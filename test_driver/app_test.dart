@@ -10,10 +10,10 @@
 // - Don't import any flutter code (e.g. material.dart)
 // - Don't import flutter_test.dart
 
-import 'package:starter_architecture_flutter_firebase/constants/keys.dart';
+import 'package:thepaper_starter/constants/keys.dart';
 // Imports the Flutter Driver API.
 import 'package:flutter_driver/flutter_driver.dart';
-import 'package:starter_architecture_flutter_firebase/constants/strings.dart';
+import 'package:thepaper_starter/constants/strings.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:starter_architecture_flutter_firebase/app/home/job_entries/job_entries_page.dart';
-import 'package:starter_architecture_flutter_firebase/app/home/jobs/edit_job_page.dart';
-import 'package:starter_architecture_flutter_firebase/app/home/jobs/job_list_tile.dart';
-import 'package:starter_architecture_flutter_firebase/app/home/jobs/list_items_builder.dart';
-import 'package:starter_architecture_flutter_firebase/app/home/models/job.dart';
-import 'package:starter_architecture_flutter_firebase/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:starter_architecture_flutter_firebase/constants/strings.dart';
-import 'package:starter_architecture_flutter_firebase/services/firestore_database.dart';
+import 'package:thepaper_starter/app/home/job_entries/job_entries_page.dart';
+import 'package:thepaper_starter/app/home/jobs/edit_job_page.dart';
+import 'package:thepaper_starter/app/home/jobs/job_list_tile.dart';
+import 'package:thepaper_starter/app/home/jobs/list_items_builder.dart';
+import 'package:thepaper_starter/app/home/models/job.dart';
+import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:thepaper_starter/constants/strings.dart';
+import 'package:thepaper_starter/services/firestore_database.dart';
 
 class JobsPage extends StatelessWidget {
   Future<void> _delete(BuildContext context, Job job) async {

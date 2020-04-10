@@ -1,4 +1,4 @@
-import 'package:starter_architecture_flutter_firebase/common_widgets/platform_alert_dialog.dart';
+import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
 import 'package:flutter/services.dart';
 
 class PlatformExceptionAlertDialog extends PlatformAlertDialog {

@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:starter_architecture_flutter_firebase/common_widgets/platform_widget.dart';
-import 'package:starter_architecture_flutter_firebase/constants/keys.dart';
+import 'package:thepaper_starter/common_widgets/platform_widget.dart';
+import 'package:thepaper_starter/constants/keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 

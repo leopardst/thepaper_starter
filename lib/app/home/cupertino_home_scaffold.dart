@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:starter_architecture_flutter_firebase/app/home/tab_item.dart';
-import 'package:starter_architecture_flutter_firebase/constants/keys.dart';
-import 'package:starter_architecture_flutter_firebase/routing/cupertino_tab_view_router.gr.dart';
+import 'package:thepaper_starter/app/home/tab_item.dart';
+import 'package:thepaper_starter/constants/keys.dart';
+import 'package:thepaper_starter/routing/cupertino_tab_view_router.gr.dart';
 
 class CupertinoHomeScaffold extends StatelessWidget {
   CupertinoHomeScaffold({
@@ -25,6 +25,7 @@ class CupertinoHomeScaffold extends StatelessWidget {
         key: Key(Keys.tabBar),
         items: [
           _buildItem(TabItem.jobs),
+          _buildItem(TabItem.funerals),
           _buildItem(TabItem.entries),
           _buildItem(TabItem.account),
         ],

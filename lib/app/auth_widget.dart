@@ -1,7 +1,7 @@
-import 'package:starter_architecture_flutter_firebase/app/home/home_page.dart';
-import 'package:starter_architecture_flutter_firebase/app/sign_in/sign_in_page.dart';
+import 'package:thepaper_starter/app/home/home_page.dart';
+import 'package:thepaper_starter/app/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
-import 'package:starter_architecture_flutter_firebase/services/firebase_auth_service.dart';
+import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
 /// Builds the signed-in or non signed-in UI, depending on the user snapshot.
 /// This widget should be below the [MaterialApp].

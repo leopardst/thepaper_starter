@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:meta/meta.dart';
-import 'package:starter_architecture_flutter_firebase/app/home/models/entry.dart';
-import 'package:starter_architecture_flutter_firebase/app/home/models/job.dart';
-import 'package:starter_architecture_flutter_firebase/services/firestore_path.dart';
-import 'package:starter_architecture_flutter_firebase/services/firestore_service.dart';
+import 'package:thepaper_starter/app/home/models/entry.dart';
+import 'package:thepaper_starter/app/home/models/job.dart';
+import 'package:thepaper_starter/app/home/models/funeral.dart';
+import 'package:thepaper_starter/services/firestore_path.dart';
+import 'package:thepaper_starter/services/firestore_service.dart';
 
 String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
 
@@ -57,5 +58,15 @@ class FirestoreDatabase {
             : null,
         builder: (data, documentID) => Entry.fromMap(data, documentID),
         sort: (lhs, rhs) => rhs.start.compareTo(lhs.start),
+      );
+
+  Stream<Funeral> funeralStream({@required String funeralId}) => _service.documentStream(
+        path: FirestorePath.funeral(funeralId),
+        builder: (data, documentId) => Funeral.fromMap(data, documentId),
+      );
+
+  Stream<List<Funeral>> funeralsStream() => _service.collectionStream(
+        path: FirestorePath.funerals(),
+        builder: (data, documentId) => Funeral.fromMap(data, documentId),
       );
 }

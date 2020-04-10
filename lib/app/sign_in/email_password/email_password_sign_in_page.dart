@@ -1,13 +1,13 @@
-import 'package:starter_architecture_flutter_firebase/app/sign_in/email_password/email_password_sign_in_model.dart';
-import 'package:starter_architecture_flutter_firebase/common_widgets/form_submit_button.dart';
-import 'package:starter_architecture_flutter_firebase/common_widgets/platform_alert_dialog.dart';
-import 'package:starter_architecture_flutter_firebase/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:starter_architecture_flutter_firebase/constants/strings.dart';
-import 'package:starter_architecture_flutter_firebase/routing/router.gr.dart';
+import 'package:thepaper_starter/app/sign_in/email_password/email_password_sign_in_model.dart';
+import 'package:thepaper_starter/common_widgets/form_submit_button.dart';
+import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
+import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:thepaper_starter/constants/strings.dart';
+import 'package:thepaper_starter/routing/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:starter_architecture_flutter_firebase/services/firebase_auth_service.dart';
+import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
 class EmailPasswordSignInPageBuilder extends StatelessWidget {
   const EmailPasswordSignInPageBuilder({Key key, this.onSignedIn})

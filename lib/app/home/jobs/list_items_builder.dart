@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:starter_architecture_flutter_firebase/app/home/jobs/empty_content.dart';
+import 'package:thepaper_starter/app/home/jobs/empty_content.dart';
+import 'package:flutter/foundation.dart';
 
 typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item);
 
@@ -14,6 +15,7 @@ class ListItemsBuilder<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  debugPrint('snapshot: $snapshot');
     if (snapshot.hasData) {
       final List<T> items = snapshot.data;
       if (items.isNotEmpty) {

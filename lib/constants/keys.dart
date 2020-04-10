@@ -3,6 +3,7 @@ class Keys {
   static const String anonymous = 'anonymous';
   static const String tabBar = 'tabBar';
   static const String jobsTab = 'jobsTab';
+  static const String funeralsTab = 'funeralsTab';
   static const String entriesTab = 'entriesTab';
   static const String accountTab = 'accountTab';
   static const String logout = 'logout';

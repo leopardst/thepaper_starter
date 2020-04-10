@@ -1,9 +1,9 @@
-//import 'package:starter_architecture_flutter_firebase/main.dart' as app;
+//import 'package:thepaper_starter/main.dart' as app;
 import 'package:mockito/mockito.dart';
-import 'package:starter_architecture_flutter_firebase/main.dart';
+import 'package:thepaper_starter/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
-import 'package:starter_architecture_flutter_firebase/services/firestore_database.dart';
+import 'package:thepaper_starter/services/firestore_database.dart';
 
 import 'fake_auth_service.dart';
 

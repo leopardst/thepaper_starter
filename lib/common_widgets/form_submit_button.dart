@@ -1,4 +1,4 @@
-import 'package:starter_architecture_flutter_firebase/common_widgets/custom_raised_button.dart';
+import 'package:thepaper_starter/common_widgets/custom_raised_button.dart';
 import 'package:flutter/material.dart';
 
 class FormSubmitButton extends CustomRaisedButton {

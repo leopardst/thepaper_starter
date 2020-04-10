@@ -58,4 +58,8 @@ class Strings {
   static const String authenticationType = 'Authentication type';
   static const String firebase = 'Firebase';
   static const String mock = 'Mock';
+
+  // Funerals Page
+  static const String funerals = 'Funerals';
+
 }

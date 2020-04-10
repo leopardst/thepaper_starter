@@ -1,11 +1,11 @@
-import 'package:starter_architecture_flutter_firebase/app/sign_in/email_password/email_password_sign_in_page.dart';
-import 'package:starter_architecture_flutter_firebase/constants/strings.dart';
+import 'package:thepaper_starter/app/sign_in/email_password/email_password_sign_in_page.dart';
+import 'package:thepaper_starter/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
-import 'package:starter_architecture_flutter_firebase/services/firebase_auth_service.dart';
+import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
 import 'mocks.dart';
 
