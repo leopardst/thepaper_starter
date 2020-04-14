@@ -15,7 +15,7 @@ class ListItemsBuilder<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  debugPrint('snapshot: $snapshot');
+  debugPrint('snapshot: $snapshot'); //TODO Remove this
     if (snapshot.hasData) {
       final List<T> items = snapshot.data;
       if (items.isNotEmpty) {
@@ -33,9 +33,9 @@ class ListItemsBuilder<T> extends StatelessWidget {
   }
 
   Widget _buildList(List<T> items) {
-    return ListView.separated(
+    return ListView.builder(
+      // padding: EdgeInsets.symmetric(vertical: 10.0), // Top padding of list
       itemCount: items.length + 2,
-      separatorBuilder: (context, index) => Divider(height: 0.5),
       itemBuilder: (context, index) {
         if (index == 0 || index == items.length + 1) {
           return Container(); // zero height: not visible

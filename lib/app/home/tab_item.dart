@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thepaper_starter/constants/keys.dart';
 import 'package:thepaper_starter/constants/strings.dart';
 
-enum TabItem { jobs, funerals, entries, account }
+enum TabItem {funerals, account }
 
 class TabItemData {
   const TabItemData(
@@ -13,21 +13,21 @@ class TabItemData {
   final IconData icon;
 
   static const Map<TabItem, TabItemData> allTabs = {
-    TabItem.jobs: TabItemData(
-      key: Keys.jobsTab,
-      title: Strings.jobs,
-      icon: Icons.work,
-    ),
+    // TabItem.jobs: TabItemData(
+    //   key: Keys.jobsTab,
+    //   title: Strings.jobs,
+    //   icon: Icons.work,
+    // ),
     TabItem.funerals: TabItemData(
       key: Keys.funeralsTab,
       title: Strings.funerals,
       icon: Icons.work,
     ),
-    TabItem.entries: TabItemData(
-      key: Keys.entriesTab,
-      title: Strings.entries,
-      icon: Icons.view_headline,
-    ),
+    // TabItem.entries: TabItemData(
+    //   key: Keys.entriesTab,
+    //   title: Strings.entries,
+    //   icon: Icons.view_headline,
+    // ),
     TabItem.account: TabItemData(
       key: Keys.accountTab,
       title: Strings.account,
