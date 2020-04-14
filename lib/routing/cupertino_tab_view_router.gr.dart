@@ -7,11 +7,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:auto_route/router_utils.dart';
-import 'package:thepaper_starter/app/home/job_entries/job_entries_page.dart';
-import 'package:thepaper_starter/app/home/models/job.dart';
+import 'package:thepaper_starter/app/home/funerals/funeral_details_page.dart';
+import 'package:thepaper_starter/app/home/models/funeral.dart';
 
 class CupertinoTabViewRouter {
-  static const jobEntriesPage = '/job-entries-page';
+  static const funeralDetailsPage = '/funeral-details-page';
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<CupertinoTabViewRouter>();
   static NavigatorState get navigator => navigatorKey.currentState;
@@ -19,13 +19,13 @@ class CupertinoTabViewRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
-      case CupertinoTabViewRouter.jobEntriesPage:
-        if (hasInvalidArgs<Job>(args, isRequired: true)) {
-          return misTypedArgsRoute<Job>(args);
+      case CupertinoTabViewRouter.funeralDetailsPage:
+        if (hasInvalidArgs<Funeral>(args, isRequired: true)) {
+          return misTypedArgsRoute<Funeral>(args);
         }
-        final typedArgs = args as Job;
+        final typedArgs = args as Funeral;
         return CupertinoPageRoute(
-          builder: (_) => JobEntriesPage(job: typedArgs),
+          builder: (_) => FuneralDetailsPage(funeral: typedArgs),
           settings: settings,
           fullscreenDialog: false,
         );

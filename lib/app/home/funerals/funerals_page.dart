@@ -18,7 +18,10 @@ class FuneralsPage extends StatelessWidget {
         title: Text(Strings.funerals),
         elevation: 2.0,
       ),
-      body: _buildContents(context),
+      body: RefreshIndicator(
+        child:_buildContents(context),
+        onRefresh: () async {},
+      )
     );
   }
 
@@ -29,7 +32,9 @@ class FuneralsPage extends StatelessWidget {
       builder: (context, snapshot) {
         return ListItemsBuilder<Funeral>(
           snapshot: snapshot,
-          itemBuilder: (context, funeral) => FuneralListTile(funeral: funeral),
+          itemBuilder: (context, funeral) => FuneralListTile(
+            funeral: funeral,
+            ),
         );
       },
     );
