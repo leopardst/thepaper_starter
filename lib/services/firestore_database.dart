@@ -4,6 +4,8 @@ import 'package:meta/meta.dart';
 import 'package:thepaper_starter/app/home/models/entry.dart';
 import 'package:thepaper_starter/app/home/models/job.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
+import 'package:thepaper_starter/app/home/models/condolence.dart';
+
 import 'package:thepaper_starter/services/firestore_path.dart';
 import 'package:thepaper_starter/services/firestore_service.dart';
 
@@ -69,4 +71,14 @@ class FirestoreDatabase {
         path: FirestorePath.funerals(),
         builder: (data, documentId) => Funeral.fromMap(data, documentId),
       );
+  
+  Stream<List<Condolence>> condolencesStream({@required Funeral funeral}) => _service.collectionStream(
+        path: FirestorePath.condolences(funeral.id),
+        builder: (data, documentId) => Condolence.fromMap(data, documentId),
+      );
+
+  Future<void> setCondolence(Condolence condolence, String funeralId) async => await _service.setData(
+      path: FirestorePath.condolence(funeralId, condolence.id),
+      data: condolence.toMap(),
+    );
 }

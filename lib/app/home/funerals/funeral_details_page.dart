@@ -5,15 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
-import 'package:thepaper_starter/app/home/job_entries/entry_list_item.dart';
-import 'package:thepaper_starter/app/home/job_entries/entry_page.dart';
-import 'package:thepaper_starter/app/home/jobs/edit_job_page.dart';
-import 'package:thepaper_starter/app/home/jobs/list_items_builder.dart';
-// import 'package:thepaper_starter/app/home/models/entry.dart';
+import 'package:thepaper_starter/app/home/condolences/condolence_list_tile.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
+import 'package:thepaper_starter/app/home/models/condolence.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:thepaper_starter/routing/cupertino_tab_view_router.gr.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
+import 'package:thepaper_starter/app/home/condolences/condolence_list_tile.dart';
+import 'package:thepaper_starter/app/home/jobs/list_items_builder.dart';
+import 'package:thepaper_starter/services/firebase_auth_service.dart';
+
 
 class FuneralDetailsPage extends StatefulWidget {
   const FuneralDetailsPage({@required this.funeral});
@@ -36,7 +37,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
   String _funeralLocation;
   String _funeralFullDateAndTime;
   String _funeralObituary;
-
+  Funeral _funeral;
   TabController _controller;
 
   @override
@@ -47,8 +48,19 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
     _funeralLocation = widget.funeral?.location ?? '';
     _funeralObituary = widget.funeral?.obituary ?? '';
     _funeralFullDateAndTime = widget.funeral?.funeralFullDateAndTimeAsString ?? '';
+    _funeral = widget.funeral; // TODO this cant be right
 
     _controller = new TabController(length: 3, vsync: this);
+  }
+
+  Condolence _condolenceFromState() {
+    final uid = Provider.of<User>(context, listen:false).uid;
+    final id = documentIdFromCurrentDate();
+
+    return Condolence(
+      id: id,
+      uid: uid,
+    );
   }
 
   @override
@@ -148,7 +160,26 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
                     SizedBox(height: 10.0),
                   ],
                 ),
-                Text("222222"),
+                Column(
+                  children: <Widget>[
+                    FlatButton(
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                      splashColor: Colors.blueAccent,
+                      padding: EdgeInsets.all(8.0),
+                      onPressed: () {
+                        _submitCondolence(context, _funeral); 
+                      },
+                      child: Text(
+                        "My Condolences"
+                      ),
+                    ),
+                    Expanded(
+                      // height: 100.0,
+                      child: _buildContent(context, _funeral),
+                    ),
+                  ],                 
+                ),
                 Text("33333"),
               ],
             ),
@@ -159,29 +190,59 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
     //   },
     // );
   }
+  
+   Widget _buildContent(BuildContext context, Funeral funeral) {
+    final database = Provider.of<FirestoreDatabase>(context, listen: false);
+    return StreamBuilder<List<Condolence>>(
+      stream: database.condolencesStream(funeral: funeral),
+      builder: (context, snapshot) {
+        return ListItemsBuilder<Condolence>(
+          snapshot: snapshot,
+          itemBuilder: (context, condolence) => CondolenceListTile(
+            condolence: condolence,
+          ),
+        );
+      },
+    );
+  }
 
-  // Widget _buildContent(BuildContext context, Funeral funeral) {
-  //   final database = Provider.of<FirestoreDatabase>(context, listen: false);
-  //   return StreamBuilder<List<Entry>>(
-  //     stream: database.entriesStream(job: job),
-  //     builder: (context, snapshot) {
-  //       return ListItemsBuilder<Entry>(
-  //         snapshot: snapshot,
-  //         itemBuilder: (context, entry) {
-  //           return DismissibleEntryListItem(
-  //             key: Key('entry-${entry.id}'),
-  //             entry: entry,
-  //             job: job,
-  //             onDismissed: () => _deleteEntry(context, entry),
-  //             onTap: () => EntryPage.show(
-  //               context: context,
-  //               job: job,
-  //               entry: entry,
-  //             ),
-  //           );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
+  Future<void> _submitCondolence(BuildContext context, Funeral funeral) async {
+    try {
+      final database = Provider.of<FirestoreDatabase>(context, listen: false);
+      final condolence = _condolenceFromState();
+      
+      await database.setCondolence(condolence, funeral.id);
+    } on PlatformException catch (e) {
+      PlatformExceptionAlertDialog(
+        title: 'Operation failed',
+        exception: e,
+      ).show(context);
+    }
+      
+    //   final jobs = await database.jobsStream().first;
+    //   final allLowerCaseNames =
+    //       jobs.map((job) => job.name.toLowerCase()).toList();
+    //   if (widget.job != null) {
+    //     allLowerCaseNames.remove(widget.job.name.toLowerCase());
+    //   }
+    //   if (allLowerCaseNames.contains(_name.toLowerCase())) {
+    //     PlatformAlertDialog(
+    //       title: 'Name already used',
+    //       content: 'Please choose a different job name',
+    //       defaultActionText: 'OK',
+    //     ).show(context);
+    //   } else {
+    //     final id = widget.job?.id ?? documentIdFromCurrentDate();
+    //     final job = Job(id: id, name: _name, ratePerHour: _ratePerHour);
+    //     await database.setJob(job);
+    //     Navigator.of(context).pop();
+    //   }
+    // } on PlatformException catch (e) {
+    //   PlatformExceptionAlertDialog(
+    //     title: 'Operation failed',
+    //     exception: e,
+    //   ).show(context);
+    // }
+    
+  }
 }
