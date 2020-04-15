@@ -9,7 +9,7 @@ class CondolenceListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(condolence.uid),
+      title: Text(condolence.name),
     );
   }
 }
