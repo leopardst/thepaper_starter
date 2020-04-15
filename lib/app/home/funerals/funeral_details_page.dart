@@ -54,12 +54,15 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
   }
 
   Condolence _condolenceFromState() {
-    final uid = Provider.of<User>(context, listen:false).uid;
+    final user = Provider.of<User>(context, listen:false);
+    final uid = user.uid;
+    final name = user.email;
     final id = documentIdFromCurrentDate();
-
+     
     return Condolence(
       id: id,
       uid: uid,
+      name: name,
     );
   }
 
