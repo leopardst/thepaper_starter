@@ -12,6 +12,8 @@ import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.
 import 'package:thepaper_starter/routing/cupertino_tab_view_router.gr.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/app/home/condolences/condolence_list_tile.dart';
+import 'package:thepaper_starter/app/home/condolences/condolence_button.dart';
+
 import 'package:thepaper_starter/app/home/jobs/list_items_builder.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
@@ -53,18 +55,6 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
     _controller = new TabController(length: 3, vsync: this);
   }
 
-  Condolence _condolenceFromState() {
-    final user = Provider.of<User>(context, listen:false);
-    final uid = user.uid;
-    final name = user.email;
-    final id = documentIdFromCurrentDate();
-     
-    return Condolence(
-      id: id,
-      uid: uid,
-      name: name,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,18 +155,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
                 ),
                 Column(
                   children: <Widget>[
-                    FlatButton(
-                      color: Colors.blue,
-                      textColor: Colors.white,
-                      splashColor: Colors.blueAccent,
-                      padding: EdgeInsets.all(8.0),
-                      onPressed: () {
-                        _submitCondolence(context, _funeral); 
-                      },
-                      child: Text(
-                        "My Condolences"
-                      ),
-                    ),
+                    CondolenceButton(funeral: _funeral),
                     Expanded(
                       // height: 100.0,
                       child: _buildContent(context, _funeral),
@@ -209,43 +188,17 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
     );
   }
 
-  Future<void> _submitCondolence(BuildContext context, Funeral funeral) async {
-    try {
-      final database = Provider.of<FirestoreDatabase>(context, listen: false);
-      final condolence = _condolenceFromState();
+  // Future<void> _submitCondolence(BuildContext context, Funeral funeral) async {
+  //   try {
+  //     final database = Provider.of<FirestoreDatabase>(context, listen: false);
+  //     final condolence = _condolenceFromState();
       
-      await database.setCondolence(condolence, funeral.id);
-    } on PlatformException catch (e) {
-      PlatformExceptionAlertDialog(
-        title: 'Operation failed',
-        exception: e,
-      ).show(context);
-    }
-      
-    //   final jobs = await database.jobsStream().first;
-    //   final allLowerCaseNames =
-    //       jobs.map((job) => job.name.toLowerCase()).toList();
-    //   if (widget.job != null) {
-    //     allLowerCaseNames.remove(widget.job.name.toLowerCase());
-    //   }
-    //   if (allLowerCaseNames.contains(_name.toLowerCase())) {
-    //     PlatformAlertDialog(
-    //       title: 'Name already used',
-    //       content: 'Please choose a different job name',
-    //       defaultActionText: 'OK',
-    //     ).show(context);
-    //   } else {
-    //     final id = widget.job?.id ?? documentIdFromCurrentDate();
-    //     final job = Job(id: id, name: _name, ratePerHour: _ratePerHour);
-    //     await database.setJob(job);
-    //     Navigator.of(context).pop();
-    //   }
-    // } on PlatformException catch (e) {
-    //   PlatformExceptionAlertDialog(
-    //     title: 'Operation failed',
-    //     exception: e,
-    //   ).show(context);
-    // }
-    
-  }
+  //     await database.setCondolence(condolence, funeral.id);
+  //   } on PlatformException catch (e) {
+  //     PlatformExceptionAlertDialog(
+  //       title: 'Operation failed',
+  //       exception: e,
+  //     ).show(context);
+  //   }
+  // }
 }

@@ -78,7 +78,12 @@ class FirestoreDatabase {
       );
 
   Future<void> setCondolence(Condolence condolence, String funeralId) async => await _service.setData(
-      path: FirestorePath.condolence(funeralId, condolence.id),
+      path: FirestorePath.condolence(funeralId, uid),
       data: condolence.toMap(),
     );
+
+  Stream<Condolence> condolenceStream({@required String funeralId}) => _service.documentStream(
+        path: FirestorePath.condolence(funeralId, uid),
+        builder: (data, documentId) => Condolence.fromMap(data, documentId),
+      );
 }
