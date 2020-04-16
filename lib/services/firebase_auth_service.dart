@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 
 @immutable
 class User {
@@ -48,6 +51,32 @@ class FirebaseAuthService {
     ));
     return _userFromFirebase(authResult.user);
   }
+  
+  Future<User> signInWithGoogle() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount googleUser = await googleSignIn.signIn();
+
+    if (googleUser != null) {
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      if (googleAuth.accessToken != null && googleAuth.idToken != null) {
+        final AuthResult authResult = await _firebaseAuth
+            .signInWithCredential(GoogleAuthProvider.getCredential(
+          idToken: googleAuth.idToken,
+          accessToken: googleAuth.accessToken,
+        ));
+        return _userFromFirebase(authResult.user);
+      } else {
+        throw PlatformException(
+            code: 'ERROR_MISSING_GOOGLE_AUTH_TOKEN',
+            message: 'Missing Google Auth Token');
+      }
+    } else {
+      throw PlatformException(
+          code: 'ERROR_ABORTED_BY_USER', message: 'Sign in aborted by user');
+    }
+  }
+
 
   Future<User> createUserWithEmailAndPassword(
       String email, String password) async {
@@ -66,6 +95,9 @@ class FirebaseAuthService {
   }
 
   Future<void> signOut() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    await googleSignIn.signOut();
     return _firebaseAuth.signOut();
+    
   }
 }

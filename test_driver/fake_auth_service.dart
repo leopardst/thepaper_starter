@@ -91,6 +91,14 @@ class FakeAuthService implements FirebaseAuthService {
     return user;
   }
 
+  @override
+  Future<User> signInWithGoogle() async {
+    await Future<void>.delayed(responseTime);
+    final User user = User(uid: random.randomAlphaNumeric(32));
+    _add(user);
+    return user;
+  }
+
   void dispose() {
     _onAuthStateChangedController.close();
   }

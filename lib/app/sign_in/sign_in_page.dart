@@ -1,6 +1,8 @@
 import 'package:thepaper_starter/app/sign_in/email_password/email_password_sign_in_page.dart';
 import 'package:thepaper_starter/app/sign_in/sign_in_view_model.dart';
-import 'package:thepaper_starter/app/sign_in/sign_in_button.dart';
+// import 'package:thepaper_starter/app/sign_in/sign_in_button.dart';
+import 'package:thepaper_starter/app/sign_in/social_sign_in_button.dart';
+
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:thepaper_starter/constants/keys.dart';
 import 'package:thepaper_starter/constants/strings.dart';
@@ -32,6 +34,7 @@ class SignInPage extends StatelessWidget {
   final SignInViewModel viewModel;
   final String title;
 
+  static const Key googleButtonKey = Key('google');
   static const Key emailPasswordButtonKey = Key(Keys.emailPassword);
   static const Key anonymousButtonKey = Key(Keys.anonymous);
 
@@ -50,6 +53,17 @@ class SignInPage extends StatelessWidget {
       _showSignInError(context, e);
     }
   }
+
+  Future<void> _signInWithGoogle(BuildContext context) async {
+    try {
+      await viewModel.signInWithGoogle();
+    } on PlatformException catch (e) {
+      if (e.code != 'ERROR_ABORTED_BY_USER') {
+        _showSignInError(context, e);
+      }
+    }
+  } 
+
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +104,13 @@ class SignInPage extends StatelessWidget {
             child: _buildHeader(),
           ),
           SizedBox(height: 32.0),
+          SocialSignInButton(
+              key: googleButtonKey,
+              assetName: 'assets/go-logo.png',
+              text: Strings.signInWithGoogle,
+              onPressed: viewModel.isLoading ? null : () => _signInWithGoogle(context),
+              color: Colors.white,
+          ),
           SignInButton(
             key: emailPasswordButtonKey,
             text: Strings.signInWithEmailPassword,
