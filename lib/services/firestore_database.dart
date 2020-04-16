@@ -85,5 +85,8 @@ class FirestoreDatabase {
   Stream<Condolence> condolenceStream({@required String funeralId}) => _service.documentStream(
         path: FirestorePath.condolence(funeralId, uid),
         builder: (data, documentId) => Condolence.fromMap(data, documentId),
-      );
+  );
+
+  Future<void> deleteCondolence(String funeralId) async =>
+      await _service.deleteData(path: FirestorePath.condolence(funeralId, uid));
 }

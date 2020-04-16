@@ -20,19 +20,9 @@ class CondolenceButton extends StatefulWidget {
 class _CondolenceButtonState extends State<CondolenceButton> {
   bool isLiked = false; // Has sent condolences
 
-  _pressed(){
-    setState(() {
-      isLiked = !isLiked;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    final database = Provider.of<FirestoreDatabase>(context, listen: false);
-//     return StreamBuilder<Job>(
-//       stream: database.jobStream(jobId: job.id),
-    // check if currently liked?
   }
 
   Condolence _condolenceFromState() {
@@ -47,42 +37,17 @@ class _CondolenceButtonState extends State<CondolenceButton> {
       name: name,
     );
   }
-  
 
-  // Entry _entryFromState() {
-  //   final start = DateTime(_startDate.year, _startDate.month, _startDate.day,
-  //       _startTime.hour, _startTime.minute);
-  //   final end = DateTime(_endDate.year, _endDate.month, _endDate.day,
-  //       _endTime.hour, _endTime.minute);
-  //   final id = widget.entry?.id ?? documentIdFromCurrentDate();
-  //   return Entry(
-  //     id: id,
-  //     jobId: widget.job.id,
-  //     start: start,
-  //     end: end,
-  //     comment: _comment,
-  //   );
-  // }
 
-  // Future<void> _setEntryAndDismiss(BuildContext context) async {
-  //   try {
-  //     final database = Provider.of<FirestoreDatabase>(context, listen: false);
-  //     final entry = _entryFromState();
-  //     await database.setEntry(entry);
-  //     Navigator.of(context).pop();
-  //   } on PlatformException catch (e) {
-  //     PlatformExceptionAlertDialog(
-  //       title: 'Operation failed',
-  //       exception: e,
-  //     ).show(context);
-  //   }
-  // }
-
-  Future<void> _toggleCondolence(BuildContext context, String funeralId) async {
+  Future<void> _toggleCondolence(BuildContext context, String funeralId, bool isLiked) async {
     try {
       final database = Provider.of<FirestoreDatabase>(context, listen: false);
-      final condolence = _condolenceFromState();
-      await database.setCondolence(condolence, funeralId);
+      if(isLiked){
+        await database.deleteCondolence(funeralId);
+      }else{
+        final condolence = _condolenceFromState();
+        await database.setCondolence(condolence, funeralId);
+      }
       setState(() {
         isLiked = !isLiked;
       });
@@ -96,14 +61,23 @@ class _CondolenceButtonState extends State<CondolenceButton> {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(
-        isLiked ? Icons.favorite : Icons.favorite_border,
-        color: isLiked ? Colors.red : Colors.grey 
-       ), 
-      onPressed: () => _toggleCondolence(context, widget.funeral.id),
+    final database = Provider.of<FirestoreDatabase>(context, listen: false);
+    return StreamBuilder(
+      stream: database.condolenceStream(funeralId: widget.funeral.id),
+      builder: (context, snapshot){
+        if(snapshot.data != null){
+          isLiked = true;
+        } else{
+          isLiked = false;
+        }
+        return IconButton(
+          icon: Icon(
+            isLiked ? Icons.favorite : Icons.favorite_border,
+            color: isLiked ? Colors.red : Colors.grey 
+          ), 
+          onPressed: () => _toggleCondolence(context, widget.funeral.id, isLiked),
+        );
+      }
     );
-    
   }
-  
 }
