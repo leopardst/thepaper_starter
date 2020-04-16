@@ -5,14 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
-import 'package:thepaper_starter/app/home/condolences/condolence_list_tile.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
+import 'package:thepaper_starter/app/home/models/comment.dart';
+
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:thepaper_starter/routing/cupertino_tab_view_router.gr.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/app/home/condolences/condolence_list_tile.dart';
 import 'package:thepaper_starter/app/home/condolences/condolence_button.dart';
+import 'package:thepaper_starter/app/home/comments/comments_list_tile.dart';
 
 import 'package:thepaper_starter/app/home/jobs/list_items_builder.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
@@ -41,6 +43,8 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
   String _funeralObituary;
   Funeral _funeral;
   TabController _controller;
+  final TextEditingController textEditingController = new TextEditingController();
+
 
   @override
   void initState() {
@@ -55,6 +59,21 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
     _controller = new TabController(length: 3, vsync: this);
   }
 
+
+Comment _commentFromState(String _content) {
+    final user = Provider.of<User>(context, listen:false);
+    final name = user.email;
+    final uid = user.uid;
+    final id = documentIdFromCurrentDate();
+    final content = _content;
+
+    return Comment(
+      id: id,
+      uid: uid,
+      name: name,
+      content: content,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,11 +177,20 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
                     CondolenceButton(funeral: _funeral),
                     Expanded(
                       // height: 100.0,
-                      child: _buildContent(context, _funeral),
+                      child: _buildCondolenceContent(context, _funeral),
                     ),
                   ],                 
                 ),
-                Text("33333"),
+                Column(
+                  children: <Widget>[
+                    // _buildCommentInput(funeral: _funeral),
+                    Container(
+                      height: 200.0,
+                      child: _buldCommentsList(context, _funeral),
+                    ),
+                    buildInput(),
+                  ],                 
+                ),
               ],
             ),
           ),
@@ -172,8 +200,9 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
     //   },
     // );
   }
+
   
-   Widget _buildContent(BuildContext context, Funeral funeral) {
+   Widget _buildCondolenceContent(BuildContext context, Funeral funeral) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     return StreamBuilder<List<Condolence>>(
       stream: database.condolencesStream(funeral: funeral),
@@ -188,17 +217,77 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
     );
   }
 
-  // Future<void> _submitCondolence(BuildContext context, Funeral funeral) async {
-  //   try {
-  //     final database = Provider.of<FirestoreDatabase>(context, listen: false);
-  //     final condolence = _condolenceFromState();
-      
-  //     await database.setCondolence(condolence, funeral.id);
-  //   } on PlatformException catch (e) {
-  //     PlatformExceptionAlertDialog(
-  //       title: 'Operation failed',
-  //       exception: e,
-  //     ).show(context);
-  //   }
-  // }
+  Widget buildInput() {
+    return Container(
+      child: Row(
+        children: <Widget>[
+          // Edit text
+          Flexible(
+            child: Container(
+              child: TextField(
+                style: TextStyle(color: Colors.black, fontSize: 15.0),
+                controller: textEditingController,
+                decoration: InputDecoration.collapsed(
+                  hintText: 'Type your message...',
+                  hintStyle: TextStyle(color: Colors.grey),
+                ),
+                // focusNode: focusNode,
+              ),
+            ),
+          ),
+
+          // Button send message
+          Material(
+            child: new Container(
+              margin: new EdgeInsets.symmetric(horizontal: 8.0),
+              child: new IconButton(
+                icon: new Icon(Icons.send),
+                onPressed: () => _sendMessage(context,widget.funeral.id, textEditingController.text),
+                color: Colors.black,
+              ),
+            ),
+            color: Colors.white,
+          ),
+        ],
+      ),
+      width: double.infinity,
+      height: 50.0,
+      decoration: new BoxDecoration(
+          border: new Border(top: new BorderSide(color: Colors.grey, width: 0.5)), color: Colors.white),
+    );
+  }
+
+
+  Future<void> _sendMessage(BuildContext context, String funeralId, String content) async {
+    if (content.trim() != '') {
+      textEditingController.clear();
+      try {
+        final database = Provider.of<FirestoreDatabase>(context, listen: false);
+        final comment = _commentFromState(content);
+        await database.setComment(comment, funeralId);
+        // listScrollController.animateTo(0.0, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+
+      } on PlatformException catch (e) {
+        PlatformExceptionAlertDialog(
+          title: 'Operation failed',
+          exception: e,
+        ).show(context);
+      }
+    }
+  }
+
+  Widget _buldCommentsList(BuildContext context, Funeral funeral) {
+    final database = Provider.of<FirestoreDatabase>(context, listen: false);
+    return StreamBuilder<List<Comment>>(
+      stream: database.commentsStream(funeral: funeral),
+      builder: (context, snapshot) {
+        return ListItemsBuilder<Comment>(
+          snapshot: snapshot,
+          itemBuilder: (context, comment) => CommentsListTile(
+            comment: comment,
+          ),
+        );
+      },
+    );
+  }
 }
