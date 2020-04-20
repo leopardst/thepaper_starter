@@ -70,13 +70,21 @@ class _CondolenceButtonState extends State<CondolenceButton> {
         } else{
           isLiked = false;
         }
-        return IconButton(
-          icon: Icon(
-            isLiked ? Icons.favorite : Icons.favorite_border,
-            color: isLiked ? Colors.red : Colors.grey 
-          ), 
-          onPressed: () => _toggleCondolence(context, widget.funeral.id, isLiked),
-        );
+        return Row(
+          children: <Widget>[
+          IconButton(
+            padding: EdgeInsets.fromLTRB(0.0, 8.0, 8.0, 8.0),
+            icon: Icon(
+              isLiked ? Icons.favorite : Icons.favorite_border,
+              color: isLiked ? Colors.red : Colors.grey 
+            ), 
+            onPressed: () => _toggleCondolence(context, widget.funeral.id, isLiked),
+          ),
+          Text("Condolences")
+
+        ],);
+        
+
       }
     );
   }

@@ -15,6 +15,7 @@ import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/app/home/condolences/condolence_list_tile.dart';
 import 'package:thepaper_starter/app/home/condolences/condolence_button.dart';
 import 'package:thepaper_starter/app/home/comments/comments_list_tile.dart';
+import 'package:thepaper_starter/constants/text_themes.dart';
 
 import 'package:thepaper_starter/app/home/jobs/list_items_builder.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
@@ -80,127 +81,205 @@ Comment _commentFromState(String _content) {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Stack(
-            children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                // borderRadius: BorderRadius.circular(30.0),
-                  boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    offset: Offset(0.0, 2.0),
-                    blurRadius: 6.0,
-                  ),
-                ],
-              ),
-              child:
-                Hero(
-                  tag: _funeral.id,
-                  child: ClipRRect(
-                    // borderRadius: BorderRadius.circular(30.0),
-                      child: _buildImage(),
-                    //     Image(
-                    //   image: AssetImage(_funeralImageURL),
-                    //   fit: BoxFit.cover,
-                    // ),
-                  ),
-                ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    iconSize: 30.0,
-                    color: Colors.black,
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              left: 20.0,
-              bottom: 20.0,
-              child: Text(
-                _funeralFullName,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.2,
-                ),
-              ),
-            )
-          ],
-          ),
-          Container(
-            color: Colors.blue,
-            child: TabBar(
-              controller: _controller,
-              tabs: [
-                Tab(
-                  icon: Icon(Icons.description),
-                  text: 'Details',
-                ),
-                Tab(
-                  icon: Icon(Icons.favorite),
-                  text: 'Condolences',
-                ),
-                Tab(
-                  icon: Icon(Icons.comment),
-                  text: 'Comments',
+          Padding(
+            padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  iconSize: 30.0,
+                  color: Colors.black,
+                  onPressed: () => Navigator.pop(context),
                 ),
               ],
             ),
           ),
           Expanded(
-            // color: Colors.green,
-            // height: 80.0,
-            child: TabBarView(
-              controller: _controller,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Funeral Service: $_funeralFullDateAndTime'),
-                    SizedBox(height: 10.0),
-                    Text('Funeral Location: $_funeralLocation'),
-                    SizedBox(height: 10.0),
-                    Text('Obituary: $_funeralObituary'),
-                    SizedBox(height: 10.0),
-                  ],
-                ),
-                Column(
-                  children: <Widget>[
-                    CondolenceButton(funeral: _funeral),
-                    Expanded(
-                      // height: 100.0,
-                      child: _buildCondolenceContent(context, _funeral),
+            child: SingleChildScrollView(
+              physics: ScrollPhysics(),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                  height: MediaQuery.of(context).size.width - 40.0,
+                  child: Hero(
+                    tag: _funeral.id,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30.0),
+                        child: _buildImage(),
                     ),
-                  ],                 
+                  ),
                 ),
-                Column(
-                  children: <Widget>[
-                    // _buildCommentInput(funeral: _funeral),
-                    Container(
-                      height: 200.0,
-                      child: _buldCommentsList(context, _funeral),
-                    ),
-                    buildInput(),
-                  ],                 
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                  child: Container(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                      Text(_funeralFullName,
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      SizedBox(height: 20.0,),
+                      Text("Funeral Service", style: TextThemes.subtitle),
+                      SizedBox(height: 10.0,),
+                      Text(_funeralFullDateAndTime),
+                      SizedBox(height: 10.0,),
+                      Text(_funeralLocation),
+                      SizedBox(height: 20.0,),
+                      Text("Obituary", style: TextThemes.subtitle),
+                      SizedBox(height: 10.0,),
+                      Text(_funeralObituary),
+                      SizedBox(height: 10.0,),
+                      CondolenceButton(funeral: _funeral),
+                      _buildCondolenceContent(context, _funeral),
+                    ],),
+                  ),
                 ),
-              ],
+                
+                // Expanded(
+                //    child:
+                // ),
+                SizedBox(height: 100.0,),
+
+              ],),
             ),
-          ),
+          )
         ],
       ),
     );
-    //   },
-    // );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     body: Column(
+  //       children: <Widget>[
+  //         Stack(
+  //           children: <Widget>[
+  //           Container(
+  //             height: MediaQuery.of(context).size.width,
+  //             decoration: BoxDecoration(
+  //               // borderRadius: BorderRadius.circular(30.0),
+  //                 boxShadow: [
+  //                 BoxShadow(
+  //                   color: Colors.black26,
+  //                   offset: Offset(0.0, 2.0),
+  //                   blurRadius: 6.0,
+  //                 ),
+  //               ],
+  //             ),
+  //             child:
+  //               Hero(
+  //                 tag: _funeral.id,
+  //                 child: ClipRRect(
+  //                   // borderRadius: BorderRadius.circular(30.0),
+  //                     child: _buildImage(),
+  //                   //     Image(
+  //                   //   image: AssetImage(_funeralImageURL),
+  //                   //   fit: BoxFit.cover,
+  //                   // ),
+  //                 ),
+  //               ),
+  //           ),
+  //           Padding(
+  //             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
+  //             child: Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: <Widget>[
+  //                 IconButton(
+  //                   icon: Icon(Icons.arrow_back),
+  //                   iconSize: 30.0,
+  //                   color: Colors.black,
+  //                   onPressed: () => Navigator.pop(context),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //           Positioned(
+  //             left: 20.0,
+  //             bottom: 20.0,
+  //             child: Text(
+  //               _funeralFullName,
+  //               style: TextStyle(
+  //                 color: Colors.white,
+  //                 fontSize: 30.0,
+  //                 fontWeight: FontWeight.w600,
+  //                 letterSpacing: 1.2,
+  //               ),
+  //             ),
+  //           )
+  //         ],
+  //         ),
+  //         Container(
+  //           color: Colors.blue,
+  //           child: TabBar(
+  //             controller: _controller,
+  //             tabs: [
+  //               Tab(
+  //                 icon: Icon(Icons.description),
+  //                 text: 'Details',
+  //               ),
+  //               Tab(
+  //                 icon: Icon(Icons.favorite),
+  //                 text: 'Condolences',
+  //               ),
+  //               Tab(
+  //                 icon: Icon(Icons.comment),
+  //                 text: 'Comments',
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         Expanded(
+  //           // color: Colors.green,
+  //           // height: 80.0,
+  //           child: TabBarView(
+  //             controller: _controller,
+  //             children: <Widget>[
+  //               Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: <Widget>[
+  //                   Text('Funeral Service: $_funeralFullDateAndTime'),
+  //                   SizedBox(height: 10.0),
+  //                   Text('Funeral Location: $_funeralLocation'),
+  //                   SizedBox(height: 10.0),
+  //                   Text('Obituary: $_funeralObituary'),
+  //                   SizedBox(height: 10.0),
+  //                 ],
+  //               ),
+  //               Column(
+  //                 children: <Widget>[
+  //                   CondolenceButton(funeral: _funeral),
+  //                   Expanded(
+  //                     // height: 100.0,
+  //                     child: _buildCondolenceContent(context, _funeral),
+  //                   ),
+  //                 ],                 
+  //               ),
+  //               Column(
+  //                 children: <Widget>[
+  //                   // _buildCommentInput(funeral: _funeral),
+  //                   Container(
+  //                     height: 200.0,
+  //                     child: _buldCommentsList(context, _funeral),
+  //                   ),
+  //                   buildInput(),
+  //                 ],                 
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  //   //   },
+  //   // );
+  // }
 
 
   Widget _buildImage() { //TODO refactor this since it exists twice
@@ -225,6 +304,7 @@ Comment _commentFromState(String _content) {
       builder: (context, snapshot) {
         return ListItemsBuilder<Condolence>(
           snapshot: snapshot,
+          dontScroll: true,
           itemBuilder: (context, condolence) => CondolenceListTile(
             condolence: condolence,
           ),
