@@ -10,10 +10,12 @@ class ListItemsBuilder<T> extends StatelessWidget {
     @required this.snapshot,
     @required this.itemBuilder,
     this.listHeader,
+    this.dontScroll = false,
   }) : super(key: key);
   final AsyncSnapshot<List<T>> snapshot;
   final ItemWidgetBuilder<T> itemBuilder;
   final String listHeader;
+  final bool dontScroll;
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +38,17 @@ class ListItemsBuilder<T> extends StatelessWidget {
 
   Widget _buildList(List<T> items) {
     return ListView.builder(
-      // padding: EdgeInsets.symmetric(vertical: 10.0), // Top padding of list
+      padding: EdgeInsets.zero, // Top padding of list
       itemCount: items.length + 2,
+      physics: dontScroll ? NeverScrollableScrollPhysics() : AlwaysScrollableScrollPhysics(),
+      shrinkWrap: dontScroll ? true : false,
       itemBuilder: (context, index) {
         if (index == 0 || index == items.length + 1) {
           return Container(); // zero height: not visible
         }
         if (index == 1 && listHeader != null){
           return Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 40.0, 0.0, 0.0),
+            padding: const EdgeInsets.fromLTRB(20.0, 80.0, 0.0, 20.0),
             child: Text(
               listHeader,
               style: Theme.of(context).textTheme.headline,
