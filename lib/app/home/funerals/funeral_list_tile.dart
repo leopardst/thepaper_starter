@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/funerals/funeral_details_page.dart';
 
@@ -48,21 +49,33 @@ class FuneralListTile extends StatelessWidget {
                 Text(funeral.location),
               ],
             ),
-            Hero( //TODO Fix the hero animation
-              tag: funeral.imageURL,
-              child: Image(
-                height: 100.0,
-                width: 100.0,
-                image: AssetImage(funeral.imageURL),
-                fit: BoxFit.cover,
-              ),
+            Hero(
+              tag: funeral.id,
+              child: _buildImage(),
             ),
           ],
         ),
       ),
     );
+  }
 
-
+  Widget _buildImage() {
+    if(funeral.imageURL != null){
+      // return Image.network(funeral.imageURL);
+      return CachedNetworkImage(
+        imageUrl: funeral.imageURL,
+        height: 100.0,
+        width: 100.0,
+      );
+    }
+    else{
+      return Image(
+        height: 100.0,
+        width: 100.0,
+        image: AssetImage('assets/images/GreenMorty.jpg'),
+        fit: BoxFit.cover,
+      );
+    }
   }
 
   List<TextSpan> _processCaption(
@@ -79,5 +92,7 @@ class FuneralListTile extends StatelessWidget {
 
     return spans;
   }
+
+  
 }
 

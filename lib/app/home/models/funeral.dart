@@ -11,7 +11,7 @@ class Funeral {
     @required this.funeralDate,
     @required this.location,
     @required this.obituary,
-    @required this.imageURL
+    this.imageURL
   });
 
   String id;
@@ -67,6 +67,7 @@ class Funeral {
     String formatted = formatter.format(funeralDate);
     return formatted;
   }
+
 
 
 

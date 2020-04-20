@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
 import 'package:thepaper_starter/app/home/models/comment.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:thepaper_starter/routing/cupertino_tab_view_router.gr.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
@@ -50,7 +50,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
   void initState() {
     super.initState();
     _funeralFullName = widget.funeral?.fullName ?? '';
-    _funeralImageURL = widget.funeral?.imageURL ?? '';
+    _funeralImageURL = widget.funeral.imageURL ?? '';
     _funeralLocation = widget.funeral?.location ?? '';
     _funeralObituary = widget.funeral?.obituary ?? '';
     _funeralFullDateAndTime = widget.funeral?.funeralFullDateAndTimeAsString ?? '';
@@ -96,13 +96,14 @@ Comment _commentFromState(String _content) {
               ),
               child:
                 Hero(
-                  tag: _funeralImageURL,
+                  tag: _funeral.id,
                   child: ClipRRect(
                     // borderRadius: BorderRadius.circular(30.0),
-                      child: Image(
-                      image: AssetImage(_funeralImageURL),
-                      fit: BoxFit.cover,
-                    ),
+                      child: _buildImage(),
+                    //     Image(
+                    //   image: AssetImage(_funeralImageURL),
+                    //   fit: BoxFit.cover,
+                    // ),
                   ),
                 ),
             ),
@@ -201,6 +202,21 @@ Comment _commentFromState(String _content) {
     // );
   }
 
+
+  Widget _buildImage() { //TODO refactor this since it exists twice
+    if(_funeralImageURL != null && _funeralImageURL != ''){
+      
+      return CachedNetworkImage(
+        imageUrl: _funeralImageURL,
+      );
+    }
+    else {
+      return Image(
+        image: AssetImage('assets/images/GreenMorty.jpg'),
+        fit: BoxFit.cover,
+      );
+    }
+  }
   
    Widget _buildCondolenceContent(BuildContext context, Funeral funeral) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
@@ -228,7 +244,7 @@ Comment _commentFromState(String _content) {
                 style: TextStyle(color: Colors.black, fontSize: 15.0),
                 controller: textEditingController,
                 decoration: InputDecoration.collapsed(
-                  hintText: 'Type your message...',
+                  hintText: 'Send a message...',
                   hintStyle: TextStyle(color: Colors.grey),
                 ),
                 // focusNode: focusNode,
