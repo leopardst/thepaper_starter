@@ -54,28 +54,4 @@ class FirestoreService {
         .map((snapshot) => builder(snapshot.data, snapshot.documentID));
   }
 
-  // Future<bool> documentExists({@required String path}) async {
-  //   bool exists = false;
-  //   try {
-  //     await Firestore.instance.document(path).get().then((doc) {
-  //       if (doc.exists)
-  //         exists = true;
-  //       else
-  //         exists = false;
-  //     });
-  //     return exists;
-  //   } catch (e) {
-  //     return false;
-  //   }
-  // }
-
 }
-
-
-  // final QuerySnapshot result = await Firestore.instance
-  //   .collection('company')
-  //   .where('name', isEqualTo: name)
-  //   .limit(1)
-  //   .getDocuments();
-  // final List<DocumentSnapshot> documents = result.documents;
-  // return documents.length == 1;

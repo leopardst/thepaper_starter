@@ -5,6 +5,7 @@ import 'package:thepaper_starter/app/home/models/entry.dart';
 import 'package:thepaper_starter/app/home/models/job.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
+import 'package:thepaper_starter/app/home/models/comment.dart';
 
 import 'package:thepaper_starter/services/firestore_path.dart';
 import 'package:thepaper_starter/services/firestore_service.dart';
@@ -89,4 +90,16 @@ class FirestoreDatabase {
 
   Future<void> deleteCondolence(String funeralId) async =>
       await _service.deleteData(path: FirestorePath.condolence(funeralId, uid));
+  
+  Stream<List<Comment>> commentsStream({@required Funeral funeral}) => _service.collectionStream(
+        path: FirestorePath.comments(funeral.id),
+        builder: (data, documentId) => Comment.fromMap(data, documentId),
+      );
+
+  Future<void> setComment(Comment comment, String funeralId) async => await _service.setData(
+    path: FirestorePath.comment(funeralId, comment.id),
+    data: comment.toMap(),
+  );
+
+
 }

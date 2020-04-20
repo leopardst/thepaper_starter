@@ -9,9 +9,11 @@ class ListItemsBuilder<T> extends StatelessWidget {
     Key key,
     @required this.snapshot,
     @required this.itemBuilder,
+    this.listHeader,
   }) : super(key: key);
   final AsyncSnapshot<List<T>> snapshot;
   final ItemWidgetBuilder<T> itemBuilder;
+  final String listHeader;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,15 @@ class ListItemsBuilder<T> extends StatelessWidget {
       itemBuilder: (context, index) {
         if (index == 0 || index == items.length + 1) {
           return Container(); // zero height: not visible
+        }
+        if (index == 1 && listHeader != null){
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 40.0, 0.0, 0.0),
+            child: Text(
+              listHeader,
+              style: Theme.of(context).textTheme.headline,
+            ),
+          );
         }
         return itemBuilder(context, items[index - 1]);
       },

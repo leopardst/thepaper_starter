@@ -14,10 +14,10 @@ class FuneralsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(Strings.funerals),
-        elevation: 2.0,
-      ),
+      // appBar: AppBar(
+      //   title: Text(Strings.funerals),
+      //   elevation: 2.0,
+      // ),
       body: RefreshIndicator(
         child:_buildContents(context),
         onRefresh: () async {},
@@ -32,6 +32,7 @@ class FuneralsPage extends StatelessWidget {
       builder: (context, snapshot) {
         return ListItemsBuilder<Funeral>(
           snapshot: snapshot,
+          listHeader: "Funerals",
           itemBuilder: (context, funeral) => FuneralListTile(
             funeral: funeral,
             ),
