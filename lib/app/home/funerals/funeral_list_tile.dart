@@ -11,7 +11,8 @@ class FuneralListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => FuneralDetailsPage.show(context, funeral),      child: Container(
+        onTap: () => FuneralDetailsPage.show(context, funeral),      
+        child: Container(
         height: 140.0,
         width: double.infinity,
         margin: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
@@ -51,7 +52,7 @@ class FuneralListTile extends StatelessWidget {
             ),
             Hero(
               tag: funeral.id,
-              child: _buildImage(),
+              child: _buildImage()
             ),
           ],
         ),
@@ -60,22 +61,33 @@ class FuneralListTile extends StatelessWidget {
   }
 
   Widget _buildImage() {
-    if(funeral.imageURL != null){
+    if(funeral.imageURL != null && funeral.imageURL != "https:"){
       // return Image.network(funeral.imageURL);
       return CachedNetworkImage(
         imageUrl: funeral.imageURL,
-        height: 100.0,
-        width: 100.0,
+        imageBuilder: (context, imageProvider) => Container(
+          width: 100.0,
+          height: 100.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            image: DecorationImage(
+              image: imageProvider, fit: BoxFit.cover),
+          ),
+        ),
+        placeholder: (context, url) => CircularProgressIndicator(),
+        errorWidget: (context, url, error) => Icon(Icons.error),
       );
-    }
-    else{
-      return Image(
-        height: 100.0,
-        width: 100.0,
-        image: AssetImage('assets/images/GreenMorty.jpg'),
-        fit: BoxFit.cover,
-      );
-    }
+    } else{return Container();}
+    // else{
+    //   return ClipRRect(
+    //     borderRadius: BorderRadius.circular(10.0),
+    //     child: Image(
+    //     height: 100.0,
+    //     width: 100.0,
+    //     image: AssetImage('assets/images/GreenMorty.jpg'),
+    //     fit: BoxFit.cover,
+    //   ));
+    // }
   }
 
   List<TextSpan> _processCaption(

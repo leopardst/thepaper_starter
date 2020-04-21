@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
+import 'package:thepaper_starter/app/home/condolences/condolences_list_builder.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
 import 'package:thepaper_starter/app/home/models/comment.dart';
@@ -19,6 +20,7 @@ import 'package:thepaper_starter/constants/text_themes.dart';
 
 import 'package:thepaper_starter/app/home/jobs/list_items_builder.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
+import 'package:animated_stream_list/animated_stream_list.dart';
 
 
 class FuneralDetailsPage extends StatefulWidget {
@@ -105,7 +107,7 @@ Comment _commentFromState(String _content) {
                   child: Hero(
                     tag: _funeral.id,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30.0),
+                      borderRadius: BorderRadius.circular(10.0),
                         child: _buildImage(),
                     ),
                   ),
@@ -297,21 +299,54 @@ Comment _commentFromState(String _content) {
     }
   }
   
-   Widget _buildCondolenceContent(BuildContext context, Funeral funeral) {
+  //  Widget _buildCondolenceContent(BuildContext context, Funeral funeral) {
+  //   final database = Provider.of<FirestoreDatabase>(context, listen: false);
+  //   return StreamBuilder<List<Condolence>>(
+  //     stream: database.condolencesStream(funeral: funeral),
+  //     builder: (context, snapshot) {
+  //       // _listKey = null; 
+  //       // _listKey = new GlobalKey();
+  //       return CondolencesListBuilder<Condolence>(
+  //         snapshot: snapshot,
+  //         itemBuilder: (context, condolence, animation) => CondolenceListTile(
+  //           condolence: condolence,
+  //           key: Key('job-${condolence.id}'),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+
+  Widget _buildCondolenceContent(BuildContext context, Funeral funeral) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
-    return StreamBuilder<List<Condolence>>(
-      stream: database.condolencesStream(funeral: funeral),
-      builder: (context, snapshot) {
-        return ListItemsBuilder<Condolence>(
-          snapshot: snapshot,
-          dontScroll: true,
-          itemBuilder: (context, condolence) => CondolenceListTile(
-            condolence: condolence,
-          ),
-        );
-      },
-    );
+    return AnimatedStreamList<Condolence>(
+      streamList: database.condolencesStream(funeral: funeral),
+      scrollPhysics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true, 
+      itemBuilder: (item, index, context, animation) =>      
+        _createCondolenceTile(item, animation),      
+      itemRemovedBuilder: (item, index, context, animation) =>  
+        _createRemovedCondolenceTile(item, animation), 
+    ); 
   }
+
+  Widget _createCondolenceTile(Condolence item, Animation<double> animation) {    
+  return SizeTransition(      
+      axis: Axis.vertical,      
+      sizeFactor: animation,      
+      child: Text(item.name),    
+    ); 
+  }
+
+  Widget _createRemovedCondolenceTile(Condolence item, Animation<double> animation) {    
+  return SizeTransition(      
+      axis: Axis.vertical,      
+      sizeFactor: animation,      
+      child: Text(item.name),    
+    ); 
+  }
+    // create tile view as the user is going to see it, attach any onClick callbacks etc. 
+ 
 
   Widget buildInput() {
     return Container(
