@@ -156,132 +156,6 @@ Comment _commentFromState(String _content) {
     );
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     body: Column(
-  //       children: <Widget>[
-  //         Stack(
-  //           children: <Widget>[
-  //           Container(
-  //             height: MediaQuery.of(context).size.width,
-  //             decoration: BoxDecoration(
-  //               // borderRadius: BorderRadius.circular(30.0),
-  //                 boxShadow: [
-  //                 BoxShadow(
-  //                   color: Colors.black26,
-  //                   offset: Offset(0.0, 2.0),
-  //                   blurRadius: 6.0,
-  //                 ),
-  //               ],
-  //             ),
-  //             child:
-  //               Hero(
-  //                 tag: _funeral.id,
-  //                 child: ClipRRect(
-  //                   // borderRadius: BorderRadius.circular(30.0),
-  //                     child: _buildImage(),
-  //                   //     Image(
-  //                   //   image: AssetImage(_funeralImageURL),
-  //                   //   fit: BoxFit.cover,
-  //                   // ),
-  //                 ),
-  //               ),
-  //           ),
-  //           Padding(
-  //             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
-  //             child: Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               children: <Widget>[
-  //                 IconButton(
-  //                   icon: Icon(Icons.arrow_back),
-  //                   iconSize: 30.0,
-  //                   color: Colors.black,
-  //                   onPressed: () => Navigator.pop(context),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //           Positioned(
-  //             left: 20.0,
-  //             bottom: 20.0,
-  //             child: Text(
-  //               _funeralFullName,
-  //               style: TextStyle(
-  //                 color: Colors.white,
-  //                 fontSize: 30.0,
-  //                 fontWeight: FontWeight.w600,
-  //                 letterSpacing: 1.2,
-  //               ),
-  //             ),
-  //           )
-  //         ],
-  //         ),
-  //         Container(
-  //           color: Colors.blue,
-  //           child: TabBar(
-  //             controller: _controller,
-  //             tabs: [
-  //               Tab(
-  //                 icon: Icon(Icons.description),
-  //                 text: 'Details',
-  //               ),
-  //               Tab(
-  //                 icon: Icon(Icons.favorite),
-  //                 text: 'Condolences',
-  //               ),
-  //               Tab(
-  //                 icon: Icon(Icons.comment),
-  //                 text: 'Comments',
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //         Expanded(
-  //           // color: Colors.green,
-  //           // height: 80.0,
-  //           child: TabBarView(
-  //             controller: _controller,
-  //             children: <Widget>[
-  //               Column(
-  //                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                 children: <Widget>[
-  //                   Text('Funeral Service: $_funeralFullDateAndTime'),
-  //                   SizedBox(height: 10.0),
-  //                   Text('Funeral Location: $_funeralLocation'),
-  //                   SizedBox(height: 10.0),
-  //                   Text('Obituary: $_funeralObituary'),
-  //                   SizedBox(height: 10.0),
-  //                 ],
-  //               ),
-  //               Column(
-  //                 children: <Widget>[
-  //                   CondolenceButton(funeral: _funeral),
-  //                   Expanded(
-  //                     // height: 100.0,
-  //                     child: _buildCondolenceContent(context, _funeral),
-  //                   ),
-  //                 ],                 
-  //               ),
-  //               Column(
-  //                 children: <Widget>[
-  //                   // _buildCommentInput(funeral: _funeral),
-  //                   Container(
-  //                     height: 200.0,
-  //                     child: _buldCommentsList(context, _funeral),
-  //                   ),
-  //                   buildInput(),
-  //                 ],                 
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  //   //   },
-  //   // );
-  // }
 
 
   Widget _buildImage() { //TODO refactor this since it exists twice
@@ -298,53 +172,23 @@ Comment _commentFromState(String _content) {
       );
     }
   }
-  
-  //  Widget _buildCondolenceContent(BuildContext context, Funeral funeral) {
+
+  Widget _buildCondolenceContent(BuildContext context, Funeral funeral){
+   return CondolencesListBuilder(funeral: funeral);
+  }
+  // Widget _buildCondolenceContent(BuildContext context, Funeral funeral) {
   //   final database = Provider.of<FirestoreDatabase>(context, listen: false);
-  //   return StreamBuilder<List<Condolence>>(
-  //     stream: database.condolencesStream(funeral: funeral),
-  //     builder: (context, snapshot) {
-  //       // _listKey = null; 
-  //       // _listKey = new GlobalKey();
-  //       return CondolencesListBuilder<Condolence>(
-  //         snapshot: snapshot,
-  //         itemBuilder: (context, condolence, animation) => CondolenceListTile(
-  //           condolence: condolence,
-  //           key: Key('job-${condolence.id}'),
-  //         ),
-  //       );
-  //     },
-  //   );
+  //   return AnimatedStreamList<Condolence>(
+  //     streamList: database.condolencesStream(funeral: funeral),
+  //     scrollPhysics: NeverScrollableScrollPhysics(),
+  //     shrinkWrap: true, 
+  //     itemBuilder: (item, index, context, animation) =>      
+  //       _createCondolenceTile(item, animation),      
+  //     itemRemovedBuilder: (item, index, context, animation) =>  
+  //       _createRemovedCondolenceTile(item, animation), 
+  //   ); 
   // }
 
-  Widget _buildCondolenceContent(BuildContext context, Funeral funeral) {
-    final database = Provider.of<FirestoreDatabase>(context, listen: false);
-    return AnimatedStreamList<Condolence>(
-      streamList: database.condolencesStream(funeral: funeral),
-      scrollPhysics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true, 
-      itemBuilder: (item, index, context, animation) =>      
-        _createCondolenceTile(item, animation),      
-      itemRemovedBuilder: (item, index, context, animation) =>  
-        _createRemovedCondolenceTile(item, animation), 
-    ); 
-  }
-
-  Widget _createCondolenceTile(Condolence item, Animation<double> animation) {    
-  return SizeTransition(      
-      axis: Axis.vertical,      
-      sizeFactor: animation,      
-      child: Text(item.name),    
-    ); 
-  }
-
-  Widget _createRemovedCondolenceTile(Condolence item, Animation<double> animation) {    
-  return SizeTransition(      
-      axis: Axis.vertical,      
-      sizeFactor: animation,      
-      child: Text(item.name),    
-    ); 
-  }
     // create tile view as the user is going to see it, attach any onClick callbacks etc. 
  
 
