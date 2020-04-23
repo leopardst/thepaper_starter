@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:thepaper_starter/app/home/condolences/condolence_list_tile.dart';
 // import 'dart:async';
 
 
@@ -68,19 +69,19 @@ class CondolencesListBuilder extends StatelessWidget {
     );
   }
 
-  Widget _createCondolenceTile(Condolence item, Animation<double> animation) {    
+  Widget _createCondolenceTile(Condolence condolence, Animation<double> animation) {    
     return SizeTransition(      
       axis: Axis.vertical,      
       sizeFactor: animation,      
-      child: Text(item.name),    
+      child: CondolenceListTile(condolence: condolence),    
     ); 
   }
 
-  Widget _createRemovedCondolenceTile(Condolence item, Animation<double> animation) {    
+  Widget _createRemovedCondolenceTile(Condolence condolence, Animation<double> animation) {    
     return SizeTransition(      
       axis: Axis.vertical,      
       sizeFactor: animation,      
-      child: Text(item.name),    
+      child: CondolenceListTile(condolence: condolence),   
     ); 
   }
 }

@@ -57,7 +57,7 @@ class Funeral {
   }
 
   String get funeralTimeAsString{
-    var formatter = new DateFormat('kk:mm');
+    var formatter = new DateFormat('h:mm a');
     String formatted = formatter.format(funeralDate);
     return formatted;
   }

@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
 
 class CondolenceListTile extends StatelessWidget {
-  const CondolenceListTile({Key key, @required this.condolence, @required this.animation}) : super(key: key);
+  const CondolenceListTile({Key key, @required this.condolence}) : super(key: key);
   final Condolence condolence;
-  final Animation<double> animation;
 
 
   @override
@@ -14,21 +13,41 @@ class CondolenceListTile extends StatelessWidget {
     //   title: Text(condolence.name),
     //   subtitle: Text("Add a message..."),
     // );
-    return Container(
-      height: 40.0,
-      width: double.infinity,
-        margin: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: Colors.grey,
-              width: 0.3,
-              )
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+      child: ListTile(
+        leading: Container(
+          width: 50.0,
+          height: 50.0,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
           ),
-          // color: Colors.blue,
-          // borderRadius: BorderRadius.circular(20.0),
+          child: CircleAvatar(
+            child: ClipOval(
+              child: Image(
+                height: 50.0,
+                width: 50.0,
+                image: AssetImage('assets/images/GreenMorty.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
         ),
-      child: Text(condolence.name),
+        title: Text(
+          condolence.name,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        subtitle: Text(condolence.name),
+        // trailing: IconButton(
+        //   icon: Icon(
+        //     Icons.favorite_border,
+        //   ),
+        //   color: Colors.grey,
+        //   onPressed: () => print('Like comment'),
+        // ),
+      ),
     );
   }
 }

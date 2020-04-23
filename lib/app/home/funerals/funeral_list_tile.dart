@@ -30,29 +30,36 @@ class FuneralListTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: 200.0,
-                  child: Text(
-                    funeral.fullName,
-                    style: TextStyle(
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.2,
+            Flexible(
+              flex: 2,
+              // fit: FlexFit.loose,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    width: 200.0,
+                    child: Text(
+                      funeral.fullName,
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1.2,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 5.0,),
-                Text(funeral.funeralFullDateAndTimeAsString),
-                SizedBox(height: 5.0,),
-                Text(funeral.location),
-              ],
+                  SizedBox(height: 5.0),
+                  Text(funeral.funeralDateAsString),
+                  SizedBox(height: 5.0),
+                  Text(funeral.funeralTimeAsString),
+                  SizedBox(height: 5.0),
+                  Text(funeral.location),
+                ],
+              ),
             ),
-            Hero(
-              tag: funeral.id,
-              child: _buildImage()
+            Flexible(
+              flex: 1,
+              // fit: FlexFit.tight,
+                child: _buildImage(),
             ),
           ],
         ),
@@ -63,19 +70,22 @@ class FuneralListTile extends StatelessWidget {
   Widget _buildImage() {
     if(funeral.imageURL != null && funeral.imageURL != "https:"){
       // return Image.network(funeral.imageURL);
-      return CachedNetworkImage(
-        imageUrl: funeral.imageURL,
-        imageBuilder: (context, imageProvider) => Container(
-          width: 100.0,
-          height: 100.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            image: DecorationImage(
-              image: imageProvider, fit: BoxFit.cover),
+      return Hero(
+        tag: funeral.id,
+        child: CachedNetworkImage(
+          imageUrl: funeral.imageURL,
+          imageBuilder: (context, imageProvider) => Container(
+            width: 100.0,
+            height: 100.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              image: DecorationImage(
+                image: imageProvider, fit: BoxFit.cover),
+            ),
           ),
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Icon(Icons.error),
         ),
-        placeholder: (context, url) => CircularProgressIndicator(),
-        errorWidget: (context, url, error) => Icon(Icons.error),
       );
     } else{return Container();}
     // else{
