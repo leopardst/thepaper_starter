@@ -1,23 +1,25 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:thepaper_starter/app/home/models/condolence.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/condolences/compose_page.dart';
 import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
+import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
 class CondolenceListTile extends StatelessWidget {
   const CondolenceListTile({Key key, @required this.condolence, @required this.funeral}) : super(key: key);
   final Condolence condolence;
   final Funeral funeral;
 
-
-
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     return Padding(
       padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
       child: ListTile(
-        leading: Container(
+          leading: Container(
           width: 50.0,
           height: 50.0,
           decoration: BoxDecoration(
@@ -40,10 +42,7 @@ class CondolenceListTile extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        subtitle: GestureDetector(
-          onTap: () => ComposePage.show(context: context, condolence: condolence, funeral: funeral),
-          child: Text(condolence?.message ?? "Add a message...")
-        ),
+        subtitle: _buildSubtitleContent(context, user), 
         // trailing: IconButton(
         //   icon: Icon(
         //     Icons.favorite_border,
@@ -55,5 +54,15 @@ class CondolenceListTile extends StatelessWidget {
     );
   }
 
+  Widget _buildSubtitleContent(BuildContext context, User user){
+    if(condolence.id == user.uid){
+      return GestureDetector(
+        onTap: () => ComposePage.show(context: context, condolence: condolence, funeral: funeral),
+        child: Text(condolence?.message ?? "Add a message...")
+      );
+    } else {
+      return null;
+    }
+  }
   
 }

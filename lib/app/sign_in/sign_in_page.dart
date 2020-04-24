@@ -117,7 +117,7 @@ class SignInPage extends StatelessWidget {
             onPressed: viewModel.isLoading
                 ? null
                 : () => EmailPasswordSignInPageBuilder.show(context),
-            textColor: Colors.white,
+            textColor: Colors.black,
             color: Theme.of(context).primaryColor,
           ),
           SizedBox(height: 8),
@@ -131,7 +131,7 @@ class SignInPage extends StatelessWidget {
             key: anonymousButtonKey,
             text: Strings.goAnonymous,
             color: Theme.of(context).primaryColor,
-            textColor: Colors.white,
+            textColor: Colors.black,
             onPressed:
                 viewModel.isLoading ? null : () => _signInAnonymously(context),
           ),

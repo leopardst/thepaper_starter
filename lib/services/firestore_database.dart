@@ -76,6 +76,7 @@ class FirestoreDatabase {
   Stream<List<Condolence>> condolencesStream({@required Funeral funeral}) => _service.collectionStream(
         path: FirestorePath.condolences(funeral.id),
         builder: (data, documentId) => Condolence.fromMap(data, documentId),
+        sort: (lhs, rhs) => rhs.updatedAt.compareTo(lhs.updatedAt),
       );
   
   Future<void> setCondolence(Condolence condolence, String funeralId) async => await _service.setData(

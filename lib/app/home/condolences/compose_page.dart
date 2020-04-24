@@ -8,7 +8,6 @@ import 'package:thepaper_starter/routing/router.gr.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
-import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
 
 
@@ -49,7 +48,8 @@ class _ComposePageState extends State<ComposePage> {
       try {
         final database = Provider.of<FirestoreDatabase>(context, listen: false);
         final id = widget.condolence?.id ?? documentIdFromCurrentDate();
-        final condolence = Condolence(id: id, name: _name, message: _message);
+        final updatedAt = DateTime.now();
+        final condolence = Condolence(id: id, name: _name, message: _message, updatedAt: updatedAt);
         await database.setCondolence(condolence, _funeralId);
         Navigator.of(context).pop();
       } on PlatformException catch (e) {

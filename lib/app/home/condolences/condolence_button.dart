@@ -30,10 +30,12 @@ class _CondolenceButtonState extends State<CondolenceButton> {
     // final uid = user.uid;
     final name = user.email;
     final id = documentIdFromCurrentDate();
+    final updatedAt = DateTime.now();
       
     return Condolence(
       id: id,
       name: name,
+      updatedAt: updatedAt,
     );
   }
 

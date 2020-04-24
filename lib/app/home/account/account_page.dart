@@ -49,7 +49,7 @@ class AccountPage extends StatelessWidget {
               Strings.logout,
               style: TextStyle(
                 fontSize: 18.0,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
             onPressed: () => _confirmSignOut(context),
@@ -76,7 +76,7 @@ class AccountPage extends StatelessWidget {
         if (user.displayName != null)
           Text(
             user.displayName,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black),
           ),
         SizedBox(height: 8),
       ],
