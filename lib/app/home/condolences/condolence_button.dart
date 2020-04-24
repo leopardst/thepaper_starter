@@ -33,7 +33,6 @@ class _CondolenceButtonState extends State<CondolenceButton> {
       
     return Condolence(
       id: id,
-      // uid: uid,
       name: name,
     );
   }

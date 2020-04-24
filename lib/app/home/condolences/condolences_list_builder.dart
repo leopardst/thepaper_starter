@@ -73,7 +73,7 @@ class CondolencesListBuilder extends StatelessWidget {
     return SizeTransition(      
       axis: Axis.vertical,      
       sizeFactor: animation,      
-      child: CondolenceListTile(condolence: condolence),    
+      child: CondolenceListTile(condolence: condolence, funeral: funeral),    
     ); 
   }
 
@@ -81,7 +81,7 @@ class CondolencesListBuilder extends StatelessWidget {
     return SizeTransition(      
       axis: Axis.vertical,      
       sizeFactor: animation,      
-      child: CondolenceListTile(condolence: condolence),   
+      child: CondolenceListTile(condolence: condolence, funeral:funeral),   
     ); 
   }
 }

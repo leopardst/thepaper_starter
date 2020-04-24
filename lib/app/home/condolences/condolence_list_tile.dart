@@ -1,18 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
+import 'package:thepaper_starter/app/home/models/funeral.dart';
+import 'package:thepaper_starter/app/home/condolences/compose_page.dart';
+import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
 
 class CondolenceListTile extends StatelessWidget {
-  const CondolenceListTile({Key key, @required this.condolence}) : super(key: key);
+  const CondolenceListTile({Key key, @required this.condolence, @required this.funeral}) : super(key: key);
   final Condolence condolence;
+  final Funeral funeral;
+
 
 
   @override
   Widget build(BuildContext context) {
-    // return ListTile(
-    //   title: Text(condolence.name),
-    //   subtitle: Text("Add a message..."),
-    // );
     return Padding(
       padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
       child: ListTile(
@@ -39,7 +40,10 @@ class CondolenceListTile extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        subtitle: Text(condolence.name),
+        subtitle: GestureDetector(
+          onTap: () => ComposePage.show(context: context, condolence: condolence, funeral: funeral),
+          child: Text(condolence?.message ?? "Add a message...")
+        ),
         // trailing: IconButton(
         //   icon: Icon(
         //     Icons.favorite_border,
@@ -50,4 +54,6 @@ class CondolenceListTile extends StatelessWidget {
       ),
     );
   }
+
+  
 }

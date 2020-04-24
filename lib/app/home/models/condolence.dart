@@ -16,7 +16,6 @@ class Condolence {
   factory Condolence.fromMap(Map<dynamic, dynamic> value, String id) {
     return Condolence(
       id: id,
-      // uid: value['uid'],
       name: value['name'],
       message: value['message'],
     );
@@ -24,7 +23,7 @@ class Condolence {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      // 'uid': uid,
+      'id': id,
       'name': name,
       'message': message,
     };

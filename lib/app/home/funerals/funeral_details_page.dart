@@ -19,7 +19,6 @@ import 'package:thepaper_starter/app/home/comments/comments_list_tile.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
 
 import 'package:thepaper_starter/app/home/jobs/list_items_builder.dart';
-import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:animated_stream_list/animated_stream_list.dart';
 
 
@@ -63,20 +62,6 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
   }
 
 
-Comment _commentFromState(String _content) {
-    final user = Provider.of<User>(context, listen:false);
-    final name = user.email;
-    final uid = user.uid;
-    final id = documentIdFromCurrentDate();
-    final content = _content;
-
-    return Comment(
-      id: id,
-      uid: uid,
-      name: name,
-      content: content,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,93 +161,6 @@ Comment _commentFromState(String _content) {
   Widget _buildCondolenceContent(BuildContext context, Funeral funeral){
    return CondolencesListBuilder(funeral: funeral);
   }
-  // Widget _buildCondolenceContent(BuildContext context, Funeral funeral) {
-  //   final database = Provider.of<FirestoreDatabase>(context, listen: false);
-  //   return AnimatedStreamList<Condolence>(
-  //     streamList: database.condolencesStream(funeral: funeral),
-  //     scrollPhysics: NeverScrollableScrollPhysics(),
-  //     shrinkWrap: true, 
-  //     itemBuilder: (item, index, context, animation) =>      
-  //       _createCondolenceTile(item, animation),      
-  //     itemRemovedBuilder: (item, index, context, animation) =>  
-  //       _createRemovedCondolenceTile(item, animation), 
-  //   ); 
-  // }
-
-    // create tile view as the user is going to see it, attach any onClick callbacks etc. 
  
 
-  Widget buildInput() {
-    return Container(
-      child: Row(
-        children: <Widget>[
-          // Edit text
-          Flexible(
-            child: Container(
-              child: TextField(
-                style: TextStyle(color: Colors.black, fontSize: 15.0),
-                controller: textEditingController,
-                decoration: InputDecoration.collapsed(
-                  hintText: 'Send a message...',
-                  hintStyle: TextStyle(color: Colors.grey),
-                ),
-                // focusNode: focusNode,
-              ),
-            ),
-          ),
-
-          // Button send message
-          Material(
-            child: new Container(
-              margin: new EdgeInsets.symmetric(horizontal: 8.0),
-              child: new IconButton(
-                icon: new Icon(Icons.send),
-                onPressed: () => _sendMessage(context,widget.funeral.id, textEditingController.text),
-                color: Colors.black,
-              ),
-            ),
-            color: Colors.white,
-          ),
-        ],
-      ),
-      width: double.infinity,
-      height: 50.0,
-      decoration: new BoxDecoration(
-          border: new Border(top: new BorderSide(color: Colors.grey, width: 0.5)), color: Colors.white),
-    );
-  }
-
-
-  Future<void> _sendMessage(BuildContext context, String funeralId, String content) async {
-    if (content.trim() != '') {
-      textEditingController.clear();
-      try {
-        final database = Provider.of<FirestoreDatabase>(context, listen: false);
-        final comment = _commentFromState(content);
-        await database.setComment(comment, funeralId);
-        // listScrollController.animateTo(0.0, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
-
-      } on PlatformException catch (e) {
-        PlatformExceptionAlertDialog(
-          title: 'Operation failed',
-          exception: e,
-        ).show(context);
-      }
-    }
-  }
-
-  Widget _buldCommentsList(BuildContext context, Funeral funeral) {
-    final database = Provider.of<FirestoreDatabase>(context, listen: false);
-    return StreamBuilder<List<Comment>>(
-      stream: database.commentsStream(funeral: funeral),
-      builder: (context, snapshot) {
-        return ListItemsBuilder<Comment>(
-          snapshot: snapshot,
-          itemBuilder: (context, comment) => CommentsListTile(
-            comment: comment,
-          ),
-        );
-      },
-    );
-  }
 }
