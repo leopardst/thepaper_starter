@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>961701363709-1kq4mn7h70l0uj3sr8mddbdhgm529po6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.961701363709-1kq4mn7h70l0uj3sr8mddbdhgm529po6</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCIQZCN2SEdcOo-fmwH7CpFItTb0T_rfp4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>961701363709</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.paperman.paperStarter</string>
+	<key>PROJECT_ID</key>
+	<string>paperstarter-91b63</string>
+	<key>STORAGE_BUCKET</key>
+	<string>paperstarter-91b63.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:961701363709:ios:fbd7a8a0c76c53b73e2394</string>
+	<key>DATABASE_URL</key>
+	<string>https://paperstarter-91b63.firebaseio.com</string>
+</dict>
+</plist>
