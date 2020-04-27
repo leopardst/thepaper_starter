@@ -30,6 +30,7 @@ dependencies:
   auto_route: ^0.2.2
   cached_network_image: ^2.1.0+1
   animated_stream_list: ^1.1.0
+  flutter_facebook_login: ^3.0.0
 
 
   # The following adds the Cupertino Icons font to your application.

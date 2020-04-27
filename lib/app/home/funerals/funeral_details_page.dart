@@ -3,23 +3,14 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter/services.dart';
+
 import 'package:thepaper_starter/app/home/condolences/condolences_list_builder.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
-import 'package:thepaper_starter/app/home/models/condolence.dart';
-import 'package:thepaper_starter/app/home/models/comment.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:thepaper_starter/routing/cupertino_tab_view_router.gr.dart';
-import 'package:thepaper_starter/services/firestore_database.dart';
-import 'package:thepaper_starter/app/home/condolences/condolence_list_tile.dart';
 import 'package:thepaper_starter/app/home/condolences/condolence_button.dart';
-import 'package:thepaper_starter/app/home/comments/comments_list_tile.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
 
-import 'package:thepaper_starter/app/home/jobs/list_items_builder.dart';
-import 'package:animated_stream_list/animated_stream_list.dart';
 
 
 class FuneralDetailsPage extends StatefulWidget {
@@ -87,16 +78,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
               physics: ScrollPhysics(),
               child: Column(
                 children: <Widget>[
-                  Container(
-                  height: MediaQuery.of(context).size.width - 40.0,
-                  child: Hero(
-                    tag: _funeral.id,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                        child: _buildImage(),
-                    ),
-                  ),
-                ),
+                  _buildImage(),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
                   child: Container(
@@ -144,17 +126,22 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
 
 
   Widget _buildImage() { //TODO refactor this since it exists twice
-    if(_funeralImageURL != null && _funeralImageURL != ''){
-      
-      return CachedNetworkImage(
-        imageUrl: _funeralImageURL,
+    if(_funeralImageURL != null && _funeralImageURL != ''){ 
+      return Container(
+        width: MediaQuery.of(context).size.width - 40.0,
+        child: Hero(
+          tag: _funeral.id,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: CachedNetworkImage(
+              imageUrl: _funeralImageURL,
+           ),
+          ),
+        ),
       );
     }
     else {
-      return Image(
-        image: AssetImage('assets/images/GreenMorty.jpg'),
-        fit: BoxFit.cover,
-      );
+      return Container();
     }
   }
 

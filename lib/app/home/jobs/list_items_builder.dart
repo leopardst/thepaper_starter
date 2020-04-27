@@ -48,7 +48,7 @@ class ListItemsBuilder<T> extends StatelessWidget {
         }
         if (index == 1 && listHeader != null){
           return Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 80.0, 0.0, 20.0),
+            padding: const EdgeInsets.all(20.0),
             child: Text(
               listHeader,
               style: Theme.of(context).textTheme.headline,

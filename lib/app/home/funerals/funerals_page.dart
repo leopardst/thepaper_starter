@@ -14,14 +14,14 @@ class FuneralsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(Strings.funerals),
-      //   elevation: 2.0,
-      // ),
-      body: RefreshIndicator(
-        child:_buildContents(context),
-        onRefresh: () async {},
-      )
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(0.0),
+        child: AppBar(
+          // title: Text(Strings.funerals),
+          elevation: 0.0,
+        ),
+      ),
+      body: _buildContents(context)
     );
   }
 

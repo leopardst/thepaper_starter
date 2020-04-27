@@ -35,6 +35,7 @@ class SignInPage extends StatelessWidget {
   final String title;
 
   static const Key googleButtonKey = Key('google');
+  static const Key facebookButtonKey = Key('facebook');
   static const Key emailPasswordButtonKey = Key(Keys.emailPassword);
   static const Key anonymousButtonKey = Key(Keys.anonymous);
 
@@ -63,6 +64,16 @@ class SignInPage extends StatelessWidget {
       }
     }
   } 
+
+  Future<void> _signInWithFacebook(BuildContext context) async {
+    try {
+      await viewModel.signInWithFacebook();
+    } on PlatformException catch (e) {
+      if (e.code != 'ERROR_ABORTED_BY_USER') {
+        _showSignInError(context, e);
+      }
+    }
+  }
 
 
   @override
@@ -111,6 +122,16 @@ class SignInPage extends StatelessWidget {
               onPressed: viewModel.isLoading ? null : () => _signInWithGoogle(context),
               color: Colors.white,
           ),
+          SizedBox(height: 32.0),
+          SocialSignInButton(
+              key: facebookButtonKey,
+              assetName: 'assets/fb-logo.png',
+              text: Strings.signInWithFacebook,
+              textColor: Colors.white,
+              onPressed: viewModel.isLoading ? null : () => _signInWithFacebook(context),
+              color: Color(0xFF334D92),
+            ),
+          SizedBox(height: 32.0),
           SignInButton(
             key: emailPasswordButtonKey,
             text: Strings.signInWithEmailPassword,

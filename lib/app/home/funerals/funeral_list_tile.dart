@@ -32,12 +32,12 @@ class FuneralListTile extends StatelessWidget {
           children: <Widget>[
             Flexible(
               flex: 2,
-              // fit: FlexFit.loose,
+              fit: FlexFit.tight,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    width: 200.0,
+                    // width: 200.0,
                     child: Text(
                       funeral.fullName,
                       style: TextStyle(
