@@ -53,18 +53,21 @@ class CondolencesListBuilder extends StatelessWidget {
   Widget _buildList(BuildContext context, List<Condolence> initialItems) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     final stream = database.condolencesStream(funeral: funeral);
-    return EmptiableList(
-        listStream: stream,
-        // placeholder: EmptyContent(),
-        list: AnimatedStreamList<Condolence>(
-          streamList: stream,
-          initialList: initialItems,
-          scrollPhysics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true, 
-          itemBuilder: (item, index, context, animation) =>      
-            _createCondolenceTile(item, animation),      
-          itemRemovedBuilder: (item, index, context, animation) =>  
-            _createRemovedCondolenceTile(item, animation), 
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0),
+      child: EmptiableList(
+          listStream: stream,
+          // placeholder: EmptyContent(),
+          list: AnimatedStreamList<Condolence>(
+            streamList: stream,
+            initialList: initialItems,
+            scrollPhysics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true, 
+            itemBuilder: (item, index, context, animation) =>      
+              _createCondolenceTile(item, animation),      
+            itemRemovedBuilder: (item, index, context, animation) =>  
+              _createRemovedCondolenceTile(item, animation), 
+        ),
       ),
     );
   }

@@ -28,14 +28,16 @@ class _CondolenceButtonState extends State<CondolenceButton> {
   Condolence _condolenceFromState() {
     final user = Provider.of<User>(context, listen:false);
     // final uid = user.uid;
-    final name = user.email;
+    final name = user.displayName ?? user.email;
     final id = documentIdFromCurrentDate();
     final updatedAt = DateTime.now();
-      
+    final userImageURL = user.photoUrl ?? null;
+
     return Condolence(
       id: id,
       name: name,
       updatedAt: updatedAt,
+      userImageURL: userImageURL,
     );
   }
 
