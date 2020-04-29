@@ -78,13 +78,12 @@ class FirebaseAuthService {
     }
   }
 
-  @override
   Future<User> signInWithFacebook() async {
     final FacebookLogin facebookLogin = FacebookLogin();
     // https://github.com/roughike/flutter_facebook_login/issues/210
     facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
     final FacebookLoginResult result =
-        await facebookLogin.logIn(<String>['public_profile']);
+        await facebookLogin.logIn(<String>['public_profile', 'email']);
     if (result.accessToken != null) {
       final AuthResult authResult = await _firebaseAuth.signInWithCredential(
         FacebookAuthProvider.getCredential(

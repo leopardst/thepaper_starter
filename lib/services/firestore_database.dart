@@ -70,7 +70,11 @@ class FirestoreDatabase {
 
   Stream<List<Funeral>> funeralsStream() => _service.collectionStream(
         path: FirestorePath.funerals(),
+        queryBuilder: (query) => query.where('isLive', isEqualTo: true)
+          .where('isDeleted', isEqualTo: false),
+          
         builder: (data, documentId) => Funeral.fromMap(data, documentId),
+        sort: (lhs, rhs) => rhs.funeralDate.compareTo(lhs.funeralDate),
       );
   
   Stream<List<Condolence>> condolencesStream({@required Funeral funeral}) => _service.collectionStream(

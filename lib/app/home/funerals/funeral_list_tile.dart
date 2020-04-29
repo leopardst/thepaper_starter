@@ -100,20 +100,7 @@ class FuneralListTile extends StatelessWidget {
     // }
   }
 
-  List<TextSpan> _processCaption(
-      String caption, String matcher, TextStyle style) {
-    List<TextSpan> spans = [];
-
-    caption.split(' ').forEach((text) {
-      if (text.toString().contains(matcher)) {
-        spans.add(TextSpan(text: text + ' ', style: style));
-      } else {
-        spans.add(TextSpan(text: text + ' '));
-      }
-    });
-
-    return spans;
-  }
+ 
 
   
 }

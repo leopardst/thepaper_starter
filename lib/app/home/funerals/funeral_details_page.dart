@@ -6,11 +6,13 @@ import 'package:flutter/widgets.dart';
 
 import 'package:thepaper_starter/app/home/condolences/condolences_list_builder.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:thepaper_starter/routing/cupertino_tab_view_router.gr.dart';
 import 'package:thepaper_starter/app/home/condolences/condolence_button.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
+import 'package:thepaper_starter/common_widgets/expandable_text.dart';
 
+import 'package:expandable/expandable.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 
 class FuneralDetailsPage extends StatefulWidget {
@@ -102,8 +104,28 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
                       SizedBox(height: 20.0,),
                       Text("Obituary", style: TextThemes.subtitle),
                       SizedBox(height: 10.0,),
-                      Text(_funeralObituary),
-                      SizedBox(height: 10.0,),
+                      ExpandableText(_funeralObituary),
+                      // ExpandablePanel(
+                      //   header: Text( 
+                      //     _funeralObituary,
+                      //     maxLines: 4,
+                      //   ),
+                      //   expanded: Align(
+                      //     alignment: Alignment.centerLeft,
+                      //       child: Text(
+                      //         _funeralObituary,
+                      //         softWrap: true,
+                      //       )),
+                      //   // tapHeaderToExpand: true,
+                      //   // hasIcon: true,
+                      // ),
+                      
+                      // Text(
+                      //   _funeralObituary,
+                      //   // overflow: TextOverflow.ellipsis,
+                      //   // maxLines: 10
+                      // ),
+                      SizedBox(height: 15,),
                       CondolenceButton(funeral: _funeral),
                       _buildCondolenceContent(context, _funeral),
                     ],),
@@ -148,6 +170,8 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
   Widget _buildCondolenceContent(BuildContext context, Funeral funeral){
    return CondolencesListBuilder(funeral: funeral);
   }
+ 
+
  
 
 }

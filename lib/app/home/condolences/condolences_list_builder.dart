@@ -70,17 +70,17 @@ class CondolencesListBuilder extends StatelessWidget {
   }
 
   Widget _createCondolenceTile(Condolence condolence, Animation<double> animation) {    
-    return SizeTransition(      
-      axis: Axis.vertical,      
-      sizeFactor: animation,      
+    return FadeTransition(      
+      // axis: Axis.vertical,      
+      opacity: animation,      
       child: CondolenceListTile(condolence: condolence, funeral: funeral),    
     ); 
   }
 
   Widget _createRemovedCondolenceTile(Condolence condolence, Animation<double> animation) {    
-    return SizeTransition(      
-      axis: Axis.vertical,      
-      sizeFactor: animation,      
+    return FadeTransition(      
+      // axis: Axis.vertical,      
+      opacity: animation,      
       child: CondolenceListTile(condolence: condolence, funeral:funeral),   
     ); 
   }
