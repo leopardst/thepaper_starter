@@ -6,11 +6,13 @@ import 'package:flutter/widgets.dart';
 
 import 'package:thepaper_starter/app/home/condolences/condolences_list_builder.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:thepaper_starter/routing/cupertino_tab_view_router.gr.dart';
 import 'package:thepaper_starter/app/home/condolences/condolence_button.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
+import 'package:thepaper_starter/common_widgets/expandable_text.dart';
 
+import 'package:expandable/expandable.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 
 class FuneralDetailsPage extends StatefulWidget {
@@ -51,8 +53,6 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
 
     _controller = new TabController(length: 3, vsync: this);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -96,14 +96,29 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
                       SizedBox(height: 20.0,),
                       Text("Funeral Service", style: TextThemes.subtitle),
                       SizedBox(height: 10.0,),
-                      Text(_funeralFullDateAndTime),
+                      Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(right: 10.0),
+                            child: Icon(Icons.today, color: Colors.grey),
+                          ),
+                          Text(_funeralFullDateAndTime),
+                      ]),
                       SizedBox(height: 10.0,),
-                      Text(_funeralLocation),
+                      Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(right: 10.0),
+                            child: Icon(Icons.location_on, color: Colors.grey),
+                          ),
+                          Text(_funeralLocation),
+                        ]
+                      ),
                       SizedBox(height: 20.0,),
                       Text("Obituary", style: TextThemes.subtitle),
                       SizedBox(height: 10.0,),
-                      Text(_funeralObituary),
-                      SizedBox(height: 10.0,),
+                      ExpandableText(_funeralObituary),
+                      SizedBox(height: 15,),
                       CondolenceButton(funeral: _funeral),
                       _buildCondolenceContent(context, _funeral),
                     ],),
@@ -128,7 +143,8 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
   Widget _buildImage() { //TODO refactor this since it exists twice
     if(_funeralImageURL != null && _funeralImageURL != ''){ 
       return Container(
-        width: MediaQuery.of(context).size.width - 40.0,
+        // width: MediaQuery.of(context).size.width - 40.0,
+        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 40.0),
         child: Hero(
           tag: _funeral.id,
           child: ClipRRect(
@@ -148,6 +164,8 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
   Widget _buildCondolenceContent(BuildContext context, Funeral funeral){
    return CondolencesListBuilder(funeral: funeral);
   }
+ 
+
  
 
 }

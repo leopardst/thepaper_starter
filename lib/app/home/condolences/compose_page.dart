@@ -9,6 +9,7 @@ import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
+import 'package:thepaper_starter/common_widgets/avatar.dart';
 
 
 class ComposePage extends StatefulWidget {
@@ -64,8 +65,9 @@ class _ComposePageState extends State<ComposePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(widget.condolence.name, style: TextThemes.subtitle),
+        title: Text("Send a message", style: TextThemes.subtitle),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.send, color: Colors.black),
@@ -79,16 +81,22 @@ class _ComposePageState extends State<ComposePage> {
   }
 
   Widget _buildContents(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          flex: 1,
-          // constraints: BoxConstraints.expand(),
-          child: Container(
-            color: Colors.white,
-            child: Padding(
+    return Container(
+      padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Avatar(photoUrl: widget.condolence.userImageURL, radius: 20.0),
+          Expanded(
+            flex: 1,
+            // constraints: BoxConstraints.expand(),
+            child: Container(
               padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
+              color: Colors.white,
               child: TextField(
+                  maxLines: 50,
+                  maxLength: 600,
                   style: TextStyle(color: Colors.black, fontSize: 15.0),
                   controller: textEditingController,
                   decoration: InputDecoration.collapsed(
@@ -98,10 +106,10 @@ class _ComposePageState extends State<ComposePage> {
                   autofocus: true,
                   // textInputAction: TextInputAction.newline,
                   // focusNode: focusNode,
-          ),
             )),
-        ),
-      ],    
+          ),
+        ],    
+      ),
     );
   }
 

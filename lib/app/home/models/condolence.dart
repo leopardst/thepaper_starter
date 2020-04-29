@@ -6,12 +6,14 @@ class Condolence {
     @required this.name,
     this.message,
     @required this.updatedAt,
+    this.userImageURL,
   });
 
   String id;
   String name;
   String message;
   DateTime updatedAt;
+  String userImageURL;
 
 
   factory Condolence.fromMap(Map<dynamic, dynamic> value, String id) {
@@ -21,6 +23,7 @@ class Condolence {
       name: value['name'],
       message: value['message'],
       updatedAt: DateTime.fromMillisecondsSinceEpoch(updatedAtAtMilliseconds),
+      userImageURL: value['userImageURL'],
     );
   }
 
@@ -29,7 +32,7 @@ class Condolence {
       'name': name,
       'message': message,
       'updatedAt': updatedAt.millisecondsSinceEpoch,
-
+      'userImageURL': userImageURL,
     };
   }
 }

@@ -27,17 +27,20 @@ class FuneralsPage extends StatelessWidget {
 
   Widget _buildContents(BuildContext context) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
-    return StreamBuilder<List<Funeral>>(
-      stream: database.funeralsStream(),
-      builder: (context, snapshot) {
-        return ListItemsBuilder<Funeral>(
-          snapshot: snapshot,
-          listHeader: "Funerals",
-          itemBuilder: (context, funeral) => FuneralListTile(
-            funeral: funeral,
-            ),
-        );
-      },
+    return Container(
+      padding: EdgeInsets.only(bottom: 100.0),
+      child: StreamBuilder<List<Funeral>>(
+        stream: database.funeralsStream(),
+        builder: (context, snapshot) {
+          return ListItemsBuilder<Funeral>(
+            snapshot: snapshot,
+            listHeader: "Funerals",
+            itemBuilder: (context, funeral) => FuneralListTile(
+              funeral: funeral,
+              ),
+          );
+        },
+      ),
     );
   }
 }
