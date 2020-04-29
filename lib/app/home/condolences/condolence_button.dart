@@ -71,19 +71,34 @@ class _CondolenceButtonState extends State<CondolenceButton> {
         } else{
           isLiked = false;
         }
-        return Row(
-          children: <Widget>[
-          IconButton(
-            padding: EdgeInsets.fromLTRB(0.0, 8.0, 8.0, 8.0),
-            icon: Icon(
-              isLiked ? Icons.favorite : Icons.favorite_border,
-              color: isLiked ? Colors.red : Colors.grey 
-            ), 
-            onPressed: () => _toggleCondolence(context, widget.funeral.id, isLiked),
+        return Container(
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Colors.grey,
+                width: 0.3,
+              ),
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.3,
+              ))
           ),
-          Text("Condolences")
+          child: Row(
+            children: <Widget>[
+            IconButton(
+              // padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
+              icon: Icon(
+                isLiked ? Icons.favorite : Icons.favorite_border,
+                color: isLiked ? Colors.red : Colors.grey 
+              ), 
+              onPressed: () => _toggleCondolence(context, widget.funeral.id, isLiked),
+            ),
+            GestureDetector(
+              onTap: () => {_toggleCondolence(context, widget.funeral.id, isLiked)},
+              child: Text("Leave Condolences"))
 
-        ],);
+          ],),
+        );
         
 
       }

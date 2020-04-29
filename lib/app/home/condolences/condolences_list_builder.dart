@@ -55,7 +55,7 @@ class CondolencesListBuilder extends StatelessWidget {
     final stream = database.condolencesStream(funeral: funeral);
     return EmptiableList(
         listStream: stream,
-        placeholder: EmptyContent(),
+        // placeholder: EmptyContent(),
         list: AnimatedStreamList<Condolence>(
           streamList: stream,
           initialList: initialItems,

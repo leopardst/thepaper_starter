@@ -54,8 +54,6 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
     _controller = new TabController(length: 3, vsync: this);
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,33 +96,28 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
                       SizedBox(height: 20.0,),
                       Text("Funeral Service", style: TextThemes.subtitle),
                       SizedBox(height: 10.0,),
-                      Text(_funeralFullDateAndTime),
+                      Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(right: 10.0),
+                            child: Icon(Icons.today, color: Colors.grey),
+                          ),
+                          Text(_funeralFullDateAndTime),
+                      ]),
                       SizedBox(height: 10.0,),
-                      Text(_funeralLocation),
+                      Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(right: 10.0),
+                            child: Icon(Icons.location_on, color: Colors.grey),
+                          ),
+                          Text(_funeralLocation),
+                        ]
+                      ),
                       SizedBox(height: 20.0,),
                       Text("Obituary", style: TextThemes.subtitle),
                       SizedBox(height: 10.0,),
                       ExpandableText(_funeralObituary),
-                      // ExpandablePanel(
-                      //   header: Text( 
-                      //     _funeralObituary,
-                      //     maxLines: 4,
-                      //   ),
-                      //   expanded: Align(
-                      //     alignment: Alignment.centerLeft,
-                      //       child: Text(
-                      //         _funeralObituary,
-                      //         softWrap: true,
-                      //       )),
-                      //   // tapHeaderToExpand: true,
-                      //   // hasIcon: true,
-                      // ),
-                      
-                      // Text(
-                      //   _funeralObituary,
-                      //   // overflow: TextOverflow.ellipsis,
-                      //   // maxLines: 10
-                      // ),
                       SizedBox(height: 15,),
                       CondolenceButton(funeral: _funeral),
                       _buildCondolenceContent(context, _funeral),
@@ -150,7 +143,8 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
   Widget _buildImage() { //TODO refactor this since it exists twice
     if(_funeralImageURL != null && _funeralImageURL != ''){ 
       return Container(
-        width: MediaQuery.of(context).size.width - 40.0,
+        // width: MediaQuery.of(context).size.width - 40.0,
+        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 40.0),
         child: Hero(
           tag: _funeral.id,
           child: ClipRRect(
