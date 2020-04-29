@@ -32,6 +32,7 @@ class ComposePage extends StatefulWidget {
 class _ComposePageState extends State<ComposePage> {
 
   String _name;
+  String _userImageURL;
   final TextEditingController textEditingController = new TextEditingController();
 
   @override
@@ -39,6 +40,7 @@ class _ComposePageState extends State<ComposePage> {
     super.initState();
     if (widget.condolence != null){
       _name = widget.condolence.name;
+      _userImageURL = widget.condolence.userImageURL;
     }
   }
 
@@ -50,7 +52,7 @@ class _ComposePageState extends State<ComposePage> {
         final database = Provider.of<FirestoreDatabase>(context, listen: false);
         final id = widget.condolence?.id ?? documentIdFromCurrentDate();
         final updatedAt = DateTime.now();
-        final condolence = Condolence(id: id, name: _name, message: _message, updatedAt: updatedAt);
+        final condolence = Condolence(id: id, name: _name, message: _message, updatedAt: updatedAt, userImageURL: _userImageURL);
         await database.setCondolence(condolence, _funeralId);
         Navigator.of(context).pop();
       } on PlatformException catch (e) {
