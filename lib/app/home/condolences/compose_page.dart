@@ -106,7 +106,10 @@ class _ComposePageState extends State<ComposePage> {
                     hintStyle: TextStyle(color: Colors.grey),
                   ),
                   autofocus: true,
-                  // textInputAction: TextInputAction.newline,
+                  textInputAction: TextInputAction.done,
+                  onSubmitted: (String str) {
+                    _sendMessage(context, widget.funeral.id, str);
+                  },
                   // focusNode: focusNode,
             )),
           ),

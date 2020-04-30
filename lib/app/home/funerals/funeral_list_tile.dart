@@ -13,9 +13,11 @@ class FuneralListTile extends StatelessWidget {
     return GestureDetector(
         onTap: () => FuneralDetailsPage.show(context, funeral),      
         child: Container(
-        height: 140.0,
+        // height: 140.0,
+        constraints: BoxConstraints(minHeight: 120.0),
         width: double.infinity,
         margin: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+        padding: EdgeInsets.only(bottom: 20.0),
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
