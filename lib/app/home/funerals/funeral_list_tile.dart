@@ -14,7 +14,7 @@ class FuneralListTile extends StatelessWidget {
         onTap: () => FuneralDetailsPage.show(context, funeral),      
         child: Container(
         // height: 140.0,
-        constraints: BoxConstraints(minHeight: 120.0),
+        constraints: BoxConstraints(minHeight: 140.0),
         width: double.infinity,
         margin: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
         padding: EdgeInsets.only(bottom: 20.0),
@@ -51,8 +51,7 @@ class FuneralListTile extends StatelessWidget {
                   ),
                   SizedBox(height: 5.0),
                   Text(funeral.funeralDateAsString),
-                  SizedBox(height: 5.0),
-                  Text(funeral.funeralTimeAsString),
+                  _funeralTime(),
                   SizedBox(height: 5.0),
                   Text(funeral.location),
                 ],
@@ -67,6 +66,19 @@ class FuneralListTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _funeralTime(){
+    if(funeral.funeralDate.hour != 0){
+      return Column(children: <Widget>[
+        SizedBox(height: 5.0),
+        Text(funeral.funeralTimeAsString),
+      ],);
+    }
+    else{
+      return Container();
+    }
+    
   }
 
   Widget _buildImage() {

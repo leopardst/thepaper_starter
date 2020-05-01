@@ -21,7 +21,7 @@ class TabItemData {
     TabItem.funerals: TabItemData(
       key: Keys.funeralsTab,
       title: Strings.funerals,
-      icon: Icons.work,
+      icon: Icons.list,
     ),
     // TabItem.entries: TabItemData(
     //   key: Keys.entriesTab,
