@@ -68,7 +68,16 @@ class Funeral {
     return formatted;
   }
 
+// if self.funeral_date.nil?
+//         return I18n.t(:please_check_for_date)
+//       elsif self.midnight? || self.no_time
+//         return I18n.l(self.funeral_date, format: :short)
+//         # return self.funeral_date.strftime "%A, %B %d, %Y"
+//       else
+//         return I18n.l(self.funeral_date, format: :long)
+//         #return self.funeral_date.strftime "%A, %B %d, %Y at %l:%M %p"
 
+//       end
 
 
 }
