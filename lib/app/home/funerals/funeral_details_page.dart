@@ -114,6 +114,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
                           Text(_funeralLocation),
                         ]
                       ),
+                      _buildGroups(),
                       SizedBox(height: 20.0,),
                       Text("Obituary", style: TextThemes.subtitle),
                       SizedBox(height: 10.0,),
@@ -140,6 +141,32 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
 
 
 
+  Widget _buildGroups(){ //TODO could extract into a widget
+    if(_funeral.groups.length > 0){
+      return Padding(
+        padding: const EdgeInsets.only(top: 10.0),
+        child: Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: Icon(Icons.group, color: Colors.grey),
+              ),
+              Row(children: 
+                _funeral.groups.map((item) => 
+                  new Chip(
+                    label: Text(item.name),
+                )).toList()
+              )
+        ]),
+      );
+    }
+    else{
+      return Container();
+    }
+  }
+
+
+
   Widget _buildImage() { //TODO refactor this since it exists twice
     if(_funeralImageURL != null && _funeralImageURL != ''){ 
       return Container(
@@ -147,6 +174,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
         constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 40.0),
         child: Hero(
           tag: _funeral.id,
+          transitionOnUserGestures: true,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: CachedNetworkImage(

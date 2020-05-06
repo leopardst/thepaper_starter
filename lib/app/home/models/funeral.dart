@@ -3,6 +3,21 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+class FuneralGroup{
+  String id; //ID of the group
+  String name; // Name of the group
+
+  FuneralGroup.fromMap(Map<dynamic, dynamic> value)
+      : id = value["id"],
+        name = value["name"];
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'name': name,
+    };
+  }
+}
+
 class Funeral {
   Funeral({
     @required this.id,
@@ -11,6 +26,7 @@ class Funeral {
     @required this.funeralDate,
     @required this.location,
     @required this.obituary,
+    this.groups,
     this.imageURL
   });
 
@@ -21,9 +37,30 @@ class Funeral {
   String location;
   String obituary;
   String imageURL;
+  List<FuneralGroup> groups;
 
   factory Funeral.fromMap(Map<dynamic, dynamic> value, String id) {
     final Timestamp dateTS = value['funeralDate'];
+    var _fgList;
+    List<FuneralGroup> finalFGList = [];
+
+    if (value["groups"]?.isEmpty ?? true) {
+      finalFGList = [];
+    }else{
+        _fgList = value['groups'].map((item) {
+        var z = Map<String, dynamic>.from(item);
+        // print(z['name']);
+        return FuneralGroup.fromMap(z);
+      }).toList();
+      print(_fgList.toString());
+      finalFGList = List<FuneralGroup>.from(_fgList);
+
+      // _fgList = value['groups'].map<FuneralGroup>((item) {
+      //   debugPrint('groupitem:' + item);
+      //   return FuneralGroup.fromMap(item);
+      // }).ztoList();
+    }
+
     return Funeral(
       id: id,
       firstName: value['firstName'],
@@ -32,10 +69,13 @@ class Funeral {
       location: value['location'],
       obituary: value['obituary'],
       imageURL: value['imageURL'],
+      groups: finalFGList,
     );
   }
 
   Map<String, dynamic> toMap() {
+    // var funeralGroups = items.map((i) => i.toMap()).toList();
+
     return <String, dynamic>{
       'first_name': firstName,
       'last_name': lastName,
@@ -43,6 +83,7 @@ class Funeral {
       'location': location,
       'obituary': obituary,
       'imageURL': imageURL,
+      // 'groups': funeralGroups,
   };
   }
 

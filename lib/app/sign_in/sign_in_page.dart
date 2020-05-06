@@ -131,31 +131,31 @@ class SignInPage extends StatelessWidget {
               onPressed: viewModel.isLoading ? null : () => _signInWithFacebook(context),
               color: Color(0xFF334D92),
             ),
-          SizedBox(height: 32.0),
-          SignInButton(
-            key: emailPasswordButtonKey,
-            text: Strings.signInWithEmailPassword,
-            onPressed: viewModel.isLoading
-                ? null
-                : () => EmailPasswordSignInPageBuilder.show(context),
-            textColor: Colors.black,
-            color: Theme.of(context).primaryColor,
-          ),
-          SizedBox(height: 8),
-          Text(
-            Strings.or,
-            style: TextStyle(fontSize: 14.0, color: Colors.black87),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 8),
-          SignInButton(
-            key: anonymousButtonKey,
-            text: Strings.goAnonymous,
-            color: Theme.of(context).primaryColor,
-            textColor: Colors.black,
-            onPressed:
-                viewModel.isLoading ? null : () => _signInAnonymously(context),
-          ),
+          // SizedBox(height: 32.0),
+          // SignInButton(
+          //   key: emailPasswordButtonKey,
+          //   text: Strings.signInWithEmailPassword,
+          //   onPressed: viewModel.isLoading
+          //       ? null
+          //       : () => EmailPasswordSignInPageBuilder.show(context),
+          //   textColor: Colors.black,
+          //   color: Theme.of(context).primaryColor,
+          // ),
+          // SizedBox(height: 8),
+          // Text(
+          //   Strings.or,
+          //   style: TextStyle(fontSize: 14.0, color: Colors.black87),
+          //   textAlign: TextAlign.center,
+          // ),
+          // SizedBox(height: 8),
+          // SignInButton(
+          //   key: anonymousButtonKey,
+          //   text: Strings.goAnonymous,
+          //   color: Theme.of(context).primaryColor,
+          //   textColor: Colors.black,
+          //   onPressed:
+          //       viewModel.isLoading ? null : () => _signInAnonymously(context),
+          // ),
         ],
       ),
     );
