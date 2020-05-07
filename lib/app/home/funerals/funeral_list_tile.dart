@@ -86,6 +86,7 @@ class FuneralListTile extends StatelessWidget {
       // return Image.network(funeral.imageURL);
       return Hero(
         tag: funeral.id,
+        transitionOnUserGestures: true,
         child: CachedNetworkImage(
           imageUrl: funeral.imageURL,
           imageBuilder: (context, imageProvider) => Container(

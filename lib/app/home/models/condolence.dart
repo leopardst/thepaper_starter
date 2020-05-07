@@ -1,4 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Condolence {
   Condolence({
@@ -17,12 +20,14 @@ class Condolence {
 
 
   factory Condolence.fromMap(Map<dynamic, dynamic> value, String id) {
-    final int updatedAtAtMilliseconds = value['updatedAt'];
+    // final int updatedAtAtMilliseconds = value['updatedAt'];
+    final Timestamp updatedAtTS = value['updatedAt'];
+
     return Condolence(
       id: id,
       name: value['name'],
       message: value['message'],
-      updatedAt: DateTime.fromMillisecondsSinceEpoch(updatedAtAtMilliseconds),
+      updatedAt: updatedAtTS.toDate(),
       userImageURL: value['userImageURL'],
     );
   }
@@ -31,7 +36,7 @@ class Condolence {
     return <String, dynamic>{
       'name': name,
       'message': message,
-      'updatedAt': updatedAt.millisecondsSinceEpoch,
+      'updatedAt': updatedAt,
       'userImageURL': userImageURL,
     };
   }
