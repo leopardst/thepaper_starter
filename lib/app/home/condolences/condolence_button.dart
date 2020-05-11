@@ -8,6 +8,7 @@ import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/routing/router.gr.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
+import 'package:thepaper_starter/app/home/condolences/compose_page.dart';
 
 class CondolenceButton extends StatefulWidget {
   const CondolenceButton({@required this.funeral});
@@ -86,19 +87,46 @@ class _CondolenceButtonState extends State<CondolenceButton> {
               ))
           ),
           child: Row(
-            children: <Widget>[
-            IconButton(
-              // padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
-              icon: Icon(
-                isLiked ? Icons.favorite : Icons.favorite_border,
-                color: isLiked ? Colors.red : Colors.grey 
-              ), 
-              onPressed: () => _toggleCondolence(context, widget.funeral.id, isLiked),
-            ),
-            GestureDetector(
-              onTap: () => {_toggleCondolence(context, widget.funeral.id, isLiked)},
-              child: Text("Leave Condolences"))
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
+            children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Row(
+                children: <Widget>[
+                  IconButton(
+                    // padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
+                    icon: Icon(
+                      isLiked ? Icons.favorite : Icons.favorite_border,
+                      color: isLiked ? Colors.red : Colors.grey 
+                    ), 
+                    onPressed: () => _toggleCondolence(context, widget.funeral.id, isLiked),
+                  ),
+                  GestureDetector(
+                    onTap: () => {_toggleCondolence(context, widget.funeral.id, isLiked)},
+                    child: Text("Condolences"))
+                ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right:30.0),
+              child: Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.chat_bubble_outline,
+                      color: Colors.grey
+                      // isLiked ? Icons.favorite : Icons.favorite_border,
+                      // color: isLiked ? Colors.red : Colors.grey 
+                    ), 
+                    onPressed: () => ComposePage.show(context: context, funeral: widget.funeral),
+                  ),
+                  GestureDetector(
+                    onTap: () => {ComposePage.show(context: context, funeral: widget.funeral)},
+                    
+                    child: Text("Comment"))
+                ]),
+            ),
+        
           ],),
         );
         

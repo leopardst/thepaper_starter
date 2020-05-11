@@ -13,8 +13,8 @@ import 'package:thepaper_starter/app/sign_in/email_password/email_password_sign_
 import 'package:thepaper_starter/app/home/jobs/edit_job_page.dart';
 import 'package:thepaper_starter/app/home/models/job.dart';
 import 'package:thepaper_starter/app/home/condolences/compose_page.dart';
-import 'package:thepaper_starter/app/home/models/condolence.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
+import 'package:thepaper_starter/app/home/condolences/condolences_page.dart';
 import 'package:thepaper_starter/app/home/job_entries/entry_page.dart';
 import 'package:thepaper_starter/app/home/models/entry.dart';
 
@@ -24,6 +24,7 @@ class Router {
       '/email-password-sign-in-page-builder';
   static const editJobPage = '/edit-job-page';
   static const composePage = '/compose-page';
+  static const condolencesPage = '/condolences-page';
   static const entryPage = '/entry-page';
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<Router>();
@@ -72,10 +73,19 @@ class Router {
         }
         final typedArgs = args as ComposePageArguments;
         return MaterialPageRoute(
-          builder: (_) => ComposePage(
-              key: typedArgs.key,
-              condolence: typedArgs.condolence,
-              funeral: typedArgs.funeral),
+          builder: (_) =>
+              ComposePage(key: typedArgs.key, funeral: typedArgs.funeral),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Router.condolencesPage:
+        if (hasInvalidArgs<CondolencesPageArguments>(args, isRequired: true)) {
+          return misTypedArgsRoute<CondolencesPageArguments>(args);
+        }
+        final typedArgs = args as CondolencesPageArguments;
+        return MaterialPageRoute(
+          builder: (_) =>
+              CondolencesPage(key: typedArgs.key, funeral: typedArgs.funeral),
           settings: settings,
           fullscreenDialog: true,
         );
@@ -123,10 +133,15 @@ class EditJobPageArguments {
 //ComposePage arguments holder class
 class ComposePageArguments {
   final Key key;
-  final Condolence condolence;
   final Funeral funeral;
-  ComposePageArguments(
-      {this.key, @required this.condolence, @required this.funeral});
+  ComposePageArguments({this.key, @required this.funeral});
+}
+
+//CondolencesPage arguments holder class
+class CondolencesPageArguments {
+  final Key key;
+  final Funeral funeral;
+  CondolencesPageArguments({this.key, @required this.funeral});
 }
 
 //EntryPage arguments holder class

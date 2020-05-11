@@ -21,6 +21,7 @@ class Condolence {
 
   factory Condolence.fromMap(Map<dynamic, dynamic> value, String id) {
     // final int updatedAtAtMilliseconds = value['updatedAt'];
+    // print('updatedat' + value['updatedAt'].toString());
     final Timestamp updatedAtTS = value['updatedAt'];
 
     return Condolence(

@@ -74,7 +74,7 @@ class FirestoreDatabase {
           .where('isDeleted', isEqualTo: false),
           
         builder: (data, documentId) => Funeral.fromMap(data, documentId),
-        sort: (lhs, rhs) => rhs.funeralDate.compareTo(lhs.funeralDate),
+        sort: (lhs, rhs) => rhs.createdDate.compareTo(lhs.createdDate),
       );
   
   Stream<List<Condolence>> condolencesStream({@required Funeral funeral}) => _service.collectionStream(
@@ -104,10 +104,18 @@ class FirestoreDatabase {
   Stream<List<Comment>> commentsStream({@required Funeral funeral}) => _service.collectionStream(
         path: FirestorePath.comments(funeral.id),
         builder: (data, documentId) => Comment.fromMap(data, documentId),
+        sort: (lhs, rhs) => rhs.createdAt.compareTo(lhs.createdAt),
+
       );
+  
+  Future<List<Comment>> commentsList({@required Funeral funeral}) => _service.collectionList(
+      path: FirestorePath.comments(funeral.id),
+      builder: (data, documentId) => Comment.fromMap(data, documentId),
+    );
+
 
   Future<void> setComment(Comment comment, String funeralId) async => await _service.setData(
-    path: FirestorePath.comment(funeralId, comment.id),
+    path: FirestorePath.comment(funeralId, uid),
     data: comment.toMap(),
   );
 
