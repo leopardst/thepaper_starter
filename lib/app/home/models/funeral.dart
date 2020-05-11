@@ -26,6 +26,7 @@ class Funeral {
     @required this.funeralDate,
     @required this.location,
     @required this.obituary,
+    this.createdDate,
     this.groups,
     this.imageURL
   });
@@ -34,6 +35,7 @@ class Funeral {
   String firstName;
   String lastName;
   DateTime funeralDate;
+  DateTime createdDate;
   String location;
   String obituary;
   String imageURL;
@@ -41,6 +43,8 @@ class Funeral {
 
   factory Funeral.fromMap(Map<dynamic, dynamic> value, String id) {
     final Timestamp dateTS = value['funeralDate'];
+    final Timestamp createdDateTS = value['createdDate'];
+
     var _fgList;
     List<FuneralGroup> finalFGList = [];
 
@@ -70,6 +74,7 @@ class Funeral {
       obituary: value['obituary'],
       imageURL: value['imageURL'],
       groups: finalFGList,
+      createdDate: createdDateTS.toDate(),
     );
   }
 
@@ -77,12 +82,13 @@ class Funeral {
     // var funeralGroups = items.map((i) => i.toMap()).toList();
 
     return <String, dynamic>{
-      'first_name': firstName,
-      'last_name': lastName,
-      'funeral_date': funeralDate.millisecondsSinceEpoch, //TODO not sure if this works
+      'firstName': firstName,
+      'lastName': lastName,
+      'funeralDate': Timestamp.fromDate(funeralDate), //TODO not sure if this works
       'location': location,
       'obituary': obituary,
       'imageURL': imageURL,
+      'createdDate': Timestamp.fromDate(createdDate),
       // 'groups': funeralGroups,
   };
   }
@@ -107,6 +113,20 @@ class Funeral {
     var formatter = new DateFormat("EEEE, MMMM d, yyyy 'at' h:mm a");
     String formatted = formatter.format(funeralDate);
     return formatted;
+  }
+
+  Widget formattedFuneralDate(){
+    if (funeralDate == null){
+      return Text("Please check back for date and time");
+    }
+    else{
+      if(funeralDate.hour != 0){
+        return Text(funeralFullDateAndTimeAsString);
+      }
+      else{
+        return Text(funeralDateAsString);
+      }
+    }
   }
 
 // if self.funeral_date.nil?

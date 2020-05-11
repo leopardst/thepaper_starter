@@ -4,24 +4,26 @@ import 'package:provider/provider.dart';
 
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
+import 'package:thepaper_starter/app/home/models/comment.dart';
+
 import 'package:thepaper_starter/routing/router.gr.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
 import 'package:thepaper_starter/common_widgets/avatar.dart';
+import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
 
 class ComposePage extends StatefulWidget {
-  const ComposePage({Key key, @required this.condolence, @required this.funeral})
+  const ComposePage({Key key, @required this.funeral})
     : super(key: key);
-  final Condolence condolence;
   final Funeral funeral;
 
-  static Future<void> show({BuildContext context, Condolence condolence, Funeral funeral}) async {
+  static Future<void> show({BuildContext context, Funeral funeral}) async {
     await Navigator.of(context, rootNavigator: true).pushNamed(
       Router.composePage,
-      arguments: ComposePageArguments(condolence: condolence, funeral: funeral),
+      arguments: ComposePageArguments(funeral: funeral),
     );
   }
 
@@ -38,22 +40,23 @@ class _ComposePageState extends State<ComposePage> {
   @override
   void initState() {
     super.initState();
-    if (widget.condolence != null){
-      _name = widget.condolence.name;
-      _userImageURL = widget.condolence.userImageURL;
-    }
+    final user = Provider.of<User>(context, listen:false);
+    _name = user.displayName ?? user.email;
+    _userImageURL = user.photoUrl ?? null;
   }
 
-  Future<void> _sendMessage(BuildContext context, String _funeralId, String _message) async {
-    debugPrint('updating condolence: $widget.condolence');
-    if (_message.trim() != '') {
+  Future<void> _sendMessage(BuildContext context, String _funeralId, String _content) async {
+    debugPrint('Creating comment' + _content);
+    if (_content.trim() != '') {
       textEditingController.clear();
       try {
         final database = Provider.of<FirestoreDatabase>(context, listen: false);
-        final id = widget.condolence?.id ?? documentIdFromCurrentDate();
-        final updatedAt = DateTime.now();
-        final condolence = Condolence(id: id, name: _name, message: _message, updatedAt: updatedAt, userImageURL: _userImageURL);
-        await database.setCondolence(condolence, _funeralId);
+        final id = documentIdFromCurrentDate();
+        final createdAt = DateTime.now();
+        print("url:" + _userImageURL);
+
+        final comment = Comment(id: id, name: _name, content: _content, createdAt: createdAt, userImageURL: _userImageURL);
+        await database.setComment(comment, _funeralId);
         Navigator.of(context).pop();
       } on PlatformException catch (e) {
         PlatformExceptionAlertDialog(
@@ -89,7 +92,7 @@ class _ComposePageState extends State<ComposePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Avatar(photoUrl: widget.condolence.userImageURL, radius: 20.0),
+          Avatar(photoUrl: _userImageURL, radius: 20.0),
           Expanded(
             flex: 1,
             // constraints: BoxConstraints.expand(),

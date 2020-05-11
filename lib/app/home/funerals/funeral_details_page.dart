@@ -4,10 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:thepaper_starter/app/home/condolences/condolences_list_builder.dart';
+import 'package:thepaper_starter/app/home/comments/comments_list_builder.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/routing/cupertino_tab_view_router.gr.dart';
 import 'package:thepaper_starter/app/home/condolences/condolence_button.dart';
+import 'package:thepaper_starter/app/home/condolences/condolence_count.dart';
+
 import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/common_widgets/expandable_text.dart';
 
@@ -37,7 +39,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
   String _funeralFullDateAndTime;
   String _funeralObituary;
   Funeral _funeral;
-  TabController _controller;
+  // TabController _controller;
   final TextEditingController textEditingController = new TextEditingController();
 
 
@@ -51,7 +53,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
     _funeralFullDateAndTime = widget.funeral?.funeralFullDateAndTimeAsString ?? '';
     _funeral = widget.funeral; // TODO this cant be right
 
-    _controller = new TabController(length: 3, vsync: this);
+    // _controller = new TabController(length: 3, vsync: this);
   }
 
   @override
@@ -102,7 +104,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
                             padding: EdgeInsets.only(right: 10.0),
                             child: Icon(Icons.today, color: Colors.grey),
                           ),
-                          Text(_funeralFullDateAndTime),
+                          widget.funeral.formattedFuneralDate(),
                       ]),
                       SizedBox(height: 10.0,),
                       Row(
@@ -120,8 +122,10 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
                       SizedBox(height: 10.0,),
                       ExpandableText(_funeralObituary),
                       SizedBox(height: 15,),
+                      CondolenceCount(funeral: _funeral),
+                      SizedBox(height: 15,),
                       CondolenceButton(funeral: _funeral),
-                      _buildCondolenceContent(context, _funeral),
+                      _buildCommentList(context, _funeral),
                     ],),
                   ),
                 ),
@@ -189,9 +193,12 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
     }
   }
 
-  Widget _buildCondolenceContent(BuildContext context, Funeral funeral){
-   return CondolencesListBuilder(funeral: funeral);
+  Widget _buildCommentList(BuildContext context, Funeral funeral){
+    return CommentsListBuilder(funeral: funeral);
+
   }
+
+
  
 
  
