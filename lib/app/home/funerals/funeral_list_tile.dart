@@ -13,11 +13,11 @@ class FuneralListTile extends StatelessWidget {
     return GestureDetector(
         onTap: () => FuneralDetailsPage.show(context, funeral),      
         child: Container(
-        // height: 140.0,
+        // height: 10,
         constraints: BoxConstraints(minHeight: 140.0),
         width: double.infinity,
         margin: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
-        padding: EdgeInsets.only(bottom: 20.0),
+        padding: EdgeInsets.only(bottom: 10.0),
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
@@ -28,42 +28,54 @@ class FuneralListTile extends StatelessWidget {
           // color: Colors.blue,
           // borderRadius: BorderRadius.circular(20.0),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Flexible(
-              flex: 2,
-              fit: FlexFit.tight,
-              child: Column(
+        child: 
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
-                    // width: 200.0,
-                    child: Text(
-                      funeral.fullName,
-                      style: TextStyle(
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.2,
-                      ),
+                  Flexible(
+                    flex: 2,
+                    fit: FlexFit.tight,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          // width: 200.0,
+                          child: Text(
+                            funeral.fullName,
+                            style: TextStyle(
+                              fontSize: 22.0,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.2,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5.0),
+                        Text(funeral.funeralDateAsString),
+                        _funeralTime(),
+                        SizedBox(height: 5.0),
+                        Text(funeral.location),
+                        SizedBox(height: 10.0),
+
+                      ],
                     ),
                   ),
-                  SizedBox(height: 5.0),
-                  Text(funeral.funeralDateAsString),
-                  _funeralTime(),
-                  SizedBox(height: 5.0),
-                  Text(funeral.location),
+                  Flexible(
+                    flex: 1,
+                    // fit: FlexFit.tight,
+                      child: _buildImage(),
+                  ),
                 ],
               ),
-            ),
-            Flexible(
-              flex: 1,
-              // fit: FlexFit.tight,
-                child: _buildImage(),
-            ),
-          ],
-        ),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Text("3 hours ago")
+              ),
+            ]),
       ),
     );
   }

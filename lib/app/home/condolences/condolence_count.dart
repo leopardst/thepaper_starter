@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:thepaper_starter/app/home/condolences/condolences_page.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
@@ -53,17 +52,28 @@ class _CondolenceCountState extends State<CondolenceCount> {
         builder: (context, snapshot) {
           if(snapshot.hasData && snapshot.data.isNotEmpty){
             var count = snapshot.data.length; 
-            var content = Intl.plural(
+
+            var nameContent = Intl.plural(
               count,
-              one: 'Condolences from ${snapshot.data[count - 1].name}',
-              two: 'Condolences from ${snapshot.data[count - 1].name} and 1 other',
-              other: 'Condolences from ${snapshot.data[count - 1].name} and ${count - 1} others',
+              one: '${snapshot.data[count - 1].name}',
+              two: '${snapshot.data[count - 1].name} and ${snapshot.data[count - 2].name}',
+              other: '${snapshot.data[count - 1].name} and others',
               );
 
             return GestureDetector(
               // onTap: () => {CondolencesPage.show(context: context, funeral: widget.funeral)},
               onTap: () => _showDialog(context),
-              child: Text(content));
+              child: RichText(
+                text: TextSpan(
+                  // style: defaultStyle,
+                  style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 14.0),
+                  text: "Condolences from ",
+                  children: <TextSpan>[
+                    TextSpan(text: nameContent, style: TextStyle(fontWeight: FontWeight.w600)),
+                  ],
+                )
+              )
+            );
           }
           else{
             return Container();

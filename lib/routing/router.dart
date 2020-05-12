@@ -24,8 +24,5 @@ class $Router {
   ComposePage composePage;
 
   @MaterialRoute(fullscreenDialog: true)
-  CondolencesPage condolencesPage;
-
-  @MaterialRoute(fullscreenDialog: true)
   EntryPage entryPage;
 }
