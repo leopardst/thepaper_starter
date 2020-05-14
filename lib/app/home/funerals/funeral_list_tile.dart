@@ -71,8 +71,7 @@ class FuneralListTile extends StatelessWidget {
                   ),
                 ],
               ),
-              Align(
-                alignment: Alignment.bottomLeft,
+              Container(
                 child: Text("3 hours ago")
               ),
             ]),
