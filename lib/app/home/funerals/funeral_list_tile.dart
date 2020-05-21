@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/funerals/funeral_details_page.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class FuneralListTile extends StatelessWidget {
   const FuneralListTile({Key key, @required this.funeral}) : super(key: key);
@@ -14,7 +15,7 @@ class FuneralListTile extends StatelessWidget {
         onTap: () => FuneralDetailsPage.show(context, funeral),      
         child: Container(
         // height: 10,
-        constraints: BoxConstraints(minHeight: 140.0),
+        // constraints: BoxConstraints(minHeight: 140.0),
         width: double.infinity,
         margin: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
         padding: EdgeInsets.only(bottom: 10.0),
@@ -40,7 +41,7 @@ class FuneralListTile extends StatelessWidget {
                   Flexible(
                     flex: 2,
                     fit: FlexFit.tight,
-                    child: Column(
+                      child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Container(
@@ -60,7 +61,6 @@ class FuneralListTile extends StatelessWidget {
                         SizedBox(height: 5.0),
                         Text(funeral.location),
                         SizedBox(height: 10.0),
-
                       ],
                     ),
                   ),
@@ -72,7 +72,11 @@ class FuneralListTile extends StatelessWidget {
                 ],
               ),
               Container(
-                child: Text("3 hours ago")
+                padding: EdgeInsets.only(top: 25.0),
+                child: Text(
+                  timeago.format(funeral.createdDate),
+                  style: TextStyle(color: Colors.grey[600])
+                )
               ),
             ]),
       ),

@@ -40,7 +40,7 @@ class _CondolenceCountState extends State<CondolenceCount> {
   @override
   Widget build(BuildContext context) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
-    // final user = Provider.of<User>(context, listen:false);
+    final user = Provider.of<User>(context, listen:false);
     var condolenceSnapshot = Provider.of<Condolence>(context);
     if(condolenceSnapshot != null){
       userHasGivenCondolences = true;
@@ -58,37 +58,7 @@ class _CondolenceCountState extends State<CondolenceCount> {
         builder: (context, snapshot) {
           if(snapshot.hasData && snapshot.data.isNotEmpty){
             var count = snapshot.data.length; 
-            var nameContent;
-
-           if(snapshot.data.length == 1 && userHasGivenCondolences){
-              // nameContent = snapshot.data[count - 1].name;
-              nameContent = "";
-            }
-            else{
-              nameContent = Intl.plural(
-                  count,
-                  one: '${snapshot.data[count - 1].name}',
-                  two: '${snapshot.data[count - 1].name} and ${snapshot.data[count - 2].name}',
-                  other: '${snapshot.data[count - 1].name} ',
-                );
-
-              // if(userHasGivenCondolences){
-              //   nameContent = Intl.plural(
-              //     count,
-              //     one: 'You',
-              //     two: 'You and ${snapshot.data[count - 1].name}',
-              //     other: 'You and others',
-              //   );
-              // }
-              // else{
-              //   nameContent = Intl.plural(
-              //     count,
-              //     one: '${snapshot.data[count - 1].name}',
-              //     two: '${snapshot.data[count - 1].name} and ${snapshot.data[count - 2].name}',
-              //     other: '${snapshot.data[count - 1].name} and others',
-              //   );
-              // }
-            }
+            var nameContent = getNames(snapshot.data, count, user);
             
             return GestureDetector(
               // onTap: () => {CondolencesPage.show(context: context, funeral: widget.funeral)},
@@ -118,20 +88,6 @@ class _CondolenceCountState extends State<CondolenceCount> {
                  
                 ]
               ),
-              // child: AnimatedSwitcher(
-              //   duration: const Duration(milliseconds: 200),
-              //   child: RichText(
-              //     key: ValueKey<int>(userHasGivenCondolences ? 0 : 1),
-              //     text: TextSpan(
-              //       // style: defaultStyle,
-              //       style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 14.0),
-              //       text: "Condolences from ",
-              //       children: <TextSpan>[
-              //         TextSpan(text: nameContent, style: TextStyle(fontWeight: FontWeight.w600)),
-              //       ],
-              //     )
-              //   ),
-              // )
             );
           }
           else{
@@ -142,10 +98,61 @@ class _CondolenceCountState extends State<CondolenceCount> {
     );
   }
 
+String getNames(List<Condolence> data, int count, User user){
+
+  var content = "";
+
+  if(data.length == 1 && userHasGivenCondolences){ // Only you have given condolences
+    content = "";
+  }
+  else{
+    
+    var name1;
+
+    if(data.length == 1){
+      name1 = data[count - 1].name;
+    }
+    else{
+      if(data[count - 1].id != user.uid){
+        name1 = data[count - 1].name;
+      }
+      else{
+        name1 = data[count - 2].name;
+      }
+
+    }
+
+    if(userHasGivenCondolences){
+    content = Intl.plural(
+        count,
+        one: '',
+        other: '$name1 ',
+      );
+    }
+    else{
+      var name2 = "";
+      if(count >= 2){
+        name2 = data[count - 2].name;
+      }
+
+      content = Intl.plural(
+        count,
+        one: '${data[count - 1].name}',
+        two: '${data[count - 1].name} and $name2',
+        other: '${data[count - 1].name} ',
+      );
+    }
+
+    
+  }
+
+  return content;
+}
+
 String andOthers(bool userHasGivenCondolences, int count){
 
   String text = "";
-  if((count >= 3 && !userHasGivenCondolences) || (count >= 4 && userHasGivenCondolences) )
+  if(count >= 3 )
   {
     text = "and others";
   }
@@ -170,8 +177,6 @@ String youCondolenceText(bool userHasGivenCondolences, int count){
   }
   
   return s1+s2;
-
-
 
 }
 
