@@ -50,7 +50,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
     _funeralFullName = widget.funeral?.fullName ?? '';
     _funeralImageURL = widget.funeral.imageURL ?? '';
     _funeralLocation = widget.funeral?.location ?? '';
-    _funeralObituary = widget.funeral?.obituary ?? '';
+    _funeralObituary = widget.funeral?.obituaryClean ?? '';
     _funeralFullDateAndTime = widget.funeral?.funeralFullDateAndTimeAsString ?? '';
     _funeral = widget.funeral; // TODO this cant be right
 
