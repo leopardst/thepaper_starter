@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SignInPageBuilder extends StatelessWidget {
   @override
@@ -79,10 +80,10 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 2.0,
-        title: Text(title),
-      ),
+      // appBar: AppBar(
+      //   elevation: 2.0,
+      //   title: Text(title),
+      // ),
       backgroundColor: Colors.grey[200],
       body: _buildSignIn(context),
     );
@@ -94,11 +95,18 @@ class SignInPage extends StatelessWidget {
         child: CircularProgressIndicator(),
       );
     }
-    return Text(
-      Strings.signIn,
+    return Text('the paper',
       textAlign: TextAlign.center,
-      style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w600),
+      style: GoogleFonts.notoSerif(
+        fontWeight: FontWeight.w600,
+        fontSize: 32.0
+       )
     );
+    // return Text(
+    //   Strings.signIn,
+    //   textAlign: TextAlign.center,
+    //   style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w600),
+    // );
   }
 
   Widget _buildSignIn(BuildContext context) {
@@ -116,14 +124,6 @@ class SignInPage extends StatelessWidget {
           ),
           SizedBox(height: 32.0),
           SocialSignInButton(
-              key: googleButtonKey,
-              assetName: 'assets/go-logo.png',
-              text: Strings.signInWithGoogle,
-              onPressed: viewModel.isLoading ? null : () => _signInWithGoogle(context),
-              color: Colors.white,
-          ),
-          SizedBox(height: 32.0),
-          SocialSignInButton(
               key: facebookButtonKey,
               assetName: 'assets/fb-logo.png',
               text: Strings.signInWithFacebook,
@@ -131,6 +131,14 @@ class SignInPage extends StatelessWidget {
               onPressed: viewModel.isLoading ? null : () => _signInWithFacebook(context),
               color: Color(0xFF334D92),
             ),
+          SizedBox(height: 32.0),
+          SocialSignInButton(
+            key: googleButtonKey,
+            assetName: 'assets/go-logo.png',
+            text: Strings.signInWithGoogle,
+            onPressed: viewModel.isLoading ? null : () => _signInWithGoogle(context),
+            color: Colors.white,
+          ),
           // SizedBox(height: 32.0),
           // SignInButton(
           //   key: emailPasswordButtonKey,

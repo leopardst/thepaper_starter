@@ -111,7 +111,7 @@ class Funeral {
     return formatted;
   }
   
-    String get funeralFullDateAndTimeAsString{
+  String get funeralFullDateAndTimeAsString{
     var formatter = new DateFormat("EEEE, MMMM d, yyyy 'at' h:mm a");
     String formatted = formatter.format(funeralDate);
     return formatted;
@@ -121,6 +121,15 @@ class Funeral {
     var oTemp = obituary.replaceAll('<br>', '\n');
     var doc = parse(oTemp);
     return parse(doc.body.text).documentElement.text;
+  }
+
+  bool get emptyImage{
+    if(imageURL != null && imageURL != "https:"){
+      return false;
+    }
+    else{
+      return true;
+    }
   }
 
   Widget formattedFuneralDate(){

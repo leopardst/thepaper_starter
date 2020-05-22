@@ -34,43 +34,7 @@ class FuneralListTile extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Flexible(
-                    flex: 2,
-                    fit: FlexFit.tight,
-                      child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          // width: 200.0,
-                          child: Text(
-                            funeral.fullName,
-                            style: TextStyle(
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 1.2,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 5.0),
-                        Text(funeral.funeralDateAsString),
-                        _funeralTime(),
-                        SizedBox(height: 5.0),
-                        Text(funeral.location),
-                        SizedBox(height: 10.0),
-                      ],
-                    ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    // fit: FlexFit.tight,
-                      child: _buildImage(),
-                  ),
-                ],
-              ),
+              _buildContent(),
               Container(
                 padding: EdgeInsets.only(top: 25.0),
                 child: Text(
@@ -94,6 +58,65 @@ class FuneralListTile extends StatelessWidget {
       return Container();
     }
     
+  }
+
+  Widget _buildContent(){
+    
+    if(funeral.emptyImage){
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _subContent(),
+        ],
+      );
+
+    }
+    else{
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Flexible(
+            flex: 2,
+            fit: FlexFit.tight,
+              child: _subContent(),
+            ),
+          Flexible(
+              flex: 1,
+              // fit: FlexFit.tight,
+                child: _buildImage(),
+          ),
+        ],
+      );
+    }
+    
+  }
+
+  Widget _subContent(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          // width: 200.0,
+          child: Text(
+            funeral.fullName,
+            style: TextStyle(
+              fontSize: 22.0,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 1.2,
+            ),
+          ),
+        ),
+        SizedBox(height: 5.0),
+        Text(funeral.funeralDateAsString),
+        _funeralTime(),
+        SizedBox(height: 5.0),
+        Text(funeral.location),
+        SizedBox(height: 10.0),
+      ],
+    );
+
   }
 
   Widget _buildImage() {

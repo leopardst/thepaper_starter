@@ -113,12 +113,14 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
                         ]),
                         SizedBox(height: 10.0,),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.only(right: 10.0),
                               child: Icon(Icons.location_on, color: Colors.grey),
                             ),
-                            Text(_funeralLocation),
+                            Flexible(child: Text(_funeralLocation)),
                           ]
                         ),
                         _buildGroups(),
