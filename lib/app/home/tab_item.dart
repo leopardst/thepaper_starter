@@ -20,7 +20,7 @@ class TabItemData {
     // ),
     TabItem.funerals: TabItemData(
       key: Keys.funeralsTab,
-      title: Strings.funerals,
+      title: Strings.listing,
       icon: Icons.list,
     ),
     // TabItem.entries: TabItemData(
