@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/funerals/funeral_details_page.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class FuneralListTile extends StatelessWidget {
   const FuneralListTile({Key key, @required this.funeral}) : super(key: key);
@@ -14,7 +15,7 @@ class FuneralListTile extends StatelessWidget {
         onTap: () => FuneralDetailsPage.show(context, funeral),      
         child: Container(
         // height: 10,
-        constraints: BoxConstraints(minHeight: 140.0),
+        // constraints: BoxConstraints(minHeight: 140.0),
         width: double.infinity,
         margin: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
         padding: EdgeInsets.only(bottom: 10.0),
@@ -33,46 +34,13 @@ class FuneralListTile extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Flexible(
-                    flex: 2,
-                    fit: FlexFit.tight,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          // width: 200.0,
-                          child: Text(
-                            funeral.fullName,
-                            style: TextStyle(
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 1.2,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 5.0),
-                        Text(funeral.funeralDateAsString),
-                        _funeralTime(),
-                        SizedBox(height: 5.0),
-                        Text(funeral.location),
-                        SizedBox(height: 10.0),
-
-                      ],
-                    ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    // fit: FlexFit.tight,
-                      child: _buildImage(),
-                  ),
-                ],
-              ),
+              _buildContent(),
               Container(
-                child: Text("3 hours ago")
+                padding: EdgeInsets.only(top: 25.0),
+                child: Text(
+                  timeago.format(funeral.createdDate),
+                  style: TextStyle(color: Colors.grey[600])
+                )
               ),
             ]),
       ),
@@ -90,6 +58,65 @@ class FuneralListTile extends StatelessWidget {
       return Container();
     }
     
+  }
+
+  Widget _buildContent(){
+    
+    if(funeral.emptyImage){
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _subContent(),
+        ],
+      );
+
+    }
+    else{
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Flexible(
+            flex: 2,
+            fit: FlexFit.tight,
+              child: _subContent(),
+            ),
+          Flexible(
+              flex: 1,
+              // fit: FlexFit.tight,
+                child: _buildImage(),
+          ),
+        ],
+      );
+    }
+    
+  }
+
+  Widget _subContent(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          // width: 200.0,
+          child: Text(
+            funeral.fullName,
+            style: TextStyle(
+              fontSize: 22.0,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 1.2,
+            ),
+          ),
+        ),
+        SizedBox(height: 5.0),
+        Text(funeral.funeralDateAsString),
+        _funeralTime(),
+        SizedBox(height: 5.0),
+        Text(funeral.location),
+        SizedBox(height: 10.0),
+      ],
+    );
+
   }
 
   Widget _buildImage() {

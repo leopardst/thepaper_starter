@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:html/parser.dart';
+
 
 class FuneralGroup{
   String id; //ID of the group
@@ -109,10 +111,25 @@ class Funeral {
     return formatted;
   }
   
-    String get funeralFullDateAndTimeAsString{
+  String get funeralFullDateAndTimeAsString{
     var formatter = new DateFormat("EEEE, MMMM d, yyyy 'at' h:mm a");
     String formatted = formatter.format(funeralDate);
     return formatted;
+  }
+
+  String get obituaryClean{
+    var oTemp = obituary.replaceAll('<br>', '\n');
+    var doc = parse(oTemp);
+    return parse(doc.body.text).documentElement.text;
+  }
+
+  bool get emptyImage{
+    if(imageURL != null && imageURL != "https:"){
+      return false;
+    }
+    else{
+      return true;
+    }
   }
 
   Widget formattedFuneralDate(){
@@ -120,6 +137,7 @@ class Funeral {
       return Text("Please check back for date and time");
     }
     else{
+
       if(funeralDate.hour != 0){
         return Text(funeralFullDateAndTimeAsString);
       }
@@ -128,6 +146,8 @@ class Funeral {
       }
     }
   }
+
+  
 
 // if self.funeral_date.nil?
 //         return I18n.t(:please_check_for_date)

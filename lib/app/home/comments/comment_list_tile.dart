@@ -50,7 +50,11 @@ class CommentListTile extends StatelessWidget {
                   Text(comment.name,
                   style: TextStyle(fontWeight: FontWeight.w500),
                   ),
-                  Text(comment.content),
+                  Text(comment.content,
+                    style: TextStyle(
+                      height: 1.45, 
+                    ),
+                  ),
                   // _buildSubtitleContent(context, user),
               ]),
             ),

@@ -50,7 +50,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
     _funeralFullName = widget.funeral?.fullName ?? '';
     _funeralImageURL = widget.funeral.imageURL ?? '';
     _funeralLocation = widget.funeral?.location ?? '';
-    _funeralObituary = widget.funeral?.obituary ?? '';
+    _funeralObituary = widget.funeral?.obituaryClean ?? '';
     _funeralFullDateAndTime = widget.funeral?.funeralFullDateAndTimeAsString ?? '';
     _funeral = widget.funeral; // TODO this cant be right
 
@@ -113,24 +113,23 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
                         ]),
                         SizedBox(height: 10.0,),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.only(right: 10.0),
                               child: Icon(Icons.location_on, color: Colors.grey),
                             ),
-                            Text(_funeralLocation),
+                            Flexible(child: Text(_funeralLocation)),
                           ]
                         ),
                         _buildGroups(),
                         SizedBox(height: 20.0,),
-                        Text("Obituary", style: TextThemes.subtitle),
-                        SizedBox(height: 10.0,),
-                        ExpandableText(_funeralObituary),
+                        obitSection(),
                         SizedBox(height: 15,),
                         CondolenceButton(funeral: _funeral),
                         SizedBox(height: 15,),
                         CondolenceCount(funeral: _funeral),
-
                         _buildCommentList(context, _funeral),
                       ],),
                     ),
@@ -151,6 +150,20 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
   }
 
 
+Widget obitSection(){
+  if(_funeralObituary != ''){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children:<Widget>[
+      Text("Obituary", style: TextThemes.subtitle),
+      SizedBox(height: 10.0,),
+      ExpandableText(_funeralObituary),
+    ]); 
+  }
+  else{
+    return Container();
+  }
+}
 
   Widget _buildGroups(){ //TODO could extract into a widget
     if(_funeral.groups.length > 0){

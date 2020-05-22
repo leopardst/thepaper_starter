@@ -22,6 +22,7 @@ class CupertinoHomeScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
+        backgroundColor: Colors.white,
         key: Key(Keys.tabBar),
         items: [
           // _buildItem(TabItem.jobs),

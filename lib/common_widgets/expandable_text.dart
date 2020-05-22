@@ -28,6 +28,9 @@ class _ExpandableTextState extends State<ExpandableText>
           crossFadeState: showFullText ? CrossFadeState.showFirst : CrossFadeState.showSecond,
           firstChild: Text(
               widget.text,
+              style: TextStyle(
+                  height: 1.65, 
+              ),
           ),
           secondChild: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,13 +39,19 @@ class _ExpandableTextState extends State<ExpandableText>
                 widget.text,
                 maxLines: 10,
                 overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  height: 1.65, 
+                ),
               ),
-              GestureDetector(
-                onTap: () => {setState(() => showFullText = !showFullText)},
-                child: Text(
-                  'See More',
-                  style: TextStyle(color: Colors.grey[600]),
-                )
+              Padding(
+                padding: const EdgeInsets.only(top: 6.0),
+                child: GestureDetector(
+                  onTap: () => {setState(() => showFullText = !showFullText)},
+                  child: Text(
+                    'See More',
+                    style: TextStyle(color: Colors.grey[600]),
+                  )
+                ),
               ),
             ]),
         );

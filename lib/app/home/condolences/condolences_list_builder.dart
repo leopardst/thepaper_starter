@@ -57,7 +57,7 @@ class CondolencesListBuilder extends StatelessWidget {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     final stream = database.condolencesStream(funeral: funeral);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10.0, 25.0, 10.0, 50.0),
+      padding: const EdgeInsets.fromLTRB(10.0, 25.0, 10.0, 0.0),
       child: AnimatedStreamList<Condolence>(
         scrollController: scrollController,
         streamList: stream,
