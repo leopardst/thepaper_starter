@@ -67,7 +67,7 @@ class FuneralListTile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _subContent(),
+          Flexible(child: _subContent()),
         ],
       );
 
