@@ -9,6 +9,8 @@ import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/routing/router.gr.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:thepaper_starter/app/home/condolences/compose_page.dart';
+import 'package:thepaper_starter/common_widgets/icomoon_icons.dart';
+
 
 class CondolenceButton extends StatefulWidget {
   const CondolenceButton({@required this.funeral});
@@ -97,7 +99,8 @@ class _CondolenceButtonState extends State<CondolenceButton> {
                   IconButton(
                     // padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
                     icon: Icon(
-                      isLiked ? Icons.favorite : Icons.favorite_border,
+                      //isLiked ? Icons.favorite : Icons.favorite_border,
+                      isLiked ? Icomoon.tulip_1 : Icomoon.tulip_outline,
                       color: isLiked ? Colors.red : Colors.grey 
                     ), 
                     onPressed: () => _toggleCondolence(context, widget.funeral.id, isLiked),

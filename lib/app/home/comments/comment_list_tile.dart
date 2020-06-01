@@ -11,7 +11,8 @@ import 'package:thepaper_starter/common_widgets/avatar.dart';
 
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
-
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:thepaper_starter/common_widgets/time_ago_format.dart';
 
 class CommentListTile extends StatelessWidget {
   const CommentListTile({Key key, @required this.comment, @required this.funeral}) : super(key: key);
@@ -21,6 +22,7 @@ class CommentListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
+    timeago.setLocaleMessages('en_short', CustomEn());
     return Container(
       padding: EdgeInsets.only(bottom: 20.0),
       child: IntrinsicHeight(
@@ -53,6 +55,13 @@ class CommentListTile extends StatelessWidget {
                   Text(comment.content,
                     style: TextStyle(
                       height: 1.45, 
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 7.0),
+                    child: Text(
+                      timeago.format(comment.createdAt, locale: 'en_short'),
+                      style: TextStyle(color: Colors.grey[600]),
                     ),
                   ),
                   // _buildSubtitleContent(context, user),
