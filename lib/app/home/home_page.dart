@@ -138,16 +138,16 @@ class _HomePageState extends State<HomePage> {
             : new AlertDialog(
                 title: Text(title),
                 content: Text(message),
-                // actions: <Widget>[
-                //   FlatButton(
-                //     child: Text(btnLabel),
-                //     onPressed: () => {},
-                //   ),
-                //   FlatButton(
-                //     child: Text(btnLabelCancel),
-                //     onPressed: () => Navigator.pop(context),
-                //   ),
-                // ],
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text(btnLabel),
+                    onPressed: () => _launchURL(url),
+                  ),
+                  FlatButton(
+                    child: Text(btnLabelCancel),
+                    onPressed: required ? null : () => Navigator.pop(context),
+                  ),
+                ],
               );
       },
     );
