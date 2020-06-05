@@ -27,6 +27,8 @@ class CupertinoHomeScaffold extends StatelessWidget {
         items: [
           // _buildItem(TabItem.jobs),
           _buildItem(TabItem.funerals),
+          _buildItem(TabItem.search),
+
           // _buildItem(TabItem.entries),
           _buildItem(TabItem.account),
         ],
