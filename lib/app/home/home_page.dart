@@ -11,6 +11,7 @@ import 'package:thepaper_starter/app/home/tab_item.dart';
 import 'package:package_info/package_info.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:thepaper_starter/app/home/search/search_page.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -22,16 +23,15 @@ class _HomePageState extends State<HomePage> {
   TabItem _currentTab = TabItem.funerals;
 
   final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
-    // TabItem.jobs: GlobalKey<NavigatorState>(),
     TabItem.funerals: GlobalKey<NavigatorState>(),
-    // TabItem.entries: GlobalKey<NavigatorState>(),
+    TabItem.search: GlobalKey<NavigatorState>(),
     TabItem.account: GlobalKey<NavigatorState>(),
   };
 
   Map<TabItem, WidgetBuilder> get widgetBuilders {
     return {
-      // TabItem.jobs: (_) => JobsPage(),
       TabItem.funerals: (_) => FuneralsPage(),
+      TabItem.search: (_) => SearchPage(),
       // TabItem.entries: (context) => EntriesPage.create(context),
       TabItem.account: (_) => AccountPage(),
     };
@@ -81,15 +81,6 @@ class _HomePageState extends State<HomePage> {
     // Using default duration to force fetching from remote server.
     await remoteConfig.fetch(expiration: const Duration(seconds: 0));
     await remoteConfig.activateFetched();
-
-    // double newVersion = double.parse(remoteConfig
-    //     .getString('force_update_current_version')
-    //     .trim()
-    //     .replaceAll(".", ""));
-    // String newVersionText = remoteConfig
-    //     .getString('force_update_text')
-    //     .trim()
-    //     .replaceAll(".", "");
 
     final data = json.decode(remoteConfig.getString('new_version'));
     double newVersion = double.parse(data['version'].trim().replaceAll(".", ""));

@@ -13,7 +13,7 @@ description: Test app for The Paper
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
 # info.plist used to be bundle version = $(FLUTTER_BUILD_NUMBER)
-version: 1.0.1+1
+version: 1.0.3+1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -23,7 +23,8 @@ dependencies:
     sdk: flutter
   firebase_auth: ^0.15.3
   # firebase_auth: ^0.16.0
-  google_sign_in: ^4.4.2
+  # google_sign_in: ^4.4.2
+  google_sign_in: ^4.5.1
   provider: ^4.0.1
   rxdart: ^0.23.1
   cloud_firestore: ^0.13.0+1
@@ -40,7 +41,10 @@ dependencies:
   firebase_remote_config: ^0.3.0+3
   package_info: ^0.4.0+17
   url_launcher: ^5.4.10
-
+  algolia: ^0.1.7
+  flappy_search_bar: ^1.7.2
+  flutter_html: ^1.0.0
+  
 
 
 

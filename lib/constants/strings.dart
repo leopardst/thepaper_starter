@@ -65,5 +65,7 @@ class Strings {
   static const String funerals = 'Funerals';
   static const String listing = 'Listing';
 
+  // Search page
+  static const String search = 'Search';
 
 }

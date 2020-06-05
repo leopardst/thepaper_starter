@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thepaper_starter/constants/keys.dart';
 import 'package:thepaper_starter/constants/strings.dart';
 
-enum TabItem {funerals, account }
+enum TabItem {funerals, search, account}
 
 class TabItemData {
   const TabItemData(
@@ -22,6 +22,11 @@ class TabItemData {
       key: Keys.funeralsTab,
       title: Strings.listing,
       icon: Icons.list,
+    ),
+    TabItem.search: TabItemData(
+      key: Keys.searchTab,
+      title: Strings.search,
+      icon: Icons.search,
     ),
     // TabItem.entries: TabItemData(
     //   key: Keys.entriesTab,
