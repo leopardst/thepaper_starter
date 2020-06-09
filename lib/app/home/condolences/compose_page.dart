@@ -72,7 +72,7 @@ class _ComposePageState extends State<ComposePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Send a message", style: TextThemes.subtitle),
+        title: Text("Add a comment", style: TextThemes.subtitle),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.send, color: Colors.black),

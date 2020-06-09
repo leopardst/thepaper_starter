@@ -57,37 +57,38 @@ class _CondolenceCountState extends State<CondolenceCount> {
         stream: database.condolencesStream(funeral: widget.funeral),
         builder: (context, snapshot) {
           if(snapshot.hasData && snapshot.data.isNotEmpty){
-            var count = snapshot.data.length; 
+            var count = snapshot.data.length;
             var nameContent = getNames(snapshot.data, count, user);
-            
+
             return GestureDetector(
               // onTap: () => {CondolencesPage.show(context: context, funeral: widget.funeral)},
               onTap: () => _showDialog(context),
-              child: Wrap(
-                direction: Axis.horizontal,
-                children: <Widget>[
-                  Text(
-                    "Condolences from "
-                  ),
-                  AnimatedSwitcher(
-                    duration: Duration(milliseconds: 200),
-                    child:
-                      Text(youCondolenceText(userHasGivenCondolences, count),
-                        key: ValueKey<int>(userHasGivenCondolences ? 0 : 1),
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                  ),
-                  Text(
-                    nameContent,
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  Text(
-                    andOthers(userHasGivenCondolences, count),
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
+              child: Text("View list of condolences", style: TextStyle(fontWeight: FontWeight.w600),),
+              // child: Wrap(
+              //   direction: Axis.horizontal,
+              //   children: <Widget>[
+              //     Text(
+              //       "Condolences from "
+              //     ),
+              //     AnimatedSwitcher(
+              //       duration: Duration(milliseconds: 200),
+              //       child:
+              //         Text(youCondolenceText(userHasGivenCondolences, count),
+              //           key: ValueKey<int>(userHasGivenCondolences ? 0 : 1),
+              //           style: TextStyle(fontWeight: FontWeight.w600),
+              //         ),
+              //     ),
+              //     Text(
+              //       nameContent,
+              //       style: TextStyle(fontWeight: FontWeight.w600),
+              //     ),
+              //     Text(
+              //       andOthers(userHasGivenCondolences, count),
+              //       style: TextStyle(fontWeight: FontWeight.w600),
+              //     ),
                  
-                ]
-              ),
+              //   ]
+              // ),
             );
           }
           else{
