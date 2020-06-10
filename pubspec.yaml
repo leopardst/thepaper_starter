@@ -44,7 +44,8 @@ dependencies:
   algolia: ^0.1.7
   flappy_search_bar: ^1.7.2
   flutter_html: ^1.0.0
-  
+  firebase_messaging: ^6.0.16
+
 
 
 
