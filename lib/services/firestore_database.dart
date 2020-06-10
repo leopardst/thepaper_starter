@@ -103,6 +103,7 @@ class FirestoreDatabase {
   
   Stream<List<Comment>> commentsStream({@required Funeral funeral}) => _service.collectionStream(
         path: FirestorePath.comments(funeral.id),
+        queryBuilder: (query) => query.where('isPublic', isEqualTo: true),
         builder: (data, documentId) => Comment.fromMap(data, documentId),
         sort: (lhs, rhs) => rhs.createdAt.compareTo(lhs.createdAt),
 

@@ -39,9 +39,9 @@ class FuneralListTile extends StatelessWidget {
                 padding: EdgeInsets.only(top: 25.0),
                 child: Wrap(
                   children: <Widget>[
-                    Text("Paperman & Sons · ",
-                      style: TextStyle(color: Colors.grey[600])
-                    ),
+                    // Text("Paperman & Sons · ",
+                    //   style: TextStyle(color: Colors.grey[600])
+                    // ),
                     Text(
                       timeago.format(funeral.createdDate),
                       style: TextStyle(color: Colors.grey[600])

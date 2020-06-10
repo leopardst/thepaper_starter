@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
+
 // TODO - Update android package names to thepaper
 
 void main() => runApp(MyApp(

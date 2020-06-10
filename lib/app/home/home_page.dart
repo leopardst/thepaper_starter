@@ -12,6 +12,7 @@ import 'package:package_info/package_info.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:thepaper_starter/app/home/search/search_page.dart';
+import 'package:thepaper_starter/push_notifications.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -37,8 +38,11 @@ class _HomePageState extends State<HomePage> {
     };
   }
 
+  final PushNotificationsManager pfm = new PushNotificationsManager();
+
   @override
   void initState() {
+    pfm.init();
     try {
       versionCheck(context);
     } catch (e) {
