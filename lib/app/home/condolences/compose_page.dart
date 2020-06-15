@@ -55,7 +55,7 @@ class _ComposePageState extends State<ComposePage> {
         final createdAt = DateTime.now();
         print("url:" + _userImageURL);
 
-        final comment = Comment(id: id, name: _name, content: _content, createdAt: createdAt, userImageURL: _userImageURL);
+        final comment = Comment(id: id, name: _name, content: _content, createdAt: createdAt, userImageURL: _userImageURL, isPublic: true);
         await database.setComment(comment, _funeralId);
         Navigator.of(context).pop();
       } on PlatformException catch (e) {

@@ -109,13 +109,13 @@ class FuneralListTile extends StatelessWidget {
           child: Text(
             funeral.fullName,
             style: TextStyle(
-              fontSize: 22.0,
+              fontSize: 18.0,
               fontWeight: FontWeight.w600,
               letterSpacing: 1.2,
             ),
           ),
         ),
-        SizedBox(height: 5.0),
+        SizedBox(height: 10.0),
         Text(funeral.funeralDateAsString),
         _funeralTime(),
         SizedBox(height: 5.0),

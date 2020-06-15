@@ -10,4 +10,6 @@ class FirestorePath {
   static String condolence(String funeralId, String uid) => 'funerals/$funeralId/condolences/$uid';
   static String comments(String funeralId) => 'funerals/$funeralId/comments';
   static String comment(String funeralId, String uid) => 'funerals/$funeralId/comments/$uid';
+  static String userProfile(String uid) => 'users/$uid';
+
 }
