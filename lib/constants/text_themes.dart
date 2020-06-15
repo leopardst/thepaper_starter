@@ -2,7 +2,17 @@ import 'package:flutter/material.dart';
 
 class TextThemes {
   static final TextStyle title = TextStyle(
-    fontSize: 24,
+    fontSize: 20.0,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 1.2,
+  );
+
+  static final TextStyle title2 = TextStyle(
+    fontSize: 18.0,
+    fontWeight: FontWeight.w300,
+  );
+
+  static final TextStyle actionTitle = TextStyle(
     fontWeight: FontWeight.w600,
   );
 
@@ -21,4 +31,13 @@ class TextThemes {
     fontWeight: FontWeight.w500,
     color: Colors.green[900],
   );
+
+  static final TextStyle commentBody = TextStyle(
+    height: 1.45, 
+  );
+
+  static final TextStyle helperText = TextStyle(
+    color: Colors.grey[600],
+  );
+
 }

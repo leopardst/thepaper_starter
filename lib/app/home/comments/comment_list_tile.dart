@@ -6,6 +6,7 @@ import 'package:thepaper_starter/app/home/models/comment.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/user_profiles/user_profile_page.dart';
 import 'package:thepaper_starter/common_widgets/avatar.dart';
+import 'package:thepaper_starter/constants/text_themes.dart';
 
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -40,13 +41,11 @@ class CommentListTile extends StatelessWidget {
                   GestureDetector(
                     onTap: () => {},
                     child: Text(comment.name,
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                      style: TextThemes.subtitle,
                     )
                   ),
                   Text(comment.content,
-                    style: TextStyle(
-                      height: 1.45, 
-                    ),
+                    style: TextThemes.commentBody,
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 7.0),
@@ -54,10 +53,10 @@ class CommentListTile extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           timeago.format(comment.createdAt, locale: 'en_short'),
-                          style: TextStyle(color: Colors.grey[600]),
+                          style: TextThemes.helperText,
                         ),
                         if(comment.remoteId != null)
-                          Text(" · from paperman.com", style: TextStyle(color: Colors.grey[600])),
+                          Text(" · from paperman.com", style: TextThemes.helperText),
                       ]),
                   ),
               ]),

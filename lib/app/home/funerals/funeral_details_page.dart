@@ -94,11 +94,8 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                         Text(_funeralFullName,
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 1.2,
-                          ),
+                          style: TextThemes.title,
+                          textScaleFactor: 1.0,
                         ),
                         SizedBox(height: 20.0,),
                         Text("Funeral Service", style: TextThemes.subtitle),

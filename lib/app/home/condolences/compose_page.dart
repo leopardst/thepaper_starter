@@ -102,11 +102,11 @@ class _ComposePageState extends State<ComposePage> {
               child: TextField(
                   maxLines: 50,
                   maxLength: 600,
-                  style: TextStyle(color: Colors.black, fontSize: 15.0),
+                  style: TextThemes.subtitle,
                   controller: textEditingController,
                   decoration: InputDecoration.collapsed(
                     hintText: 'What do you want to say...',
-                    hintStyle: TextStyle(color: Colors.grey),
+                    hintStyle: TextThemes.helperText,
                   ),
                   autofocus: true,
                   textInputAction: TextInputAction.done,

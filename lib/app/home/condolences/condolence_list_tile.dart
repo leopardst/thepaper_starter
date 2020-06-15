@@ -8,6 +8,7 @@ import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/condolences/compose_page.dart';
 import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
 import 'package:thepaper_starter/common_widgets/avatar.dart';
+import 'package:thepaper_starter/constants/text_themes.dart';
 
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
@@ -34,49 +35,20 @@ class CondolenceListTile extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Container(
-              // decoration: BoxDecoration(
-              //   border: Border(
-              //     bottom: BorderSide(
-              //       color: Colors.grey,
-              //       width:0.3,
-              //     ),
-              //   ),
-              // ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(condolence.name,
-                  style: TextStyle(fontWeight: FontWeight.w500),
+                  style: TextThemes.actionTitle,
                   ),
-                  // _buildSubtitleContent(context, user),
               ]),
             ),
           ),
         ],),
       ),
     );
-    // return Padding(
-    //   padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-    //   child: ListTile(
-    //       leading: Container(
-    //       width: 40.0,
-    //       height: 40.0,
-    //       decoration: BoxDecoration(
-    //         shape: BoxShape.circle,
-    //       ),
-    //       child: CircleAvatar(
-    //         child: ClipOval(
-    //           child: _buildAvatar(),
-    //         ),
-    //       ),
-    //     ),
-    //     title: Text(
-    //       condolence.name,
-    //     ),
-    //     subtitle: _buildSubtitleContent(context, user), 
-    //   ),
-    // );
+
   }
 
 
