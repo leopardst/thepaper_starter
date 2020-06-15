@@ -163,7 +163,10 @@ class _CondolenceButtonState extends State<CondolenceButton> {
                 new ListTile(
                   leading: new Icon(Icons.chat_bubble_outline),
                   title: new Text('Condolences with comment'),
-                  onTap: () => ComposePage.show(context: context, funeral: widget.funeral),          
+                  onTap: () => {
+                    Navigator.pop(context),
+                    ComposePage.show(context: context, funeral: widget.funeral),   
+                  },
                 ),
                 Container(
                   width: double.infinity,
