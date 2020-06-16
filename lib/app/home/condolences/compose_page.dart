@@ -55,7 +55,7 @@ class _ComposePageState extends State<ComposePage> {
         final createdAt = DateTime.now();
         print("url:" + _userImageURL);
 
-        final comment = Comment(id: id, name: _name, content: _content, createdAt: createdAt, userImageURL: _userImageURL);
+        final comment = Comment(id: id, name: _name, content: _content, createdAt: createdAt, userImageURL: _userImageURL, isPublic: true);
         await database.setComment(comment, _funeralId);
         Navigator.of(context).pop();
       } on PlatformException catch (e) {
@@ -102,11 +102,11 @@ class _ComposePageState extends State<ComposePage> {
               child: TextField(
                   maxLines: 50,
                   maxLength: 600,
-                  style: TextStyle(color: Colors.black, fontSize: 15.0),
+                  style: TextThemes.subtitle,
                   controller: textEditingController,
                   decoration: InputDecoration.collapsed(
                     hintText: 'What do you want to say...',
-                    hintStyle: TextStyle(color: Colors.grey),
+                    hintStyle: TextThemes.helperText,
                   ),
                   autofocus: true,
                   textInputAction: TextInputAction.done,

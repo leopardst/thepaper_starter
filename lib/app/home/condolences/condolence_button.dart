@@ -46,6 +46,7 @@ class _CondolenceButtonState extends State<CondolenceButton> {
 
 
   Future<void> _toggleCondolence(BuildContext context, String funeralId, bool isLiked) async {
+    Navigator.pop(context);
     try {
       final database = Provider.of<FirestoreDatabase>(context, listen: false);
       if(isLiked){
@@ -99,14 +100,15 @@ class _CondolenceButtonState extends State<CondolenceButton> {
                   IconButton(
                     // padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
                     icon: Icon(
-                      //isLiked ? Icons.favorite : Icons.favorite_border,
-                      isLiked ? Icomoon.tulip_1 : Icomoon.tulip_outline,
+                      // isLiked ? Icomoon.tulip_1 : Icomoon.tulip_outline,
+                      Icomoon.tulip_outline,
                       color: isLiked ? Colors.red : Colors.grey 
                     ), 
-                    onPressed: () => _toggleCondolence(context, widget.funeral.id, isLiked),
+                    // onPressed: () => _toggleCondolence(context, widget.funeral.id, isLiked),
+                    onPressed: () => openModal(context),
                   ),
                   GestureDetector(
-                    onTap: () => {_toggleCondolence(context, widget.funeral.id, isLiked)},
+                    onTap: () => openModal(context),
                     child: Text("Condolences"))
                 ]),
             ),
@@ -114,27 +116,84 @@ class _CondolenceButtonState extends State<CondolenceButton> {
               padding: const EdgeInsets.only(right:30.0),
               child: Row(
                 children: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      Icons.chat_bubble_outline,
-                      color: Colors.grey
-                      // isLiked ? Icons.favorite : Icons.favorite_border,
-                      // color: isLiked ? Colors.red : Colors.grey 
-                    ), 
-                    onPressed: () => ComposePage.show(context: context, funeral: widget.funeral),
-                  ),
-                  GestureDetector(
-                    onTap: () => {ComposePage.show(context: context, funeral: widget.funeral)},
+                  // IconButton(
+                  //   icon: Icon(
+                  //     Icons.chat_bubble_outline,
+                  //     color: Colors.grey
+                  //     // isLiked ? Icons.favorite : Icons.favorite_border,
+                  //     // color: isLiked ? Colors.red : Colors.grey 
+                  //   ), 
+                  //   onPressed: () => ComposePage.show(context: context, funeral: widget.funeral),
+                  // ),
+                  // GestureDetector(
+                  //   onTap: () => {ComposePage.show(context: context, funeral: widget.funeral)},
                     
-                    child: Text("Comment"))
+                  //   child: Text("Comment"))
                 ]),
             ),
         
           ],),
         );
-        
-
+    
       }
     );
+  }
+
+  openModal(BuildContext context) {
+     showModalBottomSheet(
+          shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+                ),
+          // isScrollControlled: false,
+          isDismissible: true,
+          backgroundColor: Colors.white,
+          useRootNavigator: true,
+          context: context,
+          builder: (context) => Padding(
+            padding: const EdgeInsets.only(top: 15.0, bottom: 25.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new ListTile(
+                  leading: new Icon(Icomoon.tulip_outline, color: isLiked ? Colors.red : Colors.grey ),
+                  title: condolenceMenuText(),
+                  onTap: () => _toggleCondolence(context, widget.funeral.id, isLiked),          
+                ),
+                new ListTile(
+                  leading: new Icon(Icons.chat_bubble_outline),
+                  title: new Text('Condolences with comment'),
+                  onTap: () => {
+                    Navigator.pop(context),
+                    ComposePage.show(context: context, funeral: widget.funeral),   
+                  },
+                ),
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: RaisedButton(
+                    onPressed: () => Navigator.pop(context),
+                    elevation: 0.0,
+                    highlightElevation: 0.0,
+                    color: Colors.grey[100],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    child: Text('Cancel',
+                      style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal)
+                      ),
+                  ),
+                ),
+               ]),
+          ),
+        );
+  }
+
+  Widget condolenceMenuText(){
+    if(!isLiked){
+      return Text('Condolences (Name only)');
+    } else{
+      return Text('Undo condolences', style: TextStyle(color: Colors.red));
+    }
   }
 }

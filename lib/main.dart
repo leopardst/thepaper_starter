@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:thepaper_starter/app/auth_widget_builder.dart';
 import 'package:thepaper_starter/app/auth_widget.dart';
 import 'package:thepaper_starter/routing/router.gr.dart';
@@ -45,6 +47,11 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             home: AuthWidget(userSnapshot: userSnapshot),
             onGenerateRoute: Router.onGenerateRoute,
+            builder: (context, child) {
+              return MediaQuery(
+                child: child,
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: max(0.8, min(1.2, (10*MediaQuery.textScaleFactorOf(context)).round()/10))));
+            },
           );
         },
       ),

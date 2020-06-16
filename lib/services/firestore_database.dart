@@ -6,6 +6,7 @@ import 'package:thepaper_starter/app/home/models/job.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
 import 'package:thepaper_starter/app/home/models/comment.dart';
+import 'package:thepaper_starter/app/home/models/user_profile.dart';
 
 import 'package:thepaper_starter/services/firestore_path.dart';
 import 'package:thepaper_starter/services/firestore_service.dart';
@@ -120,5 +121,14 @@ class FirestoreDatabase {
     data: comment.toMap(),
   );
 
+  Stream<UserProfile> userProfileStream({@required String uid}) => _service.documentStream(
+    path: FirestorePath.userProfile(uid),
+    builder: (data, documentId) => UserProfile.fromMap(data, documentId),
+  );
+
+  Future<UserProfile> userProfileFuture({@required String uid}) => _service.documentFuture(
+    path: FirestorePath.userProfile(uid),
+    builder: (data, documentId) => UserProfile.fromMap(data, documentId),
+  );
 
 }

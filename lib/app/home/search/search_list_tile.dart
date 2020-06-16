@@ -1,8 +1,10 @@
 import 'package:algolia/algolia.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_html/style.dart';
 import 'package:provider/provider.dart';
 import 'package:thepaper_starter/app/home/funerals/funeral_details_page.dart';
+import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -76,14 +78,23 @@ class _SearchListTileState extends State<SearchListTile> {
           direction: Axis.horizontal,
           spacing: 4,
           children: <Widget>[
-            Text(widget.snap.data["firstName"]),
-            Text(widget.snap.data["lastName"]),
+            Text(widget.snap.data["firstName"], style: TextThemes.title2),
+            Text(widget.snap.data["lastName"], style: TextThemes.title2),
           ]
         ),        
-        subtitle: Html(
-          data: widget.snap.snippetResult["obituary"]["value"]
-        ),
-      
+        subtitle: MediaQuery(
+          data: MediaQueryData(textScaleFactor: 1.0),
+          child: Html(
+          data: widget.snap.snippetResult["obituary"]["value"],
+          style: 
+            {
+              '*': Style(
+                fontSize: FontSize(16.0),
+
+              ),
+            },       
+          ),
+        )
     );  
     }
     else{
@@ -93,8 +104,8 @@ class _SearchListTileState extends State<SearchListTile> {
           direction: Axis.horizontal,
           spacing: 4,
           children: <Widget>[
-            Text(widget.snap.data["firstName"]),
-            Text(widget.snap.data["lastName"]),
+            Text(widget.snap.data["firstName"], style: TextThemes.title2),
+            Text(widget.snap.data["lastName"], style: TextThemes.title2),
           ]
         ),
         // subtitle: Text(widget.snap.snippetResult["obituary"]["value"]),

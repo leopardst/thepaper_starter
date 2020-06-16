@@ -75,4 +75,14 @@ class FirestoreService {
         .map((snapshot) => builder(snapshot.data, snapshot.documentID));
   }
 
+  Future<T> documentFuture<T>({
+    @required String path,
+    @required T builder(Map<String, dynamic> data, String documentID),
+  }) {
+    final DocumentReference reference = Firestore.instance.document(path);
+    final Stream<DocumentSnapshot> snapshot = reference.snapshots();
+    return snapshot
+        .map((snapshot) => builder(snapshot.data, snapshot.documentID)).first;
+  }
+
 }

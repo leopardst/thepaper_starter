@@ -40,6 +40,7 @@ class Comment {
       'content': content,
       'createdAt': createdAt,
       'userImageURL': userImageURL,
+      'isPublic': isPublic,
     };
   }
 }

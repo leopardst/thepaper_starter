@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/routing/router.gr.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
@@ -63,7 +64,7 @@ class _CondolenceCountState extends State<CondolenceCount> {
             return GestureDetector(
               // onTap: () => {CondolencesPage.show(context: context, funeral: widget.funeral)},
               onTap: () => _showDialog(context),
-              child: Text("View list of condolences", style: TextStyle(fontWeight: FontWeight.w600),),
+              child: Text("View list of condolences", style: TextThemes.actionTitle),
               // child: Wrap(
               //   direction: Axis.horizontal,
               //   children: <Widget>[

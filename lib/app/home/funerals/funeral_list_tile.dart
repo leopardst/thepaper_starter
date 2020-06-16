@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/funerals/funeral_details_page.dart';
+import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class FuneralListTile extends StatelessWidget {
@@ -44,7 +45,7 @@ class FuneralListTile extends StatelessWidget {
                     // ),
                     Text(
                       timeago.format(funeral.createdDate),
-                      style: TextStyle(color: Colors.grey[600])
+                      style: TextThemes.helperText,
                     ),
                     
                   ]),
@@ -108,14 +109,11 @@ class FuneralListTile extends StatelessWidget {
           // width: 200.0,
           child: Text(
             funeral.fullName,
-            style: TextStyle(
-              fontSize: 22.0,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 1.2,
-            ),
+            style: TextThemes.title,
+            textScaleFactor: 1.0,
           ),
         ),
-        SizedBox(height: 5.0),
+        SizedBox(height: 10.0),
         Text(funeral.funeralDateAsString),
         _funeralTime(),
         SizedBox(height: 5.0),
