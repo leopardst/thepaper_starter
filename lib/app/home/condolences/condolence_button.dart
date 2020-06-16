@@ -35,12 +35,14 @@ class _CondolenceButtonState extends State<CondolenceButton> {
     final id = documentIdFromCurrentDate();
     final updatedAt = DateTime.now();
     final userImageURL = user.photoUrl ?? null;
+    final isPublic = true;
 
     return Condolence(
       id: id,
       name: name,
       updatedAt: updatedAt,
       userImageURL: userImageURL,
+      isPublic: isPublic,
     );
   }
 

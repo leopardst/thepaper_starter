@@ -80,6 +80,7 @@ class FirestoreDatabase {
   
   Stream<List<Condolence>> condolencesStream({@required Funeral funeral}) => _service.collectionStream(
         path: FirestorePath.condolences(funeral.id),
+        queryBuilder: (query) => query.where('isPublic', isEqualTo: true),
         builder: (data, documentId) => Condolence.fromMap(data, documentId),
         sort: (lhs, rhs) => rhs.updatedAt.compareTo(lhs.updatedAt),
       );
@@ -94,8 +95,8 @@ class FirestoreDatabase {
         builder: (data, documentId) => Condolence.fromMap(data, documentId),
   );
 
-  Future<List<Condolence>> condolencesList({@required String funeralId}) async => await _service.collectionList(
-        path: FirestorePath.condolences(funeralId),
+  Future<List<Condolence>> condolencesList({@required Funeral funeral}) async => await _service.collectionList(
+        path: FirestorePath.condolences(funeral.id),
         builder: (data, documentId) => Condolence.fromMap(data, documentId),
   );
 
