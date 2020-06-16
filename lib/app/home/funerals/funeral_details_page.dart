@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import 'package:thepaper_starter/app/home/comments/comments_list_builder.dart';
+import 'package:thepaper_starter/app/home/comments/condolences_feed_list_builder.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
 
@@ -211,8 +211,7 @@ Widget obitSection(){
   }
 
   Widget _buildCommentList(BuildContext context, Funeral funeral){
-    return CommentsListBuilder(funeral: funeral);
-
+    return CondolencesFeedListBuilder(funeral: funeral);
   }
 
 

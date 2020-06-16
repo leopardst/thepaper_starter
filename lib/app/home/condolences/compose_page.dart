@@ -46,17 +46,17 @@ class _ComposePageState extends State<ComposePage> {
   }
 
   Future<void> _sendMessage(BuildContext context, String _funeralId, String _content) async {
-    debugPrint('Creating comment' + _content);
+    debugPrint('Creating condolence' + _content);
     if (_content.trim() != '') {
       textEditingController.clear();
       try {
         final database = Provider.of<FirestoreDatabase>(context, listen: false);
         final id = documentIdFromCurrentDate();
-        final createdAt = DateTime.now();
+        final updatedAt = DateTime.now();
         print("url:" + _userImageURL);
 
-        final comment = Comment(id: id, name: _name, content: _content, createdAt: createdAt, userImageURL: _userImageURL, isPublic: true);
-        await database.setComment(comment, _funeralId);
+        final condolence = Condolence(id: id, name: _name, content: _content, updatedAt: updatedAt, userImageURL: _userImageURL, isPublic: true);
+        await database.setCondolence(condolence, _funeralId);
         Navigator.of(context).pop();
       } on PlatformException catch (e) {
         PlatformExceptionAlertDialog(

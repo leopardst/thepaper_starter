@@ -34,7 +34,7 @@ class CondolencesListBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     return FutureBuilder<List>(
-      future: database.condolencesList(funeralId: funeral.id),
+      future: database.condolencesList(funeral: funeral),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         debugPrint('condolence snapshot: $snapshot'); //TODO Remove this
         if (snapshot.hasData) {

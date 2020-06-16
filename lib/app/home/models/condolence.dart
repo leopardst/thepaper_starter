@@ -7,17 +7,21 @@ class Condolence {
   Condolence({
     @required this.id,
     @required this.name,
-    this.message,
+    this.content,
     @required this.updatedAt,
     this.userImageURL,
+    this.remoteId,
+    @required this.isPublic,
+
   });
 
   String id;
   String name;
-  String message;
+  String content;
   DateTime updatedAt;
   String userImageURL;
-
+  int remoteId;
+  bool isPublic;
 
   factory Condolence.fromMap(Map<dynamic, dynamic> value, String id) {
     // final int updatedAtAtMilliseconds = value['updatedAt'];
@@ -27,18 +31,21 @@ class Condolence {
     return Condolence(
       id: id,
       name: value['name'],
-      message: value['message'],
+      content: value['content'],
       updatedAt: updatedAtTS.toDate(),
       userImageURL: value['userImageURL'],
+      isPublic: value['isPublic'],
+      remoteId: value['remoteId'],
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
-      'message': message,
+      'content': content,
       'updatedAt': updatedAt,
       'userImageURL': userImageURL,
+      'isPublic': isPublic,
     };
   }
 }
