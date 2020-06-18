@@ -184,7 +184,11 @@ String youCondolenceText(bool userHasGivenCondolences, int count){
 
 void _showDialog(BuildContext context) {
   showModalBottomSheet(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+    ),
     context: context,
+    useRootNavigator: true,
     isScrollControlled: true,
     builder: (BuildContext context) {
       return DraggableScrollableSheet(

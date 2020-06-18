@@ -104,7 +104,7 @@ class _CondolenceButtonState extends State<CondolenceButton> {
                     icon: Icon(
                       // isLiked ? Icomoon.tulip_1 : Icomoon.tulip_outline,
                       Icomoon.tulip_outline,
-                      color: isLiked ? Colors.red : Colors.grey 
+                      color: isLiked ? Colors.redAccent : Colors.grey 
                     ), 
                     // onPressed: () => _toggleCondolence(context, widget.funeral.id, isLiked),
                     onPressed: () => openModal(context),
@@ -158,7 +158,7 @@ class _CondolenceButtonState extends State<CondolenceButton> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 new ListTile(
-                  leading: new Icon(Icomoon.tulip_outline, color: isLiked ? Colors.red : Colors.grey ),
+                  leading: new Icon(Icomoon.tulip_outline, color: isLiked ? Colors.redAccent : Colors.grey ),
                   title: condolenceMenuText(),
                   onTap: () => _toggleCondolence(context, widget.funeral.id, isLiked),          
                 ),
@@ -195,7 +195,7 @@ class _CondolenceButtonState extends State<CondolenceButton> {
     if(!isLiked){
       return Text('Condolences (Name only)');
     } else{
-      return Text('Undo condolences', style: TextStyle(color: Colors.red));
+      return Text('Undo condolences', style: TextStyle(color: Colors.redAccent));
     }
   }
 }
