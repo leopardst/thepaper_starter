@@ -9,7 +9,7 @@ class TextThemes {
 
   static final TextStyle title2 = TextStyle(
     fontSize: 18.0,
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w500,
   );
 
   static final TextStyle actionTitle = TextStyle(

@@ -61,7 +61,7 @@ class CondolencesFeedListBuilder extends StatelessWidget {
           // placeholder: EmptyContent(),
           list: AnimatedStreamList<Condolence>(
             streamList: stream,
-            initialList: initialItems,
+            // initialList: initialItems,
             scrollPhysics: NeverScrollableScrollPhysics(),
             shrinkWrap: true, 
             itemBuilder: (item, index, context, animation) =>      

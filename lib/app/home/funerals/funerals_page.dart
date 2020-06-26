@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 // import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:thepaper_starter/app/home/calendar/calendar_page.dart';
 import 'package:thepaper_starter/app/home/funerals/funeral_list_tile.dart';
 import 'package:thepaper_starter/app/home/jobs/list_items_builder.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
@@ -36,12 +38,31 @@ class FuneralsPage extends StatelessWidget {
           flexibleSpace: FlexibleSpaceBar(
             centerTitle: false,
             titlePadding: EdgeInsetsDirectional.only(start: 20, bottom: 15),
-            title: Text('the paper',
-              style: GoogleFonts.notoSerif(
-                fontWeight: FontWeight.w600,  
-              ),
-            ),
-
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget> [
+                Text('the paper',
+                  style: GoogleFonts.notoSerif(
+                    fontWeight: FontWeight.w600,  
+                ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.calendar_today), 
+                  // onPressed: () => CalendarPage.show(context: context)
+                  onPressed: () => showModalBottomSheet(
+                    context: context,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) =>
+                        CalendarPage(),
+                  ),
+                ),
+                // FlatButton(
+                //   onPressed: () => CalendarPage.show(context: context),
+                //   splashColor: Colors.transparent,
+                //   highlightColor: Colors.transparent,
+                //   child: Text("Calendar"),
+                // ),
+              ]),
           // collapseMode: CollapseMode.pin,
           // centerTitle: true,
             

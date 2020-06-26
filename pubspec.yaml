@@ -45,6 +45,12 @@ dependencies:
   flappy_search_bar: ^1.7.2
   flutter_html: ^1.0.0
   firebase_messaging: ^6.0.16
+  grouped_list: ^3.1.0
+  modal_bottom_sheet: ^0.1.6+1
+  # firestore_service:
+  #   git:
+  #     url: https://github.com/bizz84/codewithandrea_flutter_packages
+  #     path: packages/firestore_service
 
 
 
@@ -63,14 +69,13 @@ dev_dependencies:
   flutter_driver:
     sdk: flutter 
   test: any
-  flutter_launcher_icons: "^0.7.3"
+  flutter_launcher_icons: "^0.7.5"
 
 # For flutter_launcher_icons
 flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/images/icon.png"
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -107,6 +112,17 @@ flutter:
     - family: icomoon
       fonts:
         - asset: fonts/icomoon.ttf
+    - family: Goldman
+      fonts:
+        - asset: fonts/GS/GoldmanSans_A_Bd.ttf
+        - asset: fonts/GS/GoldmanSans_A_BdIt.ttf
+        - asset: fonts/GS/GoldmanSans_A_Blk.ttf
+        - asset: fonts/GS/GoldmanSans_A_lt.ttf
+        - asset: fonts/GS/GoldmanSans_A_Lt.ttf
+        - asset: fonts/GS/GoldmanSans_A_Md.ttf
+        - asset: fonts/GS/GoldmanSans_A_MdIt.ttf
+        - asset: fonts/GS/GoldmanSans_A_Rg.ttf
+        - asset: fonts/GS/GoldmanSans_A_Th.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

@@ -89,7 +89,7 @@ class _SearchListTileState extends State<SearchListTile> {
           style: 
             {
               '*': Style(
-                fontSize: FontSize(16.0),
+                fontSize: FontSize(15.0),
 
               ),
             },       
@@ -111,62 +111,7 @@ class _SearchListTileState extends State<SearchListTile> {
         // subtitle: Text(widget.snap.snippetResult["obituary"]["value"]),
       );  
     }
-    
-    // if(funeral.emptyImage){
-    //   return Row(
-    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: <Widget>[
-    //       Flexible(child: _subContent()),
-    //     ],
-    //   );
-
-    // }
-    // else{
-    //   return Row(
-    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: <Widget>[
-    //       Flexible(
-    //         flex: 2,
-    //         fit: FlexFit.tight,
-    //           child: _subContent(),
-    //         ),
-    //       Flexible(
-    //           flex: 1,
-    //           // fit: FlexFit.tight,
-    //             child: _buildImage(),
-    //       ),
-    //     ],
-    //   );
-    // }
-    
-  }
-
-  Widget _subContent(){
-    // return Column(
-    //   crossAxisAlignment: CrossAxisAlignment.start,
-    //   children: <Widget>[
-    //     Container(
-    //       // width: 200.0,
-    //       child: Text(
-    //         funeral.fullName,
-    //         style: TextStyle(
-    //           fontSize: 22.0,
-    //           fontWeight: FontWeight.w600,
-    //           letterSpacing: 1.2,
-    //         ),
-    //       ),
-    //     ),
-    //     SizedBox(height: 5.0),
-    //     Text(funeral.funeralDateAsString),
-    //     _funeralTime(),
-    //     SizedBox(height: 5.0),
-    //     Text(funeral.location),
-    //     SizedBox(height: 10.0),
-    //   ],
-    // );
-
+   
   }
 
   Widget _buildImage() {

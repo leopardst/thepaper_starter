@@ -30,7 +30,7 @@ class CondolenceListTile extends StatelessWidget {
           children: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
-            child: Avatar(photoUrl: condolence.userImageURL, radius: 20.0),
+            child: Avatar(photoUrl: condolence.userImageURL, radius: 20.0, character: condolence.name[0]),
           ),
           Expanded(
             flex: 1,

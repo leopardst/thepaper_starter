@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
               // primaryColor: Colors.white,//Color(0xFF3EBACE),
               accentColor: Color(0xFFD8ECF1),
               scaffoldBackgroundColor: Colors.white, //Color(0xFFF3F5F7),
+              // fontFamily: 'Goldman',
             ),
             debugShowCheckedModeBanner: false,
             home: AuthWidget(userSnapshot: userSnapshot),

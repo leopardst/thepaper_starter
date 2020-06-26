@@ -9,11 +9,13 @@ class Avatar extends StatelessWidget {
     @required this.radius,
     this.borderColor,
     this.borderWidth,
+    this.character,
   });
   final String photoUrl;
   final double radius;
   final Color borderColor;
   final double borderWidth;
+  final String character;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +23,9 @@ class Avatar extends StatelessWidget {
       decoration: _borderDecoration(),
       child: CircleAvatar(
         radius: radius,
-        backgroundColor: Colors.black12,
+        backgroundColor: Colors.blueAccent[100],
         backgroundImage: photoUrl != null ? CachedNetworkImageProvider(photoUrl) : null,
-        child: photoUrl == null ? Icon(Icons.camera_alt, size: radius) : null,
+        child: photoUrl == null ? Text(character, style: TextStyle(color: Colors.white)) : null,
       ),
     );
   }

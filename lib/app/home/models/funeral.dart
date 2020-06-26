@@ -132,6 +132,18 @@ class Funeral {
     }
   }
 
+  DateTime get funeralDateGroupBy{
+    // String formattedDate = DateFormat('EEEE, MMMM d').format(funeralDate);
+    return new DateTime(funeralDate.year, funeralDate.month, funeralDate.day);
+  }
+
+  String get funeralFormattedTime{
+    if(funeralDate.hour != 0)
+      return new DateFormat.jm().format(funeralDate);
+    else
+      return "";
+  }
+
   Widget formattedFuneralDate(){
     if (funeralDate == null){
       return Text("Please check back for date and time");
@@ -146,6 +158,8 @@ class Funeral {
       }
     }
   }
+
+
 
   
 

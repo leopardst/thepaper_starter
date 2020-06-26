@@ -146,16 +146,6 @@ class FuneralListTile extends StatelessWidget {
         ),
       );
     } else{return Container();}
-    // else{
-    //   return ClipRRect(
-    //     borderRadius: BorderRadius.circular(10.0),
-    //     child: Image(
-    //     height: 100.0,
-    //     width: 100.0,
-    //     image: AssetImage('assets/images/GreenMorty.jpg'),
-    //     fit: BoxFit.cover,
-    //   ));
-    // }
   }
 
  
