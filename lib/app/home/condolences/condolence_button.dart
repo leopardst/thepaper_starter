@@ -36,6 +36,7 @@ class _CondolenceButtonState extends State<CondolenceButton> {
     final updatedAt = DateTime.now();
     final userImageURL = user.photoUrl ?? null;
     final isPublic = true;
+    final isDeleted = false;
 
     return Condolence(
       id: id,
@@ -43,6 +44,7 @@ class _CondolenceButtonState extends State<CondolenceButton> {
       updatedAt: updatedAt,
       userImageURL: userImageURL,
       isPublic: isPublic,
+      isDeleted: isDeleted,
     );
   }
 
@@ -52,10 +54,12 @@ class _CondolenceButtonState extends State<CondolenceButton> {
     try {
       final database = Provider.of<FirestoreDatabase>(context, listen: false);
       if(isLiked){
-        await database.deleteCondolence(funeralId);
+        final condolence = _condolenceFromState();
+        condolence.isDeleted = true;
+        await database.setCondolence(condolence, funeralId, merge: true);
       }else{
         final condolence = _condolenceFromState();
-        await database.setCondolence(condolence, funeralId);
+        await database.setCondolence(condolence, funeralId, merge: true);
       }
       setState(() {
         isLiked = !isLiked;
@@ -75,8 +79,11 @@ class _CondolenceButtonState extends State<CondolenceButton> {
       stream: database.condolenceStream(funeralId: widget.funeral.id),
       builder: (context, snapshot){
         if(snapshot.data != null){
-          isLiked = true;
-        } else{
+          if(!snapshot.data.isDeleted)
+            isLiked = true;
+          else
+            isLiked = false;
+        } else {
           isLiked = false;
         }
         return Container(
@@ -96,7 +103,7 @@ class _CondolenceButtonState extends State<CondolenceButton> {
 
             children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 10.0),
+              padding: const EdgeInsets.only(left: 5.0),
               child: Row(
                 children: <Widget>[
                   IconButton(

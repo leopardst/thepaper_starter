@@ -89,14 +89,16 @@ class FirestoreDatabase {
   
   Stream<List<Condolence>> condolencesStream({@required Funeral funeral}) => _service.collectionStream(
         path: FirestorePath.condolences(funeral.id),
-        queryBuilder: (query) => query.where('isPublic', isEqualTo: true),
+        queryBuilder: (query) => query.where('isPublic', isEqualTo: true)
+          .where('isDeleted', isEqualTo: false),
         builder: (data, documentId) => Condolence.fromMap(data, documentId),
         sort: (lhs, rhs) => rhs.updatedAt.compareTo(lhs.updatedAt),
       );
   
-  Future<void> setCondolence(Condolence condolence, String funeralId) async => await _service.setData(
+  Future<void> setCondolence(Condolence condolence, String funeralId, {bool merge = false}) async => await _service.setData(
       path: FirestorePath.condolence(funeralId, uid),
       data: condolence.toMap(),
+      merge: merge,
     );
 
   Stream<Condolence> condolenceStream({@required String funeralId}) => _service.documentStream(
@@ -109,12 +111,13 @@ class FirestoreDatabase {
         builder: (data, documentId) => Condolence.fromMap(data, documentId),
   );
 
-  Future<void> deleteCondolence(String funeralId) async =>
+  Future<void> deleteCondolence(String funeralId) async => 
       await _service.deleteData(path: FirestorePath.condolence(funeralId, uid));
   
   Stream<List<Comment>> commentsStream({@required Funeral funeral}) => _service.collectionStream(
         path: FirestorePath.comments(funeral.id),
-        queryBuilder: (query) => query.where('isPublic', isEqualTo: true),
+        queryBuilder: (query) => query.where('isPublic', isEqualTo: true)
+          .where('isDeleted', isEqualTo: false),
         builder: (data, documentId) => Comment.fromMap(data, documentId),
         sort: (lhs, rhs) => rhs.createdAt.compareTo(lhs.createdAt),
 

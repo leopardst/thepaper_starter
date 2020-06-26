@@ -21,11 +21,34 @@ class FirestoreService {
     await reference.delete();
   }
 
-  Stream<List<T>> collectionStream<T>({
+  // Stream<List<T>> collectionStream<T>({
+  //   @required String path,
+  //   @required T builder(Map<String, dynamic> data, String documentID),
+  //   Query queryBuilder(Query query),
+  //   int sort(T lhs, T rhs),
+  // }) {
+  //   Query query = Firestore.instance.collection(path);
+  //   if (queryBuilder != null) {
+  //     query = queryBuilder(query);
+  //   }
+  //   final Stream<QuerySnapshot> snapshots = query.snapshots();
+  //   return snapshots.map((snapshot) {
+  //     final result = snapshot.documents
+  //         .map((snapshot) => builder(snapshot.data, snapshot.documentID))
+  //         .where((value) => value != null)
+  //         .toList();
+  //     if (sort != null) {
+  //       result.sort(sort);
+  //     }
+  //     return result;
+  //   });
+  // }
+
+   Stream<List<T>> collectionStream<T>({
     @required String path,
-    @required T builder(Map<String, dynamic> data, String documentID),
-    Query queryBuilder(Query query),
-    int sort(T lhs, T rhs),
+    @required T Function(Map<String, dynamic> data, String documentID) builder,
+    Query Function(Query query) queryBuilder,
+    int Function(T lhs, T rhs) sort,
   }) {
     Query query = Firestore.instance.collection(path);
     if (queryBuilder != null) {

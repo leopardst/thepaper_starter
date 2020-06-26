@@ -55,8 +55,8 @@ class _ComposePageState extends State<ComposePage> {
         final updatedAt = DateTime.now();
         print("url:" + _userImageURL);
 
-        final condolence = Condolence(id: id, name: _name, content: _content, updatedAt: updatedAt, userImageURL: _userImageURL, isPublic: true);
-        await database.setCondolence(condolence, _funeralId);
+        final condolence = Condolence(id: id, name: _name, content: _content, updatedAt: updatedAt, userImageURL: _userImageURL, isPublic: true, isDeleted: false);
+        await database.setCondolence(condolence, _funeralId, merge: true);
         Navigator.of(context).pop();
       } on PlatformException catch (e) {
         PlatformExceptionAlertDialog(

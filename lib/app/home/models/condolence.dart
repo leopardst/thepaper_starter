@@ -12,6 +12,7 @@ class Condolence {
     this.userImageURL,
     this.remoteId,
     @required this.isPublic,
+    this.isDeleted,
 
   });
 
@@ -22,11 +23,13 @@ class Condolence {
   String userImageURL;
   int remoteId;
   bool isPublic;
+  bool isDeleted;
 
   factory Condolence.fromMap(Map<dynamic, dynamic> value, String id) {
     // final int updatedAtAtMilliseconds = value['updatedAt'];
     // print('updatedat' + value['updatedAt'].toString());
     final Timestamp updatedAtTS = value['updatedAt'];
+    final deleted = value['isDeleted'] ?? false;
 
     return Condolence(
       id: id,
@@ -36,6 +39,7 @@ class Condolence {
       userImageURL: value['userImageURL'],
       isPublic: value['isPublic'],
       remoteId: value['remoteId'],
+      isDeleted: deleted,
     );
   }
 
@@ -46,6 +50,7 @@ class Condolence {
       'updatedAt': updatedAt,
       'userImageURL': userImageURL,
       'isPublic': isPublic,
+      'isDeleted': isDeleted,
     };
   }
 }
