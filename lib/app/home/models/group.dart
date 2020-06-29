@@ -20,24 +20,32 @@ class Group {
     @required this.id,
     @required this.name,
     @required this.groupFunerals,
-    @required this.createdAt,
+    @required this.type,
+    @required this.city,
+    @required this.state,
+    // @required this.createdAt,
   });
 
   String id;
   String name;
+  String type;
+  String city;
+  String state;
   List<GroupFuneral> groupFunerals;
-  DateTime createdAt;
-
+  // DateTime createdAt;
 
   factory Group.fromMap(Map<dynamic, dynamic> value, String id) {
-    final int createdAtAtMilliseconds = value['createdAt'];
+    // final int createdAtAtMilliseconds = value['createdAt'];
     return Group(
       id: id,
       name: value['name'],
-      groupFunerals: value['groupFunerals'].map<GroupFuneral>((item) {
+      city: value['city'],
+      state: value['state'],
+      type: value['type'],
+      groupFunerals: value['group_funerals'].map<GroupFuneral>((item) {
           return GroupFuneral.fromMap(item);
         }).toList(),
-      createdAt: DateTime.fromMillisecondsSinceEpoch(createdAtAtMilliseconds),
+      // createdAt: DateTime.fromMillisecondsSinceEpoch(createdAtAtMilliseconds),
       // userImageURL: value['userImageURL'],
     );
   }
@@ -45,8 +53,8 @@ class Group {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
-      'groupFunerals': groupFunerals,
-      'createdAt': createdAt.millisecondsSinceEpoch,
+      // 'group_funerals': groupFunerals,
+      // 'createdAt': createdAt.millisecondsSinceEpoch,
     };
   }
 }

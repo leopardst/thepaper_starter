@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import 'package:thepaper_starter/app/home/comments/condolences_feed_list_builder.dart';
+import 'package:thepaper_starter/app/home/groups/group_page.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
 
@@ -175,9 +176,12 @@ Widget obitSection(){
               ),
               Row(children: 
                 _funeral.groups.map((item) => 
-                  new Chip(
-                    label: Text(item.name),
-                )).toList()
+                  GestureDetector(
+                    child: new Chip(
+                      label: Text(item.name),
+                     ),
+                     onTap: () => GroupPage.show(context, groupId: item.id),
+                  )).toList()
               )
         ]),
       );

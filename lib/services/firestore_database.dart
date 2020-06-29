@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 import 'package:thepaper_starter/app/home/models/entry.dart';
+import 'package:thepaper_starter/app/home/models/group.dart';
 import 'package:thepaper_starter/app/home/models/job.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
@@ -144,4 +145,8 @@ class FirestoreDatabase {
     builder: (data, documentId) => UserProfile.fromMap(data, documentId),
   );
 
+  Stream<Group> groupStream({@required String groupId}) => _service.documentStream(
+        path: FirestorePath.group(groupId),
+        builder: (data, documentId) => Group.fromMap(data, documentId),
+  );
 }
