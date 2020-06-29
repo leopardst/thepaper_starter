@@ -13,26 +13,16 @@ class TabItemData {
   final IconData icon;
 
   static const Map<TabItem, TabItemData> allTabs = {
-    // TabItem.jobs: TabItemData(
-    //   key: Keys.jobsTab,
-    //   title: Strings.jobs,
-    //   icon: Icons.work,
-    // ),
     TabItem.funerals: TabItemData(
       key: Keys.funeralsTab,
-      title: Strings.listing,
-      icon: Icons.list,
+      title: Strings.home,
+      icon: Icons.home,
     ),
     TabItem.search: TabItemData(
       key: Keys.searchTab,
       title: Strings.search,
       icon: Icons.search,
     ),
-    // TabItem.entries: TabItemData(
-    //   key: Keys.entriesTab,
-    //   title: Strings.entries,
-    //   icon: Icons.view_headline,
-    // ),
     TabItem.account: TabItemData(
       key: Keys.accountTab,
       title: Strings.account,

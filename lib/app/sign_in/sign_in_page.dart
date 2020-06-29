@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -80,11 +81,6 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   elevation: 2.0,
-      //   title: Text(title),
-      // ),
-      backgroundColor: Colors.grey[200],
       body: _buildSignIn(context),
     );
   }
@@ -95,13 +91,13 @@ class SignInPage extends StatelessWidget {
         child: CircularProgressIndicator(),
       );
     }
-    return Text('the paper',
-      textAlign: TextAlign.center,
-      style: GoogleFonts.notoSerif(
-        fontWeight: FontWeight.w600,
-        fontSize: 32.0
-       )
-    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text('Welcome to', style: TextThemes.login1,),
+        Text('the paper', style: TextThemes.logo,),
+    ]);
+    
     // return Text(
     //   Strings.signIn,
     //   textAlign: TextAlign.center,
@@ -117,19 +113,20 @@ class SignInPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          SizedBox(height: 32.0),
+          // SizedBox(height: 40.0),
           SizedBox(
-            height: 50.0,
+            height: 180.0,
             child: _buildHeader(),
           ),
           SizedBox(height: 32.0),
           SocialSignInButton(
               key: facebookButtonKey,
-              assetName: 'assets/fb-logo.png',
+              assetName: 'assets/fb-logo-blue.png',
               text: Strings.signInWithFacebook,
-              textColor: Colors.white,
+              // textColor: Colors.white,
               onPressed: viewModel.isLoading ? null : () => _signInWithFacebook(context),
-              color: Color(0xFF334D92),
+              // color: Color(0xFF334D92),
+              color: Colors.white,
             ),
           SizedBox(height: 32.0),
           SocialSignInButton(

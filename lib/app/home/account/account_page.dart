@@ -43,41 +43,38 @@ class AccountPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.accountPage, style: TextThemes.subtitle),
-        actions: <Widget>[
+        elevation: 0.0,
+        actions: [
           FlatButton(
             key: Key(Keys.logout),
             child: Text(
               Strings.logout,
-              style: TextThemes.subtitle,
+              style: TextThemes.logout,
             ),
             onPressed: () => _confirmSignOut(context),
           ),
         ],
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(130.0),
-          child: _buildUserInfo(user),
+          preferredSize: Size.fromHeight(120.0),
+          child: Column(
+            children: [
+              Avatar(
+                photoUrl: user.photoUrl,
+                radius: 40,
+                borderColor: Colors.black54,
+                borderWidth: 1.0,
+              ),
+              SizedBox(height: 8),
+              if (user.displayName != null)
+                Text(
+                  user.displayName,
+                  style: TextStyle(color: Colors.black),
+                ),
+              SizedBox(height: 8),
+            ],
+          ),
         ),
       ),
-    );
-  }
-
-  Widget _buildUserInfo(User user) {
-    return Column(
-      children: [
-        Avatar(
-          photoUrl: user.photoUrl,
-          radius: 50,
-          borderColor: Colors.black54,
-          borderWidth: 2.0,
-        ),
-        SizedBox(height: 8),
-        if (user.displayName != null)
-          Text(
-            user.displayName,
-            style: TextThemes.subtitle,
-          ),
-        SizedBox(height: 8),
-      ],
     );
   }
 }

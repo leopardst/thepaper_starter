@@ -12,17 +12,18 @@ class SocialSignInButton extends CustomRaisedButton {
   }) : super(
     key: key,
     child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Image.asset(assetName),
+        Image.asset(assetName, height: 30.0,),
+        SizedBox(width: 15.0,),
         Text(
           text,
           style: TextStyle(color: textColor, fontSize: 15.0),
         ),
-        Opacity(
-          opacity: 0.0,
-          child: Image.asset(assetName),
-        ),
+        // Opacity(
+        //   opacity: 0.0,
+        //   child: Image.asset(assetName),
+        // ),
       ],
     ),
     color: color,

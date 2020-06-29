@@ -34,14 +34,12 @@ class CalendarPage extends StatelessWidget {
     return Material(
       child: CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-            leading: Container(), middle: Text('Calendar')),
+            automaticallyImplyLeading: false,
+            middle: Text('Upcoming Services')),
         child: StreamBuilder<List<Funeral>>(
             initialData: [],
             stream: database.funeralsStreamAfterDate(
-                afterDate: new DateTime(
-                    DateTime.now().year,
-                    DateTime.now().month,
-                    DateTime.now().day)), // trying to get last midnight to include today
+                daysAfter: 0), // trying to get last midnight to include today
             builder: (context, snapshot) {
               print('state:' + snapshot.connectionState.toString());
               if (snapshot.hasData) {

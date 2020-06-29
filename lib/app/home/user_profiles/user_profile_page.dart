@@ -78,7 +78,7 @@ class UserProfilePage extends StatelessWidget {
                 photoUrl: userProfile.photoURL,
                 radius: 50,
                 borderColor: Colors.black54,
-                borderWidth: 2.0,
+                borderWidth: 1.0,
               ),
               SizedBox(height: 8),
               if (userProfile.displayName != null)
