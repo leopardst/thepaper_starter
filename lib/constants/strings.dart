@@ -65,6 +65,7 @@ class Strings {
   static const String funerals = 'Funerals';
   static const String listing = 'Listing';
   static const String home = 'Home';
+  static const String viewCondolences = "View list of condolences";
 
 
 

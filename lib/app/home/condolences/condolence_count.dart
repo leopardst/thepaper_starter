@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:thepaper_starter/constants/strings.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/routing/router.gr.dart';
@@ -60,36 +61,9 @@ class _CondolenceCountState extends State<CondolenceCount> {
           if(snapshot.hasData && snapshot.data.isNotEmpty){
             var count = snapshot.data.length;
             var nameContent = getNames(snapshot.data, count, user);
-
             return GestureDetector(
-              // onTap: () => {CondolencesPage.show(context: context, funeral: widget.funeral)},
               onTap: () => _showDialog(context),
-              child: Text("View list of condolences", style: TextThemes.actionTitle),
-              // child: Wrap(
-              //   direction: Axis.horizontal,
-              //   children: <Widget>[
-              //     Text(
-              //       "Condolences from "
-              //     ),
-              //     AnimatedSwitcher(
-              //       duration: Duration(milliseconds: 200),
-              //       child:
-              //         Text(youCondolenceText(userHasGivenCondolences, count),
-              //           key: ValueKey<int>(userHasGivenCondolences ? 0 : 1),
-              //           style: TextStyle(fontWeight: FontWeight.w600),
-              //         ),
-              //     ),
-              //     Text(
-              //       nameContent,
-              //       style: TextStyle(fontWeight: FontWeight.w600),
-              //     ),
-              //     Text(
-              //       andOthers(userHasGivenCondolences, count),
-              //       style: TextStyle(fontWeight: FontWeight.w600),
-              //     ),
-                 
-              //   ]
-              // ),
+              child: Text(Strings.viewCondolences, style: TextThemes.actionTitle),
             );
           }
           else{

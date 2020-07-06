@@ -127,7 +127,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
                         obitSection(),
                         SizedBox(height: 15,),
                         CondolenceButton(funeral: _funeral),
-                        SizedBox(height: 15,),
+                        SizedBox(height: 20,),
                         CondolenceCount(funeral: _funeral),
                         _buildCommentList(context, _funeral),
                       ],),

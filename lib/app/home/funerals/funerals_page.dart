@@ -48,6 +48,7 @@ class FuneralsPage extends StatelessWidget {
                   icon: Icon(Icons.calendar_today),
                   // onPressed: () => CalendarPage.show(context: context)
                   onPressed: () => showModalBottomSheet(
+                    useRootNavigator: true,
                     context: context,
                     backgroundColor: Colors.transparent,
                     builder: (context) => CalendarPage(),
@@ -57,9 +58,10 @@ class FuneralsPage extends StatelessWidget {
         ),
       ),
       StreamBuilder<List<Funeral>>(
-        stream: database.funeralsStreamAfterDate(
-          daysAfter: -30, 
+        stream: database.funeralsStreamSinceDaysAgo(
+          daysAgo: 30,
         ),
+        // stream: database.funeralsStream(),
         builder: (context, snapshot) {
           return SliverList(
               delegate: SliverChildListDelegate([

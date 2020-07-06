@@ -42,7 +42,7 @@ class AccountPage extends StatelessWidget {
     final user = Provider.of<User>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(Strings.accountPage, style: TextThemes.subtitle),
+        title: Text(Strings.account, style: TextThemes.subtitle),
         elevation: 0.0,
         actions: [
           FlatButton(
@@ -54,27 +54,47 @@ class AccountPage extends StatelessWidget {
             onPressed: () => _confirmSignOut(context),
           ),
         ],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(120.0),
-          child: Column(
-            children: [
-              Avatar(
-                photoUrl: user.photoUrl,
-                radius: 40,
-                borderColor: Colors.black54,
-                borderWidth: 1.0,
-              ),
-              SizedBox(height: 8),
-              if (user.displayName != null)
-                Text(
-                  user.displayName,
-                  style: TextStyle(color: Colors.black),
-                ),
-              SizedBox(height: 8),
-            ],
-          ),
-        ),
       ),
+      body: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+        child: _buildUserInfo(user, context)),
     );
+  }
+
+  Widget _buildUserInfo(User user, BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Avatar(
+            photoUrl: user.photoUrl,
+            radius: 30,
+            borderColor: Colors.black54,
+            borderWidth: 1.0,
+          ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              _userDisplayName(user),
+              Text('Montreal, QC'),]
+        )),
+        _condolencesList(),
+      ]);
+  }
+
+  Widget _userDisplayName(user){
+     if (user.displayName != null){
+          return Text(
+            user.displayName,
+            style: TextThemes.title2,
+        );
+     }else{
+       return null;
+     }
+  }
+
+  Widget _condolencesList(){
+    return Container();
   }
 }

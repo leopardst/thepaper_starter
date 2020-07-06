@@ -90,6 +90,18 @@ class FirestoreDatabase {
         builder: (data, documentId) => Funeral.fromMap(data, documentId),
         sort: (lhs, rhs) => rhs.createdDate.compareTo(lhs.createdDate),
       );
+
+    Stream<List<Funeral>> funeralsStreamSinceDaysAgo({@required int daysAgo}) => _service.collectionStream(
+        path: FirestorePath.funerals(),
+        queryBuilder: (query) => query.where('isLive', isEqualTo: true)
+          .where('isDeleted', isEqualTo: false)
+          .where('funeralDate', isGreaterThanOrEqualTo: new DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month,
+                    DateTime.now().day - daysAgo)),
+        builder: (data, documentId) => Funeral.fromMap(data, documentId),
+        sort: (lhs, rhs) => rhs.createdDate.compareTo(lhs.createdDate),
+      );
   
   Stream<List<Condolence>> condolencesStream({@required Funeral funeral}) => _service.collectionStream(
         path: FirestorePath.condolences(funeral.id),

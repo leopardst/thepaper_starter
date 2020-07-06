@@ -13,9 +13,10 @@ class GroupPage extends StatelessWidget {
 
   static Future<void> show(BuildContext context,
       {Group group, String groupId}) async {
-    var _group;
+    Group _group;
+    final database = Provider.of<FirestoreDatabase>(context, listen: false);
+
     if (groupId != null) {
-      final database = Provider.of<FirestoreDatabase>(context, listen: false);
       _group = await database.groupStream(groupId: groupId).first;
     } else if (group != null) {
       _group = group;
