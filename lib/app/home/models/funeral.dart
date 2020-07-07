@@ -60,11 +60,6 @@ class Funeral {
       }).toList();
       print(_fgList.toString());
       finalFGList = List<FuneralGroup>.from(_fgList);
-
-      // _fgList = value['groups'].map<FuneralGroup>((item) {
-      //   debugPrint('groupitem:' + item);
-      //   return FuneralGroup.fromMap(item);
-      // }).ztoList();
     }
 
     return Funeral(

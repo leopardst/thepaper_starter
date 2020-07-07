@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:thepaper_starter/app/home/jobs/empty_content.dart';
 import 'package:flutter/foundation.dart';
-import 'package:thepaper_starter/constants/text_themes.dart';
 
 typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item);
 
-class ListItemsBuilder<T> extends StatelessWidget {
-  const ListItemsBuilder({
+class AccountListItemsBuilder<T> extends StatelessWidget {
+  const AccountListItemsBuilder({
     Key key,
     @required this.snapshot,
     @required this.itemBuilder,
@@ -47,7 +46,6 @@ class ListItemsBuilder<T> extends StatelessWidget {
         if(index == items.length + 1){
           return Container(
             margin: EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 30.0),
-            child: Text("You can find listings older than 30 days in Search", style: TextThemes.helperText, textAlign: TextAlign.center,)
           );
         }
         return itemBuilder(context, items[index - 1]);
