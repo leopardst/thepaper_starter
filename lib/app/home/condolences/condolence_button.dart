@@ -118,7 +118,7 @@ class _CondolenceButtonState extends State<CondolenceButton> {
                   ),
                   GestureDetector(
                     onTap: () => openModal(context),
-                    child: Text("Condolences"))
+                    child: Text("Leave Condolences"))
                 ]),
             ),
             Padding(

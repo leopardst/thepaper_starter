@@ -50,21 +50,16 @@ class Funeral {
     var _fgList;
     List<FuneralGroup> finalFGList = [];
 
-    if (value["groups"]?.isEmpty ?? true) {
+    if (value["funeral_groups"]?.isEmpty ?? true) {
       finalFGList = [];
     }else{
-        _fgList = value['groups'].map((item) {
+        _fgList = value['funeral_groups'].map((item) {
         var z = Map<String, dynamic>.from(item);
         // print(z['name']);
         return FuneralGroup.fromMap(z);
       }).toList();
       print(_fgList.toString());
       finalFGList = List<FuneralGroup>.from(_fgList);
-
-      // _fgList = value['groups'].map<FuneralGroup>((item) {
-      //   debugPrint('groupitem:' + item);
-      //   return FuneralGroup.fromMap(item);
-      // }).ztoList();
     }
 
     return Funeral(

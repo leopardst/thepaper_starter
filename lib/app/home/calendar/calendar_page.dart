@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:thepaper_starter/app/home/funerals/funeral_details_page.dart';
 import 'package:thepaper_starter/app/home/jobs/empty_content.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
+import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/routing/router.gr.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 
@@ -34,14 +35,12 @@ class CalendarPage extends StatelessWidget {
     return Material(
       child: CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-            leading: Container(), middle: Text('Calendar')),
+            automaticallyImplyLeading: false,
+            middle: Text('Upcoming Services')),
         child: StreamBuilder<List<Funeral>>(
             initialData: [],
             stream: database.funeralsStreamAfterDate(
-                afterDate: new DateTime(
-                    DateTime.now().year,
-                    DateTime.now().month,
-                    DateTime.now().day)), // trying to get last midnight to include today
+                daysAfter: 0), // trying to get last midnight to include today
             builder: (context, snapshot) {
               print('state:' + snapshot.connectionState.toString());
               if (snapshot.hasData) {
@@ -107,7 +106,7 @@ class CalendarPage extends StatelessWidget {
             padding: EdgeInsets.only(top: 10.0),
             child: Text(
               DateFormat('EEEE, MMMM d').format(value),
-              style: TextStyle(fontWeight: FontWeight.w600)
+              style: TextThemes.smallTitle,
             )
     );
    }

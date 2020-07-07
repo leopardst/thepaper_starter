@@ -44,11 +44,16 @@ class CustomRaisedButton extends StatelessWidget {
           borderRadius: BorderRadius.all(
             Radius.circular(borderRadius),
           ),
-        ), // height / 2
+          side: BorderSide(color: Colors.grey[400]),
+        ),
+        
+         // height / 2
         color: color,
         disabledColor: color,
         textColor: textColor,
         onPressed: onPressed,
+        elevation: 0.0,
+        
       ),
     );
   }

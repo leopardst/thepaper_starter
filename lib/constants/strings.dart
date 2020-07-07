@@ -13,8 +13,8 @@ class Strings {
   static const String signIn = 'Sign in';
   static const String signInWithEmailPassword =
       'Sign in with email and password';
-  static const String signInWithFacebook = 'Sign in with Facebook';
-  static const String signInWithGoogle = 'Sign in with Google';
+  static const String signInWithFacebook = 'Continue with Facebook';
+  static const String signInWithGoogle = 'Continue with Google';
   static const String goAnonymous = 'Go anonymous';
   static const String or = 'or';
 
@@ -64,6 +64,10 @@ class Strings {
   // Funerals Page
   static const String funerals = 'Funerals';
   static const String listing = 'Listing';
+  static const String home = 'Home';
+  static const String viewCondolences = "View list of condolences";
+
+
 
   // Search page
   static const String search = 'Search';

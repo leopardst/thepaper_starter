@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 import 'package:thepaper_starter/app/home/models/entry.dart';
+import 'package:thepaper_starter/app/home/models/group.dart';
 import 'package:thepaper_starter/app/home/models/job.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
@@ -78,11 +79,26 @@ class FirestoreDatabase {
         sort: (lhs, rhs) => rhs.createdDate.compareTo(lhs.createdDate),
       );
 
-    Stream<List<Funeral>> funeralsStreamAfterDate({@required DateTime afterDate}) => _service.collectionStream(
+    Stream<List<Funeral>> funeralsStreamAfterDate({@required int daysAfter}) => _service.collectionStream(
         path: FirestorePath.funerals(),
         queryBuilder: (query) => query.where('isLive', isEqualTo: true)
           .where('isDeleted', isEqualTo: false)
-          .where('funeralDate', isGreaterThanOrEqualTo: afterDate),
+          .where('funeralDate', isGreaterThanOrEqualTo: new DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month,
+                    DateTime.now().day + daysAfter)),
+        builder: (data, documentId) => Funeral.fromMap(data, documentId),
+        sort: (lhs, rhs) => rhs.createdDate.compareTo(lhs.createdDate),
+      );
+
+    Stream<List<Funeral>> funeralsStreamSinceDaysAgo({@required int daysAgo}) => _service.collectionStream(
+        path: FirestorePath.funerals(),
+        queryBuilder: (query) => query.where('isLive', isEqualTo: true)
+          .where('isDeleted', isEqualTo: false)
+          .where('funeralDate', isGreaterThanOrEqualTo: new DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month,
+                    DateTime.now().day - daysAgo)),
         builder: (data, documentId) => Funeral.fromMap(data, documentId),
         sort: (lhs, rhs) => rhs.createdDate.compareTo(lhs.createdDate),
       );
@@ -144,4 +160,8 @@ class FirestoreDatabase {
     builder: (data, documentId) => UserProfile.fromMap(data, documentId),
   );
 
+  Stream<Group> groupStream({@required String groupId}) => _service.documentStream(
+        path: FirestorePath.group(groupId),
+        builder: (data, documentId) => Group.fromMap(data, documentId),
+  );
 }
