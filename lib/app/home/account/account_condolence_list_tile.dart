@@ -45,8 +45,8 @@ class _AccountCondolenceListTileState extends State<AccountCondolenceListTile> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-            Text(widget.condolence.name),
-            Text(new DateFormat('EEEE, MMMM dd, yyyy').format(widget.condolence.funeralDate)),
+            Text(widget.condolence.name, style: TextThemes.smallTitle),
+            Text(new DateFormat('EEEE, MMMM dd, yyyy').format(widget.condolence.funeralDate), style: TextThemes.smallSubtitle),
             // daysToAnniversary(condolence.funeralDate),
           ]),
         ),

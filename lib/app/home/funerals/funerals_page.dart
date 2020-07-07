@@ -46,6 +46,7 @@ class FuneralsPage extends StatelessWidget {
                 ),
                 IconButton(
                   icon: Icon(Icons.calendar_today),
+                  tooltip: 'Calendar',
                   // onPressed: () => CalendarPage.show(context: context)
                   onPressed: () => showModalBottomSheet(
                     useRootNavigator: true,

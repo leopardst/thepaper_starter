@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:thepaper_starter/app/home/funerals/funeral_details_page.dart';
 import 'package:thepaper_starter/app/home/jobs/empty_content.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
+import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/routing/router.gr.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 
@@ -105,7 +106,7 @@ class CalendarPage extends StatelessWidget {
             padding: EdgeInsets.only(top: 10.0),
             child: Text(
               DateFormat('EEEE, MMMM d').format(value),
-              style: TextStyle(fontWeight: FontWeight.w600)
+              style: TextThemes.smallTitle,
             )
     );
    }

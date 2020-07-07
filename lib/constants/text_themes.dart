@@ -31,9 +31,19 @@ class TextThemes {
     fontWeight: FontWeight.w600,
   );
 
+  static final TextStyle smallTitle = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+  );
+
   static final TextStyle subtitle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w500,
+  );
+
+  static final TextStyle smallSubtitle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
   );
 
 
