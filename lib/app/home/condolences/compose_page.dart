@@ -72,12 +72,17 @@ class _ComposePageState extends State<ComposePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Add a comment", style: TextThemes.subtitle),
+        title: Text("Leave a condolence", style: TextThemes.subtitle),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.send, color: Colors.black),
+          FlatButton(
+            textColor: Colors.blue,
+            highlightColor: Colors.grey[100],
             onPressed: () => _sendMessage(context, widget.funeral.id, textEditingController.text),
-          ),
+            child: Text("Send")),
+          // IconButton(
+          //   icon: Icon(Icons.send, color: Colors.black),
+          //   onPressed: () => _sendMessage(context, widget.funeral.id, textEditingController.text),
+          // ),
         ],
       ),
       body: _buildContents(context)
@@ -111,7 +116,8 @@ class _ComposePageState extends State<ComposePage> {
                   autofocus: true,
                   textInputAction: TextInputAction.done,
                   onSubmitted: (String str) {
-                    _sendMessage(context, widget.funeral.id, str);
+                    // _sendMessage(context, widget.funeral.id, str);
+                    FocusScope.of(context).unfocus();
                   },
                   // focusNode: focusNode,
             )),

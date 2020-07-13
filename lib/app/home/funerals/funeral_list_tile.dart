@@ -43,6 +43,7 @@ class FuneralListTile extends StatelessWidget {
                     // Text("Paperman & Sons · ",
                     //   style: TextStyle(color: Colors.grey[600])
                     // ),
+                    Text("Posted ", style: TextThemes.helperText,),
                     Text(
                       timeago.format(funeral.createdDate),
                       style: TextThemes.helperText,
