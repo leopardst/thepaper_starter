@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:thepaper_starter/app/home/account/account_page.dart';
 import 'package:thepaper_starter/app/home/cupertino_home_scaffold.dart';
 import 'package:thepaper_starter/app/home/entries/entries_page.dart';
@@ -37,12 +38,13 @@ class _HomePageState extends State<HomePage> {
       TabItem.account: (_) => AccountPage(),
     };
   }
-
+ 
   final PushNotificationsManager pfm = new PushNotificationsManager();
-
+  
   @override
   void initState() {
     pfm.init();
+
     try {
       versionCheck(context);
     } catch (e) {

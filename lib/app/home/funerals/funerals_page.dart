@@ -49,7 +49,7 @@ class FuneralsPage extends StatelessWidget {
                   tooltip: 'Calendar',
                   // onPressed: () => CalendarPage.show(context: context)
                   onPressed: () => showModalBottomSheet(
-                    useRootNavigator: true,
+                    // useRootNavigator: true,
                     context: context,
                     backgroundColor: Colors.transparent,
                     builder: (context) => CalendarPage(),

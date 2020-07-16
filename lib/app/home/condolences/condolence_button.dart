@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/routing/router.gr.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
@@ -51,15 +52,22 @@ class _CondolenceButtonState extends State<CondolenceButton> {
 
   Future<void> _toggleCondolence(BuildContext context, String funeralId, bool isLiked) async {
     Navigator.pop(context);
+
     try {
       final database = Provider.of<FirestoreDatabase>(context, listen: false);
+      final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+
       if(isLiked){
         final condolence = _condolenceFromState();
         condolence.isDeleted = true;
         await database.setCondolence(condolence, funeralId, merge: true);
+
+        analyticsService.logRemoveCondolence(condolence.content, funeralId);
       }else{
         final condolence = _condolenceFromState();
         await database.setCondolence(condolence, funeralId, merge: true);
+        
+        analyticsService.logCreateCondolence(condolence.content, funeralId);
       }
       setState(() {
         isLiked = !isLiked;

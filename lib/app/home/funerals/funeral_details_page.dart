@@ -16,17 +16,26 @@ import 'package:thepaper_starter/app/home/condolences/condolence_count.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/common_widgets/expandable_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 
 
 class FuneralDetailsPage extends StatefulWidget {
-  const FuneralDetailsPage({@required this.funeral});
+  const FuneralDetailsPage({@required this.funeral, @required this.parent});
   final Funeral funeral;
+  final String parent;
 
   static Future<void> show(BuildContext context, Funeral funeral) async {
+    
+    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    analyticsService.logViewedFuneralPage(funeral.fullName, funeral.id);
+
     await Navigator.of(context).pushNamed(
       CupertinoTabViewRouter.funeralDetailsPage,
-      arguments: funeral,
+      arguments: FuneralDetailsPageArguments(
+          funeral: funeral,
+          parent: context.widget.toString(),
+        ),
     );
   }
 
@@ -60,6 +69,8 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
 
   @override
   Widget build(BuildContext context) {
+    
+
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     return StreamProvider<Condolence>.value(
       value: database.condolenceStream(funeralId: _funeral.id),
@@ -199,7 +210,7 @@ Widget obitSection(){
         // width: MediaQuery.of(context).size.width - 40.0,
         constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 40.0),
         child: Hero(
-          tag: _funeral.id,
+          tag: "${_funeral.id}#${widget.parent}",
           transitionOnUserGestures: true,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),

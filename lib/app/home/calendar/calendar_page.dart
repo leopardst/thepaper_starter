@@ -10,6 +10,7 @@ import 'package:thepaper_starter/app/home/jobs/empty_content.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/routing/router.gr.dart';
+import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 
 class CalendarPage extends StatelessWidget {
@@ -28,10 +29,10 @@ class CalendarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
-    // final afterTimeStamp = TimeStamp(date: new DateTime(
-    //                 DateTime.now().year,
-    //                 DateTime.now().month,
-    //                 DateTime.now().day);
+
+    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    analyticsService.logViewCalendar();
+
     return Material(
       child: CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
@@ -79,7 +80,7 @@ class CalendarPage extends StatelessWidget {
         itemBuilder: (context, item) {
           return ListTile(
             onTap: () => {
-              Navigator.pop(context),
+              // Navigator.pop(context),
               FuneralDetailsPage.show(context, item)
             },
             title: Text(item.fullName),

@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
+import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 
@@ -23,6 +24,10 @@ class AccountPage extends StatelessWidget {
       final FirebaseAuthService auth =
           Provider.of<FirebaseAuthService>(context, listen: false);
       await auth.signOut();
+      
+      final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+      analyticsService.logSignOut();
+        
     } on PlatformException catch (e) {
       await PlatformExceptionAlertDialog(
         title: Strings.logoutFailed,
