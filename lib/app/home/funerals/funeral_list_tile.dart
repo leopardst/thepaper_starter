@@ -57,7 +57,8 @@ class FuneralListTile extends StatelessWidget {
   }
 
   Widget _funeralTime(){
-    if(funeral.funeralDate.hour != 0){
+
+    if(funeral.funeralDate != null && funeral.funeralDate.hour != 0){
       return Column(children: <Widget>[
         SizedBox(height: 5.0),
         Text(funeral.funeralTimeAsString),
@@ -115,7 +116,7 @@ class FuneralListTile extends StatelessWidget {
           ),
         ),
         SizedBox(height: 10.0),
-        Text(funeral.funeralDateAsString),
+        Text(funeral.formattedFuneralDate),
         _funeralTime(),
         SizedBox(height: 5.0),
         Text(funeral.location),

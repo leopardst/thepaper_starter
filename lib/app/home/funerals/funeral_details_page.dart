@@ -47,7 +47,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
   String _funeralFullName;
   String _funeralImageURL;
   String _funeralLocation;
-  String _funeralFullDateAndTime;
+
   String _funeralObituary;
   Funeral _funeral;
   // TabController _controller;
@@ -61,7 +61,6 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
     _funeralImageURL = widget.funeral.imageURL ?? '';
     _funeralLocation = widget.funeral?.location ?? '';
     _funeralObituary = widget.funeral?.obituaryClean ?? '';
-    _funeralFullDateAndTime = widget.funeral?.funeralFullDateAndTimeAsString ?? '';
     _funeral = widget.funeral; // TODO this cant be right
 
     // _controller = new TabController(length: 3, vsync: this);
@@ -119,7 +118,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
                               padding: EdgeInsets.only(right: 10.0),
                               child: Icon(Icons.today, color: Colors.grey),
                             ),
-                            widget.funeral.formattedFuneralDate(),
+                            Text(widget.funeral.formattedFuneralDate),
                         ]),
                         SizedBox(height: 10.0,),
                         Row(
