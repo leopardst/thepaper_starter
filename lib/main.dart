@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:math';
 
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:thepaper_starter/app/auth_widget_builder.dart';
 import 'package:thepaper_starter/app/auth_widget.dart';
 import 'package:thepaper_starter/routing/router.gr.dart';
@@ -11,11 +13,20 @@ import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
 // TODO - Update android package names to thepaper
 
-void main() => runApp(MyApp(
-      authServiceBuilder: (_) => FirebaseAuthService(),
-      databaseBuilder: (_, uid) => FirestoreDatabase(uid: uid),
-      analyticsService: (_) => AnalyticsService(),
-    ));
+void main() {
+
+  // Crashlytics.instance.enableInDevMode = true;
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+
+  runZoned(() {
+    runApp(MyApp(
+        authServiceBuilder: (_) => FirebaseAuthService(),
+        databaseBuilder: (_, uid) => FirestoreDatabase(uid: uid),
+        analyticsService: (_) => AnalyticsService(),
+      ));
+  }, onError: Crashlytics.instance.recordError);
+  
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key key, this.authServiceBuilder, this.databaseBuilder, this.analyticsService})
