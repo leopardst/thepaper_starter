@@ -9,6 +9,7 @@ import 'package:thepaper_starter/app/home/models/comment.dart';
 import 'package:thepaper_starter/routing/router.gr.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
 import 'package:thepaper_starter/common_widgets/avatar.dart';
@@ -57,6 +58,10 @@ class _ComposePageState extends State<ComposePage> {
 
         final condolence = Condolence(id: id, name: _name, content: _content, updatedAt: updatedAt, userImageURL: _userImageURL, isPublic: true, isDeleted: false);
         await database.setCondolence(condolence, _funeralId, merge: true);
+
+        final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+        analyticsService.logCreateCondolence(_content, _funeralId);
+        
         Navigator.of(context).pop();
       } on PlatformException catch (e) {
         PlatformExceptionAlertDialog(

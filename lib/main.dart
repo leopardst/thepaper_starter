@@ -1,28 +1,43 @@
+import 'dart:async';
 import 'dart:math';
 
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:thepaper_starter/app/auth_widget_builder.dart';
 import 'package:thepaper_starter/app/auth_widget.dart';
 import 'package:thepaper_starter/routing/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
 // TODO - Update android package names to thepaper
 
-void main() => runApp(MyApp(
-      authServiceBuilder: (_) => FirebaseAuthService(),
-      databaseBuilder: (_, uid) => FirestoreDatabase(uid: uid),
-    ));
+void main() {
+
+  // Crashlytics.instance.enableInDevMode = true;
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+
+  runZoned(() {
+    runApp(MyApp(
+        authServiceBuilder: (_) => FirebaseAuthService(),
+        databaseBuilder: (_, uid) => FirestoreDatabase(uid: uid),
+        analyticsService: (_) => AnalyticsService(),
+      ));
+  }, onError: Crashlytics.instance.recordError);
+  
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key key, this.authServiceBuilder, this.databaseBuilder})
+  const MyApp({Key key, this.authServiceBuilder, this.databaseBuilder, this.analyticsService})
       : super(key: key);
   // Expose builders for 3rd party services at the root of the widget tree
   // This is useful when mocking services while testing
   final FirebaseAuthService Function(BuildContext context) authServiceBuilder;
   final FirestoreDatabase Function(BuildContext context, String uid)
       databaseBuilder;
+  
+  final AnalyticsService Function(BuildContext context) analyticsService;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +47,9 @@ class MyApp extends StatelessWidget {
         Provider<FirebaseAuthService>(
           create: authServiceBuilder,
         ),
+        Provider<AnalyticsService>(
+          create: analyticsService,
+        )
       ],
       child: AuthWidgetBuilder(
         databaseBuilder: databaseBuilder,

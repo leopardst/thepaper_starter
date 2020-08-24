@@ -47,6 +47,10 @@ dependencies:
   firebase_messaging: ^6.0.16
   grouped_list: ^3.1.0
   modal_bottom_sheet: ^0.1.6+1
+  amplitude_flutter: ^2.1.1
+  firebase_crashlytics: ^0.1.4+1
+
+
   # firestore_service:
   #   git:
   #     url: https://github.com/bizz84/codewithandrea_flutter_packages
@@ -70,6 +74,7 @@ dev_dependencies:
     sdk: flutter 
   test: any
   flutter_launcher_icons: "^0.7.5"
+  
 
 # For flutter_launcher_icons
 flutter_icons:

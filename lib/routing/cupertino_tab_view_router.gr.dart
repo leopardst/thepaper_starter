@@ -26,12 +26,14 @@ class CupertinoTabViewRouter {
     final args = settings.arguments;
     switch (settings.name) {
       case CupertinoTabViewRouter.funeralDetailsPage:
-        if (hasInvalidArgs<Funeral>(args, isRequired: true)) {
-          return misTypedArgsRoute<Funeral>(args);
+        if (hasInvalidArgs<FuneralDetailsPageArguments>(args,
+            isRequired: true)) {
+          return misTypedArgsRoute<FuneralDetailsPageArguments>(args);
         }
-        final typedArgs = args as Funeral;
+        final typedArgs = args as FuneralDetailsPageArguments;
         return CupertinoPageRoute(
-          builder: (_) => FuneralDetailsPage(funeral: typedArgs),
+          builder: (_) => FuneralDetailsPage(
+              funeral: typedArgs.funeral, parent: typedArgs.parent),
           settings: settings,
           fullscreenDialog: false,
         );
@@ -57,4 +59,15 @@ class CupertinoTabViewRouter {
         return unknownRoutePage(settings.name);
     }
   }
+}
+
+//**************************************************************************
+// Arguments holder classes
+//***************************************************************************
+
+//FuneralDetailsPage arguments holder class
+class FuneralDetailsPageArguments {
+  final Funeral funeral;
+  final String parent;
+  FuneralDetailsPageArguments({@required this.funeral, @required this.parent});
 }

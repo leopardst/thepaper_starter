@@ -95,7 +95,7 @@ class FirestoreDatabase {
         path: FirestorePath.funerals(),
         queryBuilder: (query) => query.where('isLive', isEqualTo: true)
           .where('isDeleted', isEqualTo: false)
-          .where('funeralDate', isGreaterThanOrEqualTo: new DateTime(
+          .where('createdDate', isGreaterThanOrEqualTo: new DateTime(
                     DateTime.now().year,
                     DateTime.now().month,
                     DateTime.now().day - daysAgo)),

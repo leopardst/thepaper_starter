@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
@@ -18,11 +19,17 @@ class AuthWidgetBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final authService =
         Provider.of<FirebaseAuthService>(context, listen: false);
+
     return StreamBuilder<User>(
       stream: authService.onAuthStateChanged,
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         final User user = snapshot.data;
         if (user != null) {
+
+          if(snapshot.connectionState == ConnectionState.active){
+            final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+            analyticsService.identifyUser(user.uid, user.displayName);
+          }
           return MultiProvider(
             providers: [
               Provider<User>.value(value: user),

@@ -117,26 +117,31 @@ class _SearchListTileState extends State<SearchListTile> {
   Widget _buildImage() {
     if(widget.snap.data["imageURL"] != null && widget.snap.data["imageURL"] != "https:"){
       // return Image.network(funeral.imageURL);
-      return ConstrainedBox(
-        constraints: BoxConstraints(
-          minWidth: 44,
-          minHeight: 44,
-          maxWidth: 64,
-          maxHeight: 64,
-        ),
-        child: CachedNetworkImage(
-          imageUrl: widget.snap.data["imageURL"],
-          imageBuilder: (context, imageProvider) => Container(
-            width: 100.0,
-            height: 100.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              image: DecorationImage(
-                image: imageProvider, fit: BoxFit.cover),
-            ),
+
+      return Hero(
+        tag: "${widget.snap.objectID}#SearchListTile",
+        transitionOnUserGestures: true,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: 44,
+            minHeight: 44,
+            maxWidth: 64,
+            maxHeight: 64,
           ),
-          placeholder: (context, url) => CircularProgressIndicator(),
-          errorWidget: (context, url, error) => Icon(Icons.error),
+          child: CachedNetworkImage(
+            imageUrl: widget.snap.data["imageURL"],
+            imageBuilder: (context, imageProvider) => Container(
+              width: 100.0,
+              height: 100.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                image: DecorationImage(
+                  image: imageProvider, fit: BoxFit.cover),
+              ),
+            ),
+            placeholder: (context, url) => CircularProgressIndicator(),
+            errorWidget: (context, url, error) => Icon(Icons.error),
+          ),
         ),
       );
     } 

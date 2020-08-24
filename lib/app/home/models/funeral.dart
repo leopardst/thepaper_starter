@@ -46,6 +46,11 @@ class Funeral {
   factory Funeral.fromMap(Map<dynamic, dynamic> value, String id) {
     final Timestamp dateTS = value['funeralDate'];
     final Timestamp createdDateTS = value['createdDate'];
+    var _dateTS = null;
+
+    if(dateTS != null){
+      _dateTS = dateTS.toDate();
+    }
 
     var _fgList;
     List<FuneralGroup> finalFGList = [];
@@ -66,7 +71,7 @@ class Funeral {
       id: id,
       firstName: value['firstName'],
       lastName: value['lastName'],
-      funeralDate: dateTS.toDate(),
+      funeralDate: _dateTS,
       location: value['location'],
       obituary: value['obituary'],
       imageURL: value['imageURL'],
@@ -95,9 +100,9 @@ class Funeral {
   }
 
   String get funeralDateAsString{
-  var formatter = new DateFormat('EEEE, MMMM dd, yyyy');
-  String formatted = formatter.format(funeralDate);
-  return formatted;
+    var formatter = new DateFormat('EEEE, MMMM dd, yyyy');
+    String formatted = formatter.format(funeralDate);
+    return formatted;
   }
 
   String get funeralTimeAsString{
@@ -139,18 +144,12 @@ class Funeral {
       return "";
   }
 
-  Widget formattedFuneralDate(){
+  String get formattedFuneralDate{
     if (funeralDate == null){
-      return Text("Please check back for date and time");
+      return "Please check back for funeral date and time";
     }
     else{
-
-      if(funeralDate.hour != 0){
-        return Text(funeralFullDateAndTimeAsString);
-      }
-      else{
-        return Text(funeralDateAsString);
-      }
+      return funeralDateAsString; 
     }
   }
 
@@ -172,17 +171,3 @@ class Funeral {
 
 }
 
-
-//  t.string "first_name", limit: 255
-//     t.string "last_name", limit: 255
-//     t.datetime "funeral_date"
-//     t.datetime "created_at"
-//     t.datetime "updated_at"
-//     t.boolean "send_condolences"
-//     t.string "condolences_email", limit: 255
-//     t.string "director", limit: 255
-//     t.text "donations"
-//     t.string "location", limit: 255
-//     t.text "obituary"
-//     t.text "notes"
-//     t.integer "paperman_memo"

@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
+import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 
@@ -23,6 +24,10 @@ class AccountPage extends StatelessWidget {
       final FirebaseAuthService auth =
           Provider.of<FirebaseAuthService>(context, listen: false);
       await auth.signOut();
+      
+      final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+      analyticsService.logSignOut();
+        
     } on PlatformException catch (e) {
       await PlatformExceptionAlertDialog(
         title: Strings.logoutFailed,
@@ -124,10 +129,14 @@ class AccountPage extends StatelessWidget {
                       width: double.infinity,
                       decoration: BoxDecoration(
                           border: Border(
-                              top: BorderSide(
+                              bottom: BorderSide(
                         color: Colors.grey,
                         width: 0.3,
                       ))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text('Your condolences', style: TextThemes.subtitle),
+                      ),
                     ),
                     _buildCondolenceList(userProfile.condolences),
                   ]);
@@ -188,25 +197,6 @@ class AccountPage extends StatelessWidget {
               condolence: condolences[index - 1]);
         },
       );
-      // return Padding(
-      //   padding: const EdgeInsets.only(top: 10.0),
-      //   child: Row(
-      //       children: <Widget>[
-      //         Padding(
-      //           padding: const EdgeInsets.only(right: 10.0),
-      //           child: Icon(Icons.group, color: Colors.grey),
-      //         ),
-      //         Row(children:
-      //           _funeral.groups.map((item) =>
-      //             GestureDetector(
-      //               child: new Chip(
-      //                 label: Text(item.name),
-      //               ),
-      //               onTap: () => GroupPage.show(context, groupId: item.id),
-      //             )).toList()
-      //         )
-      //   ]),
-      // );
     } else {
       return Container();
     }
