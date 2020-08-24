@@ -61,11 +61,20 @@ class _AccountCondolenceListTileState extends State<AccountCondolenceListTile> {
       return Hero(
         tag: "${widget.condolence.id}#AccountCondolenceListTile",
         transitionOnUserGestures: true,
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: CachedNetworkImage(
-                  imageUrl: imageURL,
-           )),
+            child: CachedNetworkImage(
+          imageUrl: imageURL,
+          imageBuilder: (context, imageProvider) => Container(
+            width: 60.0,
+            height: 60.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              image: DecorationImage(
+                image: imageProvider, fit: BoxFit.cover),
+            ),
+          ),
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Icon(Icons.error),
+        ),
       );
     }
   }

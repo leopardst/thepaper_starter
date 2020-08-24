@@ -129,10 +129,14 @@ class AccountPage extends StatelessWidget {
                       width: double.infinity,
                       decoration: BoxDecoration(
                           border: Border(
-                              top: BorderSide(
+                              bottom: BorderSide(
                         color: Colors.grey,
                         width: 0.3,
                       ))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text('Your condolences', style: TextThemes.subtitle),
+                      ),
                     ),
                     _buildCondolenceList(userProfile.condolences),
                   ]);
@@ -193,25 +197,6 @@ class AccountPage extends StatelessWidget {
               condolence: condolences[index - 1]);
         },
       );
-      // return Padding(
-      //   padding: const EdgeInsets.only(top: 10.0),
-      //   child: Row(
-      //       children: <Widget>[
-      //         Padding(
-      //           padding: const EdgeInsets.only(right: 10.0),
-      //           child: Icon(Icons.group, color: Colors.grey),
-      //         ),
-      //         Row(children:
-      //           _funeral.groups.map((item) =>
-      //             GestureDetector(
-      //               child: new Chip(
-      //                 label: Text(item.name),
-      //               ),
-      //               onTap: () => GroupPage.show(context, groupId: item.id),
-      //             )).toList()
-      //         )
-      //   ]),
-      // );
     } else {
       return Container();
     }

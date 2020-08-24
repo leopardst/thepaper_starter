@@ -19,23 +19,22 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 
-
 class FuneralDetailsPage extends StatefulWidget {
   const FuneralDetailsPage({@required this.funeral, @required this.parent});
   final Funeral funeral;
   final String parent;
 
   static Future<void> show(BuildContext context, Funeral funeral) async {
-    
-    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    final analyticsService =
+        Provider.of<AnalyticsService>(context, listen: false);
     analyticsService.logViewedFuneralPage(funeral.fullName, funeral.id);
 
     await Navigator.of(context).pushNamed(
       CupertinoTabViewRouter.funeralDetailsPage,
       arguments: FuneralDetailsPageArguments(
-          funeral: funeral,
-          parent: context.widget.toString(),
-        ),
+        funeral: funeral,
+        parent: context.widget.toString(),
+      ),
     );
   }
 
@@ -43,7 +42,8 @@ class FuneralDetailsPage extends StatefulWidget {
   State<StatefulWidget> createState() => _FuneralDetailsPageState();
 }
 
-class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTickerProviderStateMixin {
+class _FuneralDetailsPageState extends State<FuneralDetailsPage>
+    with SingleTickerProviderStateMixin {
   String _funeralFullName;
   String _funeralImageURL;
   String _funeralLocation;
@@ -51,8 +51,8 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
   String _funeralObituary;
   Funeral _funeral;
   // TabController _controller;
-  final TextEditingController textEditingController = new TextEditingController();
-
+  final TextEditingController textEditingController =
+      new TextEditingController();
 
   @override
   void initState() {
@@ -68,8 +68,6 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
 
   @override
   Widget build(BuildContext context) {
-    
-
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     return StreamProvider<Condolence>.value(
       value: database.condolenceStream(funeralId: _funeral.id),
@@ -97,59 +95,78 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
                 child: Column(
                   children: <Widget>[
                     _buildImage(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-                    child: Container(
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                        Text(_funeralFullName,
-                          style: TextThemes.title,
-                          textScaleFactor: 1.0,
-                        ),
-                        SizedBox(height: 20.0,),
-                        Text("Funeral Service", style: TextThemes.subtitle),
-                        SizedBox(height: 10.0,),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 20.0),
+                      child: Container(
+                        width: double.infinity,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(right: 10.0),
-                              child: Icon(Icons.today, color: Colors.grey),
+                            Text(
+                              _funeralFullName,
+                              style: TextThemes.title,
+                              textScaleFactor: 1.0,
                             ),
-                            Text(widget.funeral.formattedFuneralDate),
-                        ]),
-                        SizedBox(height: 10.0,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(right: 10.0),
-                              child: Icon(Icons.location_on, color: Colors.grey),
+                            SizedBox(
+                              height: 20.0,
                             ),
-                            Flexible(child: Text(_funeralLocation)),
-                          ]
+                            Text("Funeral Service", style: TextThemes.subtitle),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 10.0),
+                                    child:
+                                        Icon(Icons.today, color: Colors.grey),
+                                  ),
+                                  Text(widget.funeral.formattedFuneralDate),
+                                ]),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            funeralLocation(),
+                            // Row(
+                            //     mainAxisAlignment: MainAxisAlignment.start,
+                            //     crossAxisAlignment: CrossAxisAlignment.center,
+                            //     children: <Widget>[
+                            //       Padding(
+                            //         padding: EdgeInsets.only(right: 10.0),
+                            //         child: Icon(Icons.location_on,
+                            //             color: Colors.grey),
+                            //       ),
+                            //       Flexible(child: Text(_funeralLocation)),
+                            //     ]),
+                            _buildGroups(),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            obitSection(),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            CondolenceButton(funeral: _funeral),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            CondolenceCount(funeral: _funeral),
+                            _buildCommentList(context, _funeral),
+                          ],
                         ),
-                        _buildGroups(),
-                        SizedBox(height: 20.0,),
-                        obitSection(),
-                        SizedBox(height: 15,),
-                        CondolenceButton(funeral: _funeral),
-                        SizedBox(height: 20,),
-                        CondolenceCount(funeral: _funeral),
-                        _buildCommentList(context, _funeral),
-                      ],),
+                      ),
                     ),
-                  ),
-                  
-                  // Expanded(
-                  //    child:
-                  // ),
-                  SizedBox(height: 100.0,),
 
-                ],),
+                    // Expanded(
+                    //    child:
+                    // ),
+                    SizedBox(
+                      height: 100.0,
+                    ),
+                  ],
+                ),
               ),
             )
           ],
@@ -158,56 +175,72 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage> with SingleTick
     );
   }
 
-
-Widget obitSection(){
-  if(_funeralObituary != ''){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children:<Widget>[
-      Text("Obituary", style: TextThemes.subtitle),
-      SizedBox(height: 10.0,),
-      ExpandableText(_funeralObituary),
-    ]); 
-  }
-  else{
-    return Container();
-  }
-}
-
-  Widget _buildGroups(){ //TODO could extract into a widget
-    if(_funeral.groups.length > 0){
-      return Padding(
-        padding: const EdgeInsets.only(top: 10.0),
-        child: Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: Icon(Icons.group, color: Colors.grey),
-              ),
-              Row(children: 
-                _funeral.groups.map((item) => 
-                  GestureDetector(
-                    child: new Chip(
-                      label: Text(item.name),
-                     ),
-                     onTap: () => GroupPage.show(context, groupId: item.id),
-                  )).toList()
-              )
-        ]),
-      );
-    }
-    else{
+  Widget funeralLocation() {
+    if (_funeralLocation != null && _funeralLocation != "") {
+      return Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(right: 10.0),
+              child: Icon(Icons.location_on, color: Colors.grey),
+            ),
+            Flexible(child: Text(_funeralLocation)),
+          ]);
+    } else {
       return Container();
     }
   }
 
+  Widget obitSection() {
+    if (_funeralObituary != '') {
+      return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text("Obituary", style: TextThemes.subtitle),
+            SizedBox(
+              height: 10.0,
+            ),
+            ExpandableText(_funeralObituary),
+          ]);
+    } else {
+      return Container();
+    }
+  }
 
+  Widget _buildGroups() {
+    //TODO could extract into a widget
+    if (_funeral.groups.length > 0) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 10.0),
+        child: Row(children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: Icon(Icons.group, color: Colors.grey),
+          ),
+          Row(
+              children: _funeral.groups
+                  .map((item) => GestureDetector(
+                        child: new Chip(
+                          label: Text(item.name),
+                        ),
+                        onTap: () => GroupPage.show(context, groupId: item.id),
+                      ))
+                  .toList())
+        ]),
+      );
+    } else {
+      return Container();
+    }
+  }
 
-  Widget _buildImage() { //TODO refactor this since it exists twice
-    if(_funeralImageURL != null && _funeralImageURL != ''){ 
+  Widget _buildImage() {
+    //TODO refactor this since it exists twice
+    if (_funeralImageURL != null && _funeralImageURL != '') {
       return Container(
         // width: MediaQuery.of(context).size.width - 40.0,
-        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 40.0),
+        constraints:
+            BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 40.0),
         child: Hero(
           tag: "${_funeral.id}#${widget.parent}",
           transitionOnUserGestures: true,
@@ -215,23 +248,16 @@ Widget obitSection(){
             borderRadius: BorderRadius.circular(10.0),
             child: CachedNetworkImage(
               imageUrl: _funeralImageURL,
-           ),
+            ),
           ),
         ),
       );
-    }
-    else {
+    } else {
       return Container();
     }
   }
 
-  Widget _buildCommentList(BuildContext context, Funeral funeral){
+  Widget _buildCommentList(BuildContext context, Funeral funeral) {
     return CondolencesFeedListBuilder(funeral: funeral);
   }
-
-
- 
-
- 
-
 }
