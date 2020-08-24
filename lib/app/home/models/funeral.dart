@@ -149,12 +149,7 @@ class Funeral {
       return "Please check back for funeral date and time";
     }
     else{
-      if(funeralDate.hour != 0){
-        return funeralFullDateAndTimeAsString;
-      }
-      else{
-        return funeralDateAsString;
-      }
+      return funeralDateAsString; 
     }
   }
 
