@@ -50,7 +50,7 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    final user = Provider.of<AppUser>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.account, style: TextThemes.subtitle),
@@ -71,7 +71,7 @@ class AccountPage extends StatelessWidget {
     );
   }
 
-  Widget _buildUserInfo(User user, BuildContext context) {
+  Widget _buildUserInfo(AppUser user, BuildContext context) {
     return Expanded(
       child: SingleChildScrollView(
         physics: ScrollPhysics(),
@@ -82,7 +82,7 @@ class AccountPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Avatar(
-                  photoUrl: user.photoUrl,
+                  photoUrl: user.photoURL,
                   radius: 30,
                   borderColor: Colors.black54,
                   borderWidth: 1.0,
@@ -111,7 +111,7 @@ class AccountPage extends StatelessWidget {
     }
   }
 
-  Widget _condolencesList(BuildContext context, User user) {
+  Widget _condolencesList(BuildContext context, AppUser user) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     return StreamBuilder<UserProfile>(
         stream: database.userProfileStream(uid: user.uid),
@@ -183,8 +183,7 @@ class AccountPage extends StatelessWidget {
         },
         padding: EdgeInsets.zero, // Top padding of list
         itemCount: condolences.length + 2,
-        physics:
-            NeverScrollableScrollPhysics(), //: AlwaysScrollableScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(), //: AlwaysScrollableScrollPhysics(),
         shrinkWrap: true, //: false,
         itemBuilder: (context, index) {
           if (index == 0) return Container(); // zero height: not visible

@@ -1,57 +1,57 @@
-import 'dart:async';
+// import 'dart:async';
 
-import 'package:thepaper_starter/app/sign_in/sign_in_view_model.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:thepaper_starter/services/firebase_auth_service.dart';
+// import 'package:thepaper_starter/app/sign_in/sign_in_view_model.dart';
+// import 'package:flutter/services.dart';
+// import 'package:flutter_test/flutter_test.dart';
+// import 'package:mockito/mockito.dart';
+// import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
-import 'mocks.dart';
+// import 'mocks.dart';
 
-void main() {
-  MockAuthService mockAuthService;
-  SignInViewModel viewModel;
+// void main() {
+//   MockAuthService mockAuthService;
+//   SignInViewModel viewModel;
 
-  setUp(() {
-    mockAuthService = MockAuthService();
-    viewModel = SignInViewModel(auth: mockAuthService);
-  });
+//   setUp(() {
+//     mockAuthService = MockAuthService();
+//     viewModel = SignInViewModel(auth: mockAuthService);
+//   });
 
-  tearDown(() {
-    mockAuthService = null;
-    viewModel = null;
-  });
+//   tearDown(() {
+//     mockAuthService = null;
+//     viewModel = null;
+//   });
 
-  void stubSignInAnonymouslyReturnsUser() {
-    when(mockAuthService.signInAnonymously())
-        .thenAnswer((_) => Future<User>.value(User(uid: '123')));
-  }
+//   void stubSignInAnonymouslyReturnsUser() {
+//     when(mockAuthService.signInAnonymously())
+//         .thenAnswer((_) => Future<User>.value(User(uid: '123')));
+//   }
 
-  void stubSignInAnonymouslyThrows(Exception exception) {
-    when(mockAuthService.signInAnonymously()).thenThrow(exception);
-  }
+//   void stubSignInAnonymouslyThrows(Exception exception) {
+//     when(mockAuthService.signInAnonymously()).thenThrow(exception);
+//   }
 
-  test(
-      'WHEN view model signs in anonymously'
-      'AND auth returns valid user'
-      'THEN isLoading is true', () async {
-    stubSignInAnonymouslyReturnsUser();
+//   test(
+//       'WHEN view model signs in anonymously'
+//       'AND auth returns valid user'
+//       'THEN isLoading is true', () async {
+//     stubSignInAnonymouslyReturnsUser();
 
-    await viewModel.signInAnonymously();
+//     await viewModel.signInAnonymously();
 
-    expect(viewModel.isLoading, true);
-  });
+//     expect(viewModel.isLoading, true);
+//   });
 
-  test(
-      'WHEN view model signs in anonymously'
-      'AND auth throws an exception'
-      'THEN view model throws an exception'
-      'THEN isLoading is false', () async {
-    final exception = PlatformException(code: 'ERROR_MISSING_PERMISSIONS');
-    stubSignInAnonymouslyThrows(exception);
+//   test(
+//       'WHEN view model signs in anonymously'
+//       'AND auth throws an exception'
+//       'THEN view model throws an exception'
+//       'THEN isLoading is false', () async {
+//     final exception = PlatformException(code: 'ERROR_MISSING_PERMISSIONS');
+//     stubSignInAnonymouslyThrows(exception);
 
-    expect(() async => await viewModel.signInAnonymously(), throwsA(exception));
+//     expect(() async => await viewModel.signInAnonymously(), throwsA(exception));
 
-    expect(viewModel.isLoading, false);
-  });
-}
+//     expect(viewModel.isLoading, false);
+//   });
+// }

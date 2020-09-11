@@ -20,7 +20,7 @@ class CondolenceListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    final user = Provider.of<AppUser>(context);
     return Container(
       padding: EdgeInsets.only(bottom: 20.0),
       child: IntrinsicHeight(

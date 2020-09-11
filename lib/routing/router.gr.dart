@@ -112,7 +112,7 @@ class Router {
 //AuthWidget arguments holder class
 class AuthWidgetArguments {
   final Key key;
-  final AsyncSnapshot<User> userSnapshot;
+  final AsyncSnapshot<AppUser> userSnapshot;
   AuthWidgetArguments({this.key, @required this.userSnapshot});
 }
 
