@@ -14,6 +14,8 @@ import 'package:thepaper_starter/app/home/jobs/edit_job_page.dart';
 import 'package:thepaper_starter/app/home/models/job.dart';
 import 'package:thepaper_starter/app/home/condolences/compose_page.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
+import 'package:thepaper_starter/app/home/account/edit_profile_page.dart';
+import 'package:thepaper_starter/app/home/models/user_profile.dart';
 import 'package:thepaper_starter/app/home/condolences/condolences_page.dart';
 import 'package:thepaper_starter/app/home/job_entries/entry_page.dart';
 import 'package:thepaper_starter/app/home/models/entry.dart';
@@ -24,6 +26,7 @@ class Router {
       '/email-password-sign-in-page-builder';
   static const editJobPage = '/edit-job-page';
   static const composePage = '/compose-page';
+  static const editProfilePage = '/edit-profile-page';
   static const condolencesPage = '/condolences-page';
   static const entryPage = '/entry-page';
   static GlobalKey<NavigatorState> get navigatorKey =>
@@ -75,6 +78,18 @@ class Router {
         return MaterialPageRoute(
           builder: (_) =>
               ComposePage(key: typedArgs.key, funeral: typedArgs.funeral),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Router.editProfilePage:
+        if (hasInvalidArgs<EditProfilePageArguments>(args)) {
+          return misTypedArgsRoute<EditProfilePageArguments>(args);
+        }
+        final typedArgs =
+            args as EditProfilePageArguments ?? EditProfilePageArguments();
+        return MaterialPageRoute(
+          builder: (_) => EditProfilePage(
+              key: typedArgs.key, userProfile: typedArgs.userProfile),
           settings: settings,
           fullscreenDialog: true,
         );
@@ -135,6 +150,13 @@ class ComposePageArguments {
   final Key key;
   final Funeral funeral;
   ComposePageArguments({this.key, @required this.funeral});
+}
+
+//EditProfilePage arguments holder class
+class EditProfilePageArguments {
+  final Key key;
+  final UserProfile userProfile;
+  EditProfilePageArguments({this.key, this.userProfile});
 }
 
 //CondolencesPage arguments holder class

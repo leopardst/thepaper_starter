@@ -101,7 +101,7 @@ class FirebaseAuthService {
     // https://github.com/roughike/flutter_facebook_login/issues/210
     facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
     final FacebookLoginResult result =
-        await facebookLogin.logIn(<String>['public_profile', 'email', 'user_hometown', 'user_age_range', 'user_location']);
+        await facebookLogin.logIn(<String>['public_profile', 'email']);
     if (result.accessToken != null) {
       final userCredential = await FirebaseAuth.instance
       .signInWithCredential(

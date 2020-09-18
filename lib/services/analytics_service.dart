@@ -47,6 +47,13 @@ class AnalyticsService {
     });
   }
 
+  Future<void> logUpdateProfile(String oldName, String newName) async {
+    analytics.logEvent('Updated user profile', eventProperties: {
+      'old_name': oldName,
+      'new_name': newName
+    });
+  }
+
   Future<void> logRemoveCondolence(String id, String funeralId) async {
     analytics.logEvent('Removed condolence', eventProperties: {
       'condolenceId': id,

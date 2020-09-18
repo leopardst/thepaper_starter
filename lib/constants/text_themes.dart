@@ -31,6 +31,10 @@ class TextThemes {
     fontWeight: FontWeight.w600,
   );
 
+  static final TextStyle inputStyle = TextStyle(
+    color: Colors.blue,
+  );
+
   static final TextStyle smallTitle = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w500,

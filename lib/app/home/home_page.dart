@@ -34,7 +34,6 @@ class _HomePageState extends State<HomePage> {
     return {
       TabItem.funerals: (_) => FuneralsPage(),
       TabItem.search: (_) => SearchPage(),
-      // TabItem.entries: (context) => EntriesPage.create(context),
       TabItem.account: (_) => AccountPage(),
     };
   }

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route_annotations.dart';
 import 'package:thepaper_starter/app/auth_widget.dart';
+import 'package:thepaper_starter/app/home/account/edit_profile_page.dart';
 import 'package:thepaper_starter/app/home/calendar/calendar_page.dart';
 import 'package:thepaper_starter/app/home/job_entries/entry_page.dart';
 import 'package:thepaper_starter/app/home/jobs/edit_job_page.dart';
@@ -23,6 +24,9 @@ class $Router {
 
   @MaterialRoute(fullscreenDialog: true)
   ComposePage composePage;
+
+  @MaterialRoute(fullscreenDialog: true)
+  EditProfilePage editProfilePage;
 
   @MaterialRoute(fullscreenDialog: true)
   CondolencesPage condolencesPage;
