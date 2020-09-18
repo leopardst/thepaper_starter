@@ -20,7 +20,7 @@ import 'package:thepaper_starter/app/home/condolences/condolences_page.dart';
 import 'package:thepaper_starter/app/home/job_entries/entry_page.dart';
 import 'package:thepaper_starter/app/home/models/entry.dart';
 
-class Router {
+class AppRouter {
   static const authWidget = '/';
   static const emailPasswordSignInPageBuilder =
       '/email-password-sign-in-page-builder';
@@ -30,13 +30,13 @@ class Router {
   static const condolencesPage = '/condolences-page';
   static const entryPage = '/entry-page';
   static GlobalKey<NavigatorState> get navigatorKey =>
-      getNavigatorKey<Router>();
+      getNavigatorKey<AppRouter>();
   static NavigatorState get navigator => navigatorKey.currentState;
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
-      case Router.authWidget:
+      case AppRouter.authWidget:
         if (hasInvalidArgs<AuthWidgetArguments>(args, isRequired: true)) {
           return misTypedArgsRoute<AuthWidgetArguments>(args);
         }
@@ -46,7 +46,7 @@ class Router {
               key: typedArgs.key, userSnapshot: typedArgs.userSnapshot),
           settings: settings,
         );
-      case Router.emailPasswordSignInPageBuilder:
+      case AppRouter.emailPasswordSignInPageBuilder:
         if (hasInvalidArgs<EmailPasswordSignInPageBuilderArguments>(args)) {
           return misTypedArgsRoute<EmailPasswordSignInPageBuilderArguments>(
               args);
@@ -59,7 +59,7 @@ class Router {
           settings: settings,
           fullscreenDialog: true,
         );
-      case Router.editJobPage:
+      case AppRouter.editJobPage:
         if (hasInvalidArgs<EditJobPageArguments>(args)) {
           return misTypedArgsRoute<EditJobPageArguments>(args);
         }
@@ -70,7 +70,7 @@ class Router {
           settings: settings,
           fullscreenDialog: true,
         );
-      case Router.composePage:
+      case AppRouter.composePage:
         if (hasInvalidArgs<ComposePageArguments>(args, isRequired: true)) {
           return misTypedArgsRoute<ComposePageArguments>(args);
         }
@@ -81,7 +81,7 @@ class Router {
           settings: settings,
           fullscreenDialog: true,
         );
-      case Router.editProfilePage:
+      case AppRouter.editProfilePage:
         if (hasInvalidArgs<EditProfilePageArguments>(args)) {
           return misTypedArgsRoute<EditProfilePageArguments>(args);
         }
@@ -93,7 +93,7 @@ class Router {
           settings: settings,
           fullscreenDialog: true,
         );
-      case Router.condolencesPage:
+      case AppRouter.condolencesPage:
         if (hasInvalidArgs<CondolencesPageArguments>(args, isRequired: true)) {
           return misTypedArgsRoute<CondolencesPageArguments>(args);
         }
@@ -104,7 +104,7 @@ class Router {
           settings: settings,
           fullscreenDialog: true,
         );
-      case Router.entryPage:
+      case AppRouter.entryPage:
         if (hasInvalidArgs<EntryPageArguments>(args, isRequired: true)) {
           return misTypedArgsRoute<EntryPageArguments>(args);
         }

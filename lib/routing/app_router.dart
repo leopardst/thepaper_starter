@@ -12,7 +12,7 @@ import 'package:thepaper_starter/app/home/condolences/condolences_page.dart';
 // flutter packages pub run build_runner build
 
 @autoRouter
-class $Router {
+class $AppRouter {
   @initial
   AuthWidget authWidget;
 

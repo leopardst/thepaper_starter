@@ -32,7 +32,7 @@ dependencies:
   firebase_core: ^0.5.0
   intl: ^0.16.0
   auto_route: ^0.2.2
-  cached_network_image: ^2.3.1 # ^2.1.0+1
+  cached_network_image: ^2.3.2+1 # ^2.1.0+1
   animated_stream_list: ^1.1.0
   flutter_facebook_login: ^3.0.0
   expandable: ^4.1.3
@@ -45,7 +45,8 @@ dependencies:
   algolia: ^0.1.7
   flappy_search_bar: ^1.7.2
   flutter_html: ^1.0.0
-  firebase_messaging: ^6.0.16
+  # firebase_messaging: ^6.0.16
+  # firebase_messaging: ^7.0.0
   # firebase_messaging:
   #   git:
   #     url: git://github.com/preetjdp/flutterfire.git
@@ -56,7 +57,16 @@ dependencies:
   amplitude_flutter: ^2.1.1
   firebase_crashlytics: ^0.1.4+1
   meta: ^1.1.8
+  flutter_svg: ^0.18.0
+  cupertino_icons: ^0.1.2
 
+
+dependency_overrides:
+  # For firebase_messaging
+  # image: last_version
+  # xml: last_version
+
+#   platform: 3.0.0-nullsafety.1
 
   # firestore_service:
   #   git:
@@ -68,7 +78,6 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
 
 dev_dependencies:
   flutter_test:

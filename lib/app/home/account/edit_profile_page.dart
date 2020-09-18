@@ -25,7 +25,7 @@ class EditProfilePage extends StatefulWidget {
 
   static Future<void> show({BuildContext context, UserProfile userProfile}) async {
     await Navigator.of(context, rootNavigator: true).pushNamed(
-      Router.editProfilePage,
+      AppRouter.editProfilePage,
       arguments: EditProfilePageArguments(userProfile: userProfile),
     );
   }

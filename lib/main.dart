@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
             ),
             debugShowCheckedModeBanner: false,
             home: AuthWidget(userSnapshot: userSnapshot),
-            onGenerateRoute: Router.onGenerateRoute,
+            onGenerateRoute: AppRouter.onGenerateRoute,
             builder: (context, child) {
               return MediaQuery(
                 child: child,

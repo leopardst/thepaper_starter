@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
   
   @override
   void initState() {
-    pfm.init();
+    // pfm.init();
 
     try {
       versionCheck(context);

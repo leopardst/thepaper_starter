@@ -23,7 +23,7 @@ class ComposePage extends StatefulWidget {
 
   static Future<void> show({BuildContext context, Funeral funeral}) async {
     await Navigator.of(context, rootNavigator: true).pushNamed(
-      Router.composePage,
+      AppRouter.composePage,
       arguments: ComposePageArguments(funeral: funeral),
     );
   }
