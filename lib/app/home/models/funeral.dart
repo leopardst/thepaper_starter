@@ -28,6 +28,7 @@ class Funeral {
     @required this.funeralDate,
     @required this.location,
     @required this.obituary,
+    @required this.allowCondolences,
     this.createdDate,
     this.groups,
     this.imageURL
@@ -42,6 +43,7 @@ class Funeral {
   String obituary;
   String imageURL;
   List<FuneralGroup> groups;
+  bool allowCondolences;
 
   factory Funeral.fromMap(Map<dynamic, dynamic> value, String id) {
     final Timestamp dateTS = value['funeralDate'];
@@ -77,6 +79,7 @@ class Funeral {
       imageURL: value['imageURL'],
       groups: finalFGList,
       createdDate: createdDateTS.toDate(),
+      allowCondolences: value['allowCondolences'],
     );
   }
 
@@ -91,6 +94,7 @@ class Funeral {
       'obituary': obituary,
       'imageURL': imageURL,
       'createdDate': Timestamp.fromDate(createdDate),
+      'allowCondolences': allowCondolences,
       // 'groups': funeralGroups,
   };
   }
