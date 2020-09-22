@@ -9,7 +9,7 @@ import 'package:thepaper_starter/services/firebase_auth_service.dart';
 /// Note: this class used to be called [LandingPage].
 class AuthWidget extends StatelessWidget {
   const AuthWidget({Key key, @required this.userSnapshot}) : super(key: key);
-  final AsyncSnapshot<User> userSnapshot;
+  final AsyncSnapshot<AppUser> userSnapshot;
 
   @override
   Widget build(BuildContext context) {

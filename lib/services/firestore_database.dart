@@ -150,6 +150,11 @@ class FirestoreDatabase {
     data: comment.toMap(),
   );
 
+  Future<void> updateUserProfile(Map<String, dynamic> userProfileUpdates) async => await _service.updateData(
+    path: FirestorePath.userProfile(uid),
+    data: userProfileUpdates,
+  );
+
   Stream<UserProfile> userProfileStream({@required String uid}) => _service.documentStream(
     path: FirestorePath.userProfile(uid),
     builder: (data, documentId) => UserProfile.fromMap(data, documentId),

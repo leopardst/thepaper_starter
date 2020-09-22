@@ -42,7 +42,7 @@ class _CondolenceCountState extends State<CondolenceCount> {
   @override
   Widget build(BuildContext context) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
-    final user = Provider.of<User>(context, listen:false);
+    final user = Provider.of<AppUser>(context, listen:false);
     var condolenceSnapshot = Provider.of<Condolence>(context);
     if(condolenceSnapshot != null){
       userHasGivenCondolences = true;
@@ -74,7 +74,7 @@ class _CondolenceCountState extends State<CondolenceCount> {
     );
   }
 
-String getNames(List<Condolence> data, int count, User user){
+String getNames(List<Condolence> data, int count, AppUser user){
 
   var content = "";
 

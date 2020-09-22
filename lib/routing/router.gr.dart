@@ -14,26 +14,29 @@ import 'package:thepaper_starter/app/home/jobs/edit_job_page.dart';
 import 'package:thepaper_starter/app/home/models/job.dart';
 import 'package:thepaper_starter/app/home/condolences/compose_page.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
+import 'package:thepaper_starter/app/home/account/edit_profile_page.dart';
+import 'package:thepaper_starter/app/home/models/user_profile.dart';
 import 'package:thepaper_starter/app/home/condolences/condolences_page.dart';
 import 'package:thepaper_starter/app/home/job_entries/entry_page.dart';
 import 'package:thepaper_starter/app/home/models/entry.dart';
 
-class Router {
+class AppRouter {
   static const authWidget = '/';
   static const emailPasswordSignInPageBuilder =
       '/email-password-sign-in-page-builder';
   static const editJobPage = '/edit-job-page';
   static const composePage = '/compose-page';
+  static const editProfilePage = '/edit-profile-page';
   static const condolencesPage = '/condolences-page';
   static const entryPage = '/entry-page';
   static GlobalKey<NavigatorState> get navigatorKey =>
-      getNavigatorKey<Router>();
+      getNavigatorKey<AppRouter>();
   static NavigatorState get navigator => navigatorKey.currentState;
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
-      case Router.authWidget:
+      case AppRouter.authWidget:
         if (hasInvalidArgs<AuthWidgetArguments>(args, isRequired: true)) {
           return misTypedArgsRoute<AuthWidgetArguments>(args);
         }
@@ -43,7 +46,7 @@ class Router {
               key: typedArgs.key, userSnapshot: typedArgs.userSnapshot),
           settings: settings,
         );
-      case Router.emailPasswordSignInPageBuilder:
+      case AppRouter.emailPasswordSignInPageBuilder:
         if (hasInvalidArgs<EmailPasswordSignInPageBuilderArguments>(args)) {
           return misTypedArgsRoute<EmailPasswordSignInPageBuilderArguments>(
               args);
@@ -56,7 +59,7 @@ class Router {
           settings: settings,
           fullscreenDialog: true,
         );
-      case Router.editJobPage:
+      case AppRouter.editJobPage:
         if (hasInvalidArgs<EditJobPageArguments>(args)) {
           return misTypedArgsRoute<EditJobPageArguments>(args);
         }
@@ -67,7 +70,7 @@ class Router {
           settings: settings,
           fullscreenDialog: true,
         );
-      case Router.composePage:
+      case AppRouter.composePage:
         if (hasInvalidArgs<ComposePageArguments>(args, isRequired: true)) {
           return misTypedArgsRoute<ComposePageArguments>(args);
         }
@@ -78,7 +81,19 @@ class Router {
           settings: settings,
           fullscreenDialog: true,
         );
-      case Router.condolencesPage:
+      case AppRouter.editProfilePage:
+        if (hasInvalidArgs<EditProfilePageArguments>(args)) {
+          return misTypedArgsRoute<EditProfilePageArguments>(args);
+        }
+        final typedArgs =
+            args as EditProfilePageArguments ?? EditProfilePageArguments();
+        return MaterialPageRoute(
+          builder: (_) => EditProfilePage(
+              key: typedArgs.key, userProfile: typedArgs.userProfile),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case AppRouter.condolencesPage:
         if (hasInvalidArgs<CondolencesPageArguments>(args, isRequired: true)) {
           return misTypedArgsRoute<CondolencesPageArguments>(args);
         }
@@ -89,7 +104,7 @@ class Router {
           settings: settings,
           fullscreenDialog: true,
         );
-      case Router.entryPage:
+      case AppRouter.entryPage:
         if (hasInvalidArgs<EntryPageArguments>(args, isRequired: true)) {
           return misTypedArgsRoute<EntryPageArguments>(args);
         }
@@ -112,7 +127,7 @@ class Router {
 //AuthWidget arguments holder class
 class AuthWidgetArguments {
   final Key key;
-  final AsyncSnapshot<User> userSnapshot;
+  final AsyncSnapshot<AppUser> userSnapshot;
   AuthWidgetArguments({this.key, @required this.userSnapshot});
 }
 
@@ -135,6 +150,13 @@ class ComposePageArguments {
   final Key key;
   final Funeral funeral;
   ComposePageArguments({this.key, @required this.funeral});
+}
+
+//EditProfilePage arguments holder class
+class EditProfilePageArguments {
+  final Key key;
+  final UserProfile userProfile;
+  EditProfilePageArguments({this.key, this.userProfile});
 }
 
 //CondolencesPage arguments holder class

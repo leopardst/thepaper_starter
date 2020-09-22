@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:thepaper_starter/app/auth_widget_builder.dart';
 import 'package:thepaper_starter/app/auth_widget.dart';
@@ -13,7 +14,9 @@ import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
 // TODO - Update android package names to thepaper
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
   // Crashlytics.instance.enableInDevMode = true;
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
@@ -53,7 +56,7 @@ class MyApp extends StatelessWidget {
       ],
       child: AuthWidgetBuilder(
         databaseBuilder: databaseBuilder,
-        builder: (BuildContext context, AsyncSnapshot<User> userSnapshot) {
+        builder: (BuildContext context, AsyncSnapshot<AppUser> userSnapshot) {
           return MaterialApp(
             // theme: ThemeData(primarySwatch: Colors.indigo),
             theme: ThemeData(
@@ -65,7 +68,7 @@ class MyApp extends StatelessWidget {
             ),
             debugShowCheckedModeBanner: false,
             home: AuthWidget(userSnapshot: userSnapshot),
-            onGenerateRoute: Router.onGenerateRoute,
+            onGenerateRoute: AppRouter.onGenerateRoute,
             builder: (context, child) {
               return MediaQuery(
                 child: child,

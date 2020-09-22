@@ -18,13 +18,6 @@ class CalendarPage extends StatelessWidget {
 
   const CalendarPage({Key key, this.scrollController}) : super(key: key);
 
-  // static Future<void> show({BuildContext context}) async {
-  //   // await Navigator.of(context, rootNavigator: true).pushNamed(
-  //   //   Router.calendarPage
-  //   // );
-  //   await Navigator.of(context).push(MaterialWithModalsPageRoute());
-
-  // }
 
   @override
   Widget build(BuildContext context) {

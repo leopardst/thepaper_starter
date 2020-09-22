@@ -23,7 +23,7 @@ class ComposePage extends StatefulWidget {
 
   static Future<void> show({BuildContext context, Funeral funeral}) async {
     await Navigator.of(context, rootNavigator: true).pushNamed(
-      Router.composePage,
+      AppRouter.composePage,
       arguments: ComposePageArguments(funeral: funeral),
     );
   }
@@ -41,9 +41,9 @@ class _ComposePageState extends State<ComposePage> {
   @override
   void initState() {
     super.initState();
-    final user = Provider.of<User>(context, listen:false);
+    final user = Provider.of<AppUser>(context, listen:false);
     _name = user.displayName ?? user.email;
-    _userImageURL = user.photoUrl ?? null;
+    _userImageURL = user.photoURL ?? null;
   }
 
   Future<void> _sendMessage(BuildContext context, String _funeralId, String _content) async {
