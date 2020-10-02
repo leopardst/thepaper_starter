@@ -5,9 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:thepaper_starter/app/home/account/account_condolence_list_tile.dart';
-import 'package:thepaper_starter/app/home/account/account_list_item_builder.dart';
+import 'package:thepaper_starter/app/home/account/account_condolences_list_builder.dart';
 import 'package:thepaper_starter/app/home/account/edit_profile_page.dart';
 import 'package:thepaper_starter/app/home/jobs/empty_content.dart';
+import 'package:thepaper_starter/app/home/jobs/list_items_builder.dart';
 import 'package:thepaper_starter/app/home/models/user_profile.dart';
 import 'package:thepaper_starter/common_widgets/avatar.dart';
 import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
@@ -124,7 +125,26 @@ class _AccountPageState extends State<AccountPage> {
                       _userDisplayName(context, userProfile),
                       // Text('Montreal, QC'),
                     ])),
-                _condolencesList(context, user),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    // _condolenceListHeader(),
+                    Container(
+                      margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                        color: Colors.grey,
+                        width: 0.3,
+                      ))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text('Your condolences', style: TextThemes.subtitle),
+                      ),
+                    ),
+                    _condolencesList(context, user),
+                  ]),
               ]),
         ),
       ),
@@ -159,93 +179,107 @@ class _AccountPageState extends State<AccountPage> {
     }
   }
 
-  Widget _condolencesList(BuildContext context, AppUser user) {
+  Widget _condolencesList(BuildContext context, AppUser user){
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
-    return StreamBuilder<UserProfile>(
-        stream: database.userProfileStream(uid: user.uid),
+    return StreamBuilder<List<UserCondolence>>(
+        stream: database.userCondolencesStream(uid: user.uid),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            UserProfile userProfile = snapshot.data;
-            if (userProfile != null) {
-              // return _buildList(items);
-              return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    // _condolenceListHeader(),
-                    Container(
-                      margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                        color: Colors.grey,
-                        width: 0.3,
-                      ))),
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text('Your condolences', style: TextThemes.subtitle),
-                      ),
-                    ),
-                    _buildCondolenceList(userProfile.condolences),
-                  ]);
-            } else {
-              return EmptyContent(
-                title: "No funerals",
-                message: "Check back later for updated schedule",
-              );
-            }
-          } else if (snapshot.hasError) {
-            return EmptyContent(
-              title: 'Something went wrong',
-              message: 'Can\'t load items right now',
-            );
-          }
-          return Center(child: CircularProgressIndicator());
+          return AccountCondolencesListBuilder<UserCondolence>(
+            snapshot: snapshot,
+            itemBuilder: (context, condolence) =>  AccountCondolenceListTile(
+              condolence: condolence          
+            ));
         });
   }
 
-  Widget _condolenceListHeader() {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border(
-              top: BorderSide(
-        color: Colors.grey,
-        width: 0.3,
-      ))),
-      width: double.infinity,
-      margin: EdgeInsets.only(top: 20.0),
-      padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-      child: Text('Your Condolences', style: TextThemes.subtitle),
-    );
-  }
+  // Widget _condolencesList(BuildContext context, AppUser user) {
+  //   final database = Provider.of<FirestoreDatabase>(context, listen: false);
+  //   return StreamBuilder<UserProfile>(
+  //       stream: database.userProfileStream(uid: user.uid),
+  //       builder: (context, snapshot) {
+  //         if (snapshot.hasData) {
+  //           UserProfile userProfile = snapshot.data;
+  //           if (userProfile != null) {
+  //             // return _buildList(items);
+  //             return Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: <Widget>[
+  //                   // _condolenceListHeader(),
+  //                   Container(
+  //                     margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
+  //                     width: double.infinity,
+  //                     decoration: BoxDecoration(
+  //                         border: Border(
+  //                             bottom: BorderSide(
+  //                       color: Colors.grey,
+  //                       width: 0.3,
+  //                     ))),
+  //                     child: Padding(
+  //                       padding: const EdgeInsets.only(bottom: 8.0),
+  //                       child: Text('Your condolences', style: TextThemes.subtitle),
+  //                     ),
+  //                   ),
+  //                   _buildCondolenceList(userProfile.condolences),
+  //                 ]);
+  //           } else {
+  //             return EmptyContent(
+  //               title: "No funerals",
+  //               message: "Check back later for updated schedule",
+  //             );
+  //           }
+  //         } else if (snapshot.hasError) {
+  //           return EmptyContent(
+  //             title: 'Something went wrong',
+  //             message: 'Can\'t load items right now',
+  //           );
+  //         }
+  //         return Center(child: CircularProgressIndicator());
+  //       });
+  // }
 
-  Widget _buildCondolenceList(List<UserCondolence> condolences) {
-    if (condolences.length > 0) {
-      condolences.sort((m, m2) => m2.funeralDate.compareTo(m.funeralDate));
-      return ListView.separated(
-        separatorBuilder: (BuildContext context, int index) {
-          if (index == 0)
-            return Container();
-          else
-            return Divider();
-        },
-        padding: EdgeInsets.zero, // Top padding of list
-        itemCount: condolences.length + 2,
-        physics: NeverScrollableScrollPhysics(), //: AlwaysScrollableScrollPhysics(),
-        shrinkWrap: true, //: false,
-        itemBuilder: (context, index) {
-          if (index == 0) return Container(); // zero height: not visible
-          if (index == condolences.length + 1) {
-            return Container(
-              margin: EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 30.0),
-            );
-          }
-          return AccountCondolenceListTile(
-              condolence: condolences[index - 1]);
-        },
-      );
-    } else {
-      return Container();
-    }
-  }
+  // Widget _condolenceListHeader() {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //         border: Border(
+  //             top: BorderSide(
+  //       color: Colors.grey,
+  //       width: 0.3,
+  //     ))),
+  //     width: double.infinity,
+  //     margin: EdgeInsets.only(top: 20.0),
+  //     padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+  //     child: Text('Your Condolences', style: TextThemes.subtitle),
+  //   );
+  // }
+
+  // Widget _buildCondolenceList(List<UserCondolence> condolences) {
+  //   if (condolences.length > 0) {
+  //     // condolences.sort((m, m2) => m2.funeralDate.compareTo(m.funeralDate));
+  //     // condolences.reversed;
+  //     return ListView.separated(
+  //       separatorBuilder: (BuildContext context, int index) {
+  //         if (index == 0)
+  //           return Container();
+  //         else
+  //           return Divider();
+  //       },
+  //       padding: EdgeInsets.zero, // Top padding of list
+  //       itemCount: condolences.length + 2,
+  //       physics: NeverScrollableScrollPhysics(), //: AlwaysScrollableScrollPhysics(),
+  //       shrinkWrap: true, //: false,
+  //       itemBuilder: (context, index) {
+  //         if (index == 0) return Container(); // zero height: not visible
+  //         if (index == condolences.length + 1) {
+  //           return Container(
+  //             margin: EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 30.0),
+  //           );
+  //         }
+  //         return AccountCondolenceListTile(
+  //             condolence: condolences[index - 1]);
+  //       },
+  //     );
+  //   } else {
+  //     return Container();
+  //   }
+  // }
 }

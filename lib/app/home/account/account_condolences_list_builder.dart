@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 
 typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item);
 
-class AccountListItemsBuilder<T> extends StatelessWidget {
-  const AccountListItemsBuilder({
+class AccountCondolencesListBuilder<T> extends StatelessWidget {
+  const AccountCondolencesListBuilder({
     Key key,
     @required this.snapshot,
     @required this.itemBuilder,
@@ -19,11 +19,14 @@ class AccountListItemsBuilder<T> extends StatelessWidget {
   Widget build(BuildContext context) {
   debugPrint('snapshot: $snapshot'); //TODO Remove this
     if (snapshot.hasData) {
-      final List<T> items = snapshot.data;
+      final List<T> items = snapshot.data.reversed.toList();
       if (items.isNotEmpty) {
         return _buildList(items);
       } else {
-        return EmptyContent();
+        return EmptyContent(
+          title: "No condolences",
+          message: "You haven't left any condolences yet"
+        );
       }
     } else if (snapshot.hasError) {
       return EmptyContent(
@@ -35,11 +38,17 @@ class AccountListItemsBuilder<T> extends StatelessWidget {
   }
 
   Widget _buildList(List<T> items) {
-    return ListView.builder(
+    return ListView.separated(
+        separatorBuilder: (BuildContext context, int index) {
+          if (index == 0)
+            return Container();
+          else
+            return Divider();
+        },
       padding: EdgeInsets.zero, // Top padding of list
       itemCount: items.length + 2,
-      physics: dontScroll ? NeverScrollableScrollPhysics() : AlwaysScrollableScrollPhysics(),
-      shrinkWrap: dontScroll ? true : false,
+      physics:  NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
       itemBuilder: (context, index) {
         if (index == 0)
           return Container(); // zero height: not visible
