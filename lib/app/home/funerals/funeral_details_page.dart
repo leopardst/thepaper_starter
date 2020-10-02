@@ -242,7 +242,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
         constraints:
             BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 40.0),
         child: Hero(
-          tag: "${_funeral.id}#${widget.parent}",
+          tag: "${_funeral.id}",
           transitionOnUserGestures: true,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),

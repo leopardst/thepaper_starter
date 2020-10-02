@@ -130,7 +130,7 @@ class FuneralListTile extends StatelessWidget {
     if(funeral.imageURL != null && funeral.imageURL != "https:"){
       // return Image.network(funeral.imageURL);
       return Hero(
-        tag: "${funeral.id}#FuneralListTile",
+        tag: "${funeral.id}",
         transitionOnUserGestures: true,
         child: CachedNetworkImage(
           imageUrl: funeral.imageURL,

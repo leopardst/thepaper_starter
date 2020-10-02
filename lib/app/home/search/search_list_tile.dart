@@ -119,7 +119,7 @@ class _SearchListTileState extends State<SearchListTile> {
       // return Image.network(funeral.imageURL);
 
       return Hero(
-        tag: "${widget.snap.objectID}#SearchListTile",
+        tag: "${widget.snap.objectID}",
         transitionOnUserGestures: true,
         child: ConstrainedBox(
           constraints: BoxConstraints(

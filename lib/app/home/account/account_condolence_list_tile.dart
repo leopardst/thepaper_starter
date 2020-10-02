@@ -59,7 +59,7 @@ class _AccountCondolenceListTileState extends State<AccountCondolenceListTile> {
       return Container(width: 44.0,);
     }else{
       return Hero(
-        tag: "${widget.condolence.id}#AccountCondolenceListTile",
+        tag: "${widget.condolence.id}",
         transitionOnUserGestures: true,
             child: Container(
               height: 60.0,
