@@ -7,11 +7,11 @@ class UserCondolence{
   String imageURL;
   DateTime funeralDate;
 
-  UserCondolence.fromMap(Map<dynamic, dynamic> value)
+  UserCondolence.fromMap(Map<dynamic, dynamic> value, String id)
       : id = value["id"],
         name = value["name"],
         imageURL = value["imageURL"],
-        funeralDate = value["funeralDate"].toDate();
+        funeralDate = value["funeralDate"]?.toDate();
 }
 
 
@@ -38,20 +38,20 @@ class UserProfile {
   factory UserProfile.fromMap(Map<dynamic, dynamic> value, String id) {
     final Timestamp createdDateTS = value['createdDate'];
 
-    var _ucList;
-    List<UserCondolence> finalUCList = [];
+    // var _ucList;
+    // List<UserCondolence> finalUCList = [];
 
-    if (value["condolences"]?.isEmpty ?? true) {
-      finalUCList = [];
-    }else{
-        _ucList = value['condolences'].map((item) {
-        var z = Map<String, dynamic>.from(item);
-        // print(z['name']);
-        return UserCondolence.fromMap(z);
-      }).toList();
-      print(_ucList.toString());
-      finalUCList = List<UserCondolence>.from(_ucList);
-    }
+    // if (value["condolences"]?.isEmpty ?? true) {
+    //   finalUCList = [];
+    // }else{
+    //     _ucList = value['condolences'].map((item) {
+    //     var z = Map<String, dynamic>.from(item);
+    //     print(z['name']);
+    //     return UserCondolence.fromMap(z);
+    //   }).toList();
+    //   print(_ucList.toString());
+    //   finalUCList = List<UserCondolence>.from(_ucList);
+    // }
     
     return UserProfile(
       id: id,
@@ -59,7 +59,7 @@ class UserProfile {
       email: value['email'],
       createdDate: createdDateTS.toDate(),
       photoURL: value['photoURL'],
-      condolences: finalUCList,
+      // condolences: finalUCList,
       // phoneNumber: value['phoneNumber'],
     );
   }

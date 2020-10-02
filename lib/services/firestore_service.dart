@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 
 class FirestoreService {
   FirestoreService._();
@@ -97,14 +97,23 @@ class FirestoreService {
       return list;
   }
 
+  // Stream<T> documentStream<T>({
+  //   @required String path,
+  //   @required T builder(Map<String, dynamic> data, String documentID),
+  // }) {
+  //   final DocumentReference reference = FirebaseFirestore.instance.doc(path);
+  //   final Stream<DocumentSnapshot> snapshots = reference.snapshots();
+  //   return snapshots
+  //       .map((snapshot) => builder(snapshot.data(), snapshot.id));
+  // }
+
   Stream<T> documentStream<T>({
     @required String path,
-    @required T builder(Map<String, dynamic> data, String documentID),
+    @required T Function(Map<String, dynamic> data, String documentID) builder,
   }) {
     final DocumentReference reference = FirebaseFirestore.instance.doc(path);
     final Stream<DocumentSnapshot> snapshots = reference.snapshots();
-    return snapshots
-        .map((snapshot) => builder(snapshot.data(), snapshot.id));
+    return snapshots.map((snapshot) => builder(snapshot.data(), snapshot.id));
   }
 
   Future<T> documentFuture<T>({

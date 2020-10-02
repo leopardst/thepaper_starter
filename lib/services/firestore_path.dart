@@ -12,4 +12,5 @@ class FirestorePath {
   static String comment(String funeralId, String uid) => 'funerals/$funeralId/comments/$uid';
   static String userProfile(String uid) => 'users/$uid';
   static String group(String groupId) => 'groups/$groupId';
+  static String usercondolences(String uid) => 'users/$uid/condolences';
 }

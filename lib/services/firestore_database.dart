@@ -165,8 +165,17 @@ class FirestoreDatabase {
     builder: (data, documentId) => UserProfile.fromMap(data, documentId),
   );
 
+  Stream<List<UserCondolence>> userCondolencesStream({@required String uid}) => _service.collectionStream(
+        path: FirestorePath.usercondolences(uid),
+        queryBuilder: (query) => query.where('isDeleted', isEqualTo: false),
+        builder: (data, documentId) => UserCondolence.fromMap(data, documentId)
+        // sort: (lhs, rhs) => rhs.updatedAt.compareTo(lhs.updatedAt),
+      );
+
   Stream<Group> groupStream({@required String groupId}) => _service.documentStream(
         path: FirestorePath.group(groupId),
         builder: (data, documentId) => Group.fromMap(data, documentId),
   );
+
+  
 }
