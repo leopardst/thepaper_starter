@@ -6,9 +6,9 @@ import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
 import 'package:thepaper_starter/app/home/models/comment.dart';
 
-import 'package:thepaper_starter/routing/router.gr.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:thepaper_starter/routing/router.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
 import 'package:thepaper_starter/common_widgets/avatar.dart';
@@ -20,12 +20,12 @@ class CondolencesPage extends StatefulWidget {
     : super(key: key);
   final Funeral funeral;
 
-  // static Future<void> show({BuildContext context, Funeral funeral}) async {
-  //   await Navigator.of(context, rootNavigator: true).pushNamed(
-  //     Router.composePage,
-  //     arguments: CondolencesPageArugment(funeral: funeral),
-  //   );
-  // }
+  static Future<void> show({BuildContext context, Funeral funeral}) async {
+    await Navigator.of(context, rootNavigator: true).pushNamed(
+      Routes.composePage,
+      arguments: {funeral: funeral},
+    );
+  }
 
   @override
   _CondolencesPageState createState() => _CondolencesPageState();

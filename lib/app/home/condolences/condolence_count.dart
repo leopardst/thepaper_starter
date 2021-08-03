@@ -9,7 +9,6 @@ import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.
 import 'package:thepaper_starter/constants/strings.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
-import 'package:thepaper_starter/routing/router.gr.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:thepaper_starter/app/home/condolences/compose_page.dart';
 import 'package:thepaper_starter/app/home/condolences/condolences_list_builder.dart';

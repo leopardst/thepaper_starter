@@ -9,7 +9,7 @@ import 'package:thepaper_starter/common_widgets/avatar.dart';
 import 'package:thepaper_starter/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:thepaper_starter/routing/cupertino_tab_view_router.gr.dart';
+import 'package:thepaper_starter/routing/cupertino_tab_view_router.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
@@ -32,7 +32,7 @@ class UserProfilePage extends StatelessWidget {
     }
     
     await Navigator.of(context).pushNamed(
-      CupertinoTabViewRouter.userProfilePage,
+      CupertinoTabViewRoutes.userProfilePage,
       arguments: userProfile,
     );
 

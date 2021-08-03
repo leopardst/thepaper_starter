@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:thepaper_starter/app/home/models/job.dart';
 import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:thepaper_starter/routing/router.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
-import 'package:thepaper_starter/routing/router.gr.dart';
 
 class EditJobPage extends StatefulWidget {
   const EditJobPage({Key key, this.job}) : super(key: key);
@@ -13,8 +13,12 @@ class EditJobPage extends StatefulWidget {
 
   static Future<void> show(BuildContext context, {Job job}) async {
     await Navigator.of(context, rootNavigator: true).pushNamed(
-      AppRouter.editJobPage,
-      arguments: EditJobPageArguments(job: job),
+      Routes.editJobPage,
+      arguments: {
+        'job': job
+      },
+      
+     
     );
   }
 
@@ -32,8 +36,8 @@ class _EditJobPageState extends State<EditJobPage> {
   void initState() {
     super.initState();
     if (widget.job != null) {
-      _name = widget.job.name;
-      _ratePerHour = widget.job.ratePerHour;
+      _name = widget.job?.name;
+      _ratePerHour = widget.job?.ratePerHour;
     }
   }
 

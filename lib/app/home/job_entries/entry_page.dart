@@ -2,13 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:thepaper_starter/common_widgets/date_time_picker.dart';
 import 'package:thepaper_starter/app/home/job_entries/format.dart';
 import 'package:thepaper_starter/app/home/models/entry.dart';
 import 'package:thepaper_starter/app/home/models/job.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:thepaper_starter/routing/router.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
-import 'package:thepaper_starter/routing/router.gr.dart';
 
 class EntryPage extends StatefulWidget {
   const EntryPage({@required this.job, this.entry});
@@ -16,11 +15,13 @@ class EntryPage extends StatefulWidget {
   final Entry entry;
 
   static Future<void> show({BuildContext context, Job job, Entry entry}) async {
-    await Navigator.of(context, rootNavigator: true).pushNamed(AppRouter.entryPage,
-        arguments: EntryPageArguments(
-          job: job,
-          entry: entry,
-        ));
+    await Navigator.of(context, rootNavigator: true).pushNamed(
+      Routes.entryPage,
+      arguments: {
+        'job': job,
+        'entry': entry,
+      },
+    );  
   }
 
   @override
@@ -100,8 +101,7 @@ class _EntryPageState extends State<EntryPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              _buildStartDate(),
-              _buildEndDate(),
+            
               SizedBox(height: 8.0),
               _buildDuration(),
               SizedBox(height: 8.0),
@@ -113,25 +113,7 @@ class _EntryPageState extends State<EntryPage> {
     );
   }
 
-  Widget _buildStartDate() {
-    return DateTimePicker(
-      labelText: 'Start',
-      selectedDate: _startDate,
-      selectedTime: _startTime,
-      onSelectedDate: (date) => setState(() => _startDate = date),
-      onSelectedTime: (time) => setState(() => _startTime = time),
-    );
-  }
 
-  Widget _buildEndDate() {
-    return DateTimePicker(
-      labelText: 'End',
-      selectedDate: _endDate,
-      selectedTime: _endTime,
-      onSelectedDate: (date) => setState(() => _endDate = date),
-      onSelectedTime: (time) => setState(() => _endTime = time),
-    );
-  }
 
   Widget _buildDuration() {
     final currentEntry = _entryFromState();

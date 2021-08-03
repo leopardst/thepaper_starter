@@ -3,8 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:thepaper_starter/app/home/jobs/list_items_builder.dart';
 import 'package:thepaper_starter/app/home/models/group.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
-import 'package:thepaper_starter/routing/cupertino_tab_view_router.gr.dart';
-import 'package:thepaper_starter/routing/router.gr.dart';
+import 'package:thepaper_starter/routing/cupertino_tab_view_router.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 
 class GroupPage extends StatelessWidget {
@@ -23,8 +22,7 @@ class GroupPage extends StatelessWidget {
     }
 
     await Navigator.of(context).pushNamed(
-      CupertinoTabViewRouter.groupPage,
-      // Router.groupPage,
+      CupertinoTabViewRoutes.groupPage,
       arguments: _group,
     );
   }
