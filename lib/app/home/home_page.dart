@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:thepaper_starter/app/home/account/account_page.dart';
 import 'package:thepaper_starter/app/home/cupertino_home_scaffold.dart';
-import 'package:thepaper_starter/app/home/entries/entries_page.dart';
 import 'package:thepaper_starter/app/home/jobs/jobs_page.dart';
 import 'package:thepaper_starter/app/home/funerals/funerals_page.dart';
 import 'package:thepaper_starter/app/home/tab_item.dart';
@@ -84,8 +83,8 @@ class _HomePageState extends State<HomePage> {
 
   try {
     // Using default duration to force fetching from remote server.
-    await remoteConfig.fetch(expiration: const Duration(seconds: 0));
-    await remoteConfig.activateFetched();
+    // await remoteConfig.fetch(expiration: const Duration(seconds: 0));
+    // await remoteConfig.activateFetched();
 
     final data = json.decode(remoteConfig.getString('new_version'));
     double newVersion = double.parse(data['version'].trim().replaceAll(".", ""));
@@ -97,9 +96,9 @@ class _HomePageState extends State<HomePage> {
     if (newVersion > currentVersion) {
       _showVersionDialog(context, newVersionText, url, required);
     }
-  } on FetchThrottledException catch (exception) {
-    // Fetch throttled.
-    print(exception);
+  // } on FetchThrottledException catch (exception) {
+  //   // Fetch throttled.
+  //   print(exception);
   } catch (exception) {
     print('Unable to fetch remote config. Cached or default values will be '
         'used');

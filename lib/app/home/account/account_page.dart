@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
+import 'package:thepaper_starter/routing/app_router.gr.dart';
 import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
@@ -160,7 +161,8 @@ class _AccountPageState extends State<AccountPage> {
             style: TextThemes.title2,
           ),
           FlatButton(
-              onPressed: () => { EditProfilePage.show(context: context, userProfile: userProfile)},
+              // onPressed: () => { EditProfilePage.show(context: context, userProfile: userProfile)},
+              onPressed: () => context.router.push(EditProfileRoute(userProfile: userProfile)),
               child: Text("Edit profile", style: TextThemes.inputStyle),
               color: Colors.white,
               shape: RoundedRectangleBorder(

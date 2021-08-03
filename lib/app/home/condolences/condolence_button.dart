@@ -7,10 +7,11 @@ import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
-import 'package:thepaper_starter/routing/router.gr.dart';
+import 'package:thepaper_starter/routing/app_router.gr.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:thepaper_starter/app/home/condolences/compose_page.dart';
 import 'package:thepaper_starter/common_widgets/icomoon_icons.dart';
+import 'package:auto_route/auto_route.dart';
 
 class CondolenceButton extends StatefulWidget {
   const CondolenceButton({@required this.funeral});
@@ -187,7 +188,8 @@ Widget leaveCondolencesButton(BuildContext context){
                 title: new Text('Condolences with comment'),
                 onTap: () => {
                   Navigator.pop(context),
-                  ComposePage.show(context: context, funeral: widget.funeral),
+                  context.router.push(ComposeRoute(funeral: widget.funeral))
+                  // ComposePage.show(context: context, funeral: widget.funeral),
                 },
               ),
               Container(

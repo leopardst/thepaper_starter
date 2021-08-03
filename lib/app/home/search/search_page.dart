@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:algolia/algolia.dart';
 import 'package:provider/provider.dart';
@@ -46,20 +45,21 @@ class _SearchPageState extends State<SearchPage>{
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: SearchBar<AlgoliaObjectSnapshot>(
-            onSearch: search2,
-            hintText: "Search",
-            hintStyle: TextStyle(
-              color: Colors.grey[600],
-            ),
-            emptyWidget: Padding(
-              padding: const EdgeInsets.only(top: 4.0),
-              child: Text("No results found"),
-            ),
-            onItemFound: (AlgoliaObjectSnapshot snap, int index){
-              return SearchListTile(snap: snap, index: index);
-            },
-          ),
+          child: Container(),
+          // child: SearchBar<AlgoliaObjectSnapshot>(
+          //   onSearch: search2,
+          //   hintText: "Search",
+          //   hintStyle: TextStyle(
+          //     color: Colors.grey[600],
+          //   ),
+          //   emptyWidget: Padding(
+          //     padding: const EdgeInsets.only(top: 4.0),
+          //     child: Text("No results found"),
+          //   ),
+          //   onItemFound: (AlgoliaObjectSnapshot snap, int index){
+          //     return SearchListTile(snap: snap, index: index);
+          //   },
+          // ),
         ),
       ),
     );

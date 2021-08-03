@@ -2,15 +2,15 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:thepaper_starter/app/auth_widget_builder.dart';
-import 'package:thepaper_starter/app/auth_widget.dart';
-import 'package:thepaper_starter/routing/router.gr.dart';
+// import 'package:thepaper_starter/app/auth_widget.dart';
+import 'package:thepaper_starter/routing/app_router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
+import 'package:auto_route/auto_route.dart';
 
 // TODO - Update android package names to thepaper
 
@@ -19,7 +19,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   // Crashlytics.instance.enableInDevMode = true;
-  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+  // FlutterError.onError = Crashlytics.instance.recordFlutterError;
 
   runZoned(() {
     runApp(MyApp(
@@ -27,12 +27,12 @@ Future<void> main() async {
         databaseBuilder: (_, uid) => FirestoreDatabase(uid: uid),
         analyticsService: (_) => AnalyticsService(),
       ));
-  }, onError: Crashlytics.instance.recordError);
+  });
   
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key key, this.authServiceBuilder, this.databaseBuilder, this.analyticsService})
+  MyApp({Key key, this.authServiceBuilder, this.databaseBuilder, this.analyticsService})
       : super(key: key);
   // Expose builders for 3rd party services at the root of the widget tree
   // This is useful when mocking services while testing
@@ -41,6 +41,8 @@ class MyApp extends StatelessWidget {
       databaseBuilder;
   
   final AnalyticsService Function(BuildContext context) analyticsService;
+
+  final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class MyApp extends StatelessWidget {
       child: AuthWidgetBuilder(
         databaseBuilder: databaseBuilder,
         builder: (BuildContext context, AsyncSnapshot<AppUser> userSnapshot) {
-          return MaterialApp(
+          return MaterialApp.router(
             // theme: ThemeData(primarySwatch: Colors.indigo),
             theme: ThemeData(
               primaryColor: Colors.white, //Color(0xFFF3F5F7),
@@ -67,8 +69,10 @@ class MyApp extends StatelessWidget {
               // fontFamily: 'Goldman',
             ),
             debugShowCheckedModeBanner: false,
-            home: AuthWidget(userSnapshot: userSnapshot),
-            onGenerateRoute: AppRouter.onGenerateRoute,
+            // home: AuthWidget(userSnapshot: userSnapshot),
+            // onGenerateRoute: AppRouter.onGenerateRoute,
+            routeInformationParser: _appRouter.defaultRouteParser(),
+            routerDelegate: _appRouter.delegate(),
             builder: (context, child) {
               return MediaQuery(
                 child: child,

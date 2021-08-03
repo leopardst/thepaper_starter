@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -17,16 +18,16 @@ import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
 
 class ComposePage extends StatefulWidget {
-  const ComposePage({Key key, @required this.funeral})
+  const ComposePage({Key key, @PathParam('funeral') @required this.funeral})
     : super(key: key);
   final Funeral funeral;
 
-  static Future<void> show({BuildContext context, Funeral funeral}) async {
-    await Navigator.of(context, rootNavigator: true).pushNamed(
-      AppRouter.composePage,
-      arguments: ComposePageArguments(funeral: funeral),
-    );
-  }
+  // static Future<void> show({BuildContext context, Funeral funeral}) async {
+  //   await Navigator.of(context, rootNavigator: true).pushNamed(
+  //     AppRouter.composePage,
+  //     arguments: ComposePageArguments(funeral: funeral),
+  //   );
+  // }
 
   @override
   _ComposePageState createState() => _ComposePageState();
