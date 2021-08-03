@@ -61,7 +61,7 @@ dependencies:
   grouped_list: ^4.1.0
   modal_bottom_sheet: ^2.0.0
   amplitude_flutter: ^3.2.1
-  firebase_crashlytics: ^2.1.1
+  # firebase_crashlytics: ^2.1.1
   meta: ^1.7.0
   cupertino_icons: ^1.0.3
 
