@@ -9,8 +9,8 @@ import 'package:thepaper_starter/app/home/comments/condolences_feed_list_builder
 import 'package:thepaper_starter/app/home/groups/group_page.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
+import 'package:thepaper_starter/routing/cupertino_tab_view_router.dart';
 
-import 'package:thepaper_starter/routing/cupertino_tab_view_router.gr.dart';
 import 'package:thepaper_starter/app/home/condolences/condolence_button.dart';
 import 'package:thepaper_starter/app/home/condolences/condolence_count.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
@@ -30,11 +30,11 @@ class FuneralDetailsPage extends StatefulWidget {
     analyticsService.logViewedFuneralPage(funeral.fullName, funeral.id);
 
     await Navigator.of(context).pushNamed(
-      CupertinoTabViewRouter.funeralDetailsPage,
-      arguments: FuneralDetailsPageArguments(
-        funeral: funeral,
-        parent: context.widget.toString(),
-      ),
+      CupertinoTabViewRoutes.funeralDetailsPage,
+      arguments: {
+        'funeral': funeral,
+        'parent': context.widget.toString(),
+      },
     );
   }
 

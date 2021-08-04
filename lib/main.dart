@@ -2,10 +2,9 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:thepaper_starter/app/auth_widget_builder.dart';
 import 'package:thepaper_starter/app/auth_widget.dart';
-import 'package:thepaper_starter/routing/router.gr.dart';
+import 'package:thepaper_starter/routing/router.dart' as route;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thepaper_starter/services/analytics_service.dart';
@@ -19,7 +18,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   // Crashlytics.instance.enableInDevMode = true;
-  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+  // FlutterError.onError = Crashlytics.instance.recordFlutterError;
 
   runZoned(() {
     runApp(MyApp(
@@ -27,7 +26,7 @@ Future<void> main() async {
         databaseBuilder: (_, uid) => FirestoreDatabase(uid: uid),
         analyticsService: (_) => AnalyticsService(),
       ));
-  }, onError: Crashlytics.instance.recordError);
+  });
   
 }
 
@@ -61,6 +60,7 @@ class MyApp extends StatelessWidget {
             // theme: ThemeData(primarySwatch: Colors.indigo),
             theme: ThemeData(
               primaryColor: Colors.white, //Color(0xFFF3F5F7),
+              primarySwatch: white,
               // primaryColor: Colors.white,//Color(0xFF3EBACE),
               // accentColor: Color(0xFFD8ECF1),
               scaffoldBackgroundColor: Colors.white, //Color(0xFFF3F5F7),
@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
             ),
             debugShowCheckedModeBanner: false,
             home: AuthWidget(userSnapshot: userSnapshot),
-            onGenerateRoute: AppRouter.onGenerateRoute,
+            onGenerateRoute: route.Router.onGenerateRoute,
             builder: (context, child) {
               return MediaQuery(
                 child: child,
@@ -80,3 +80,19 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+const MaterialColor white = const MaterialColor(
+  0xFFFFFFFF,
+  const <int, Color>{
+    50: const Color(0xFFFFFFFF),
+    100: const Color(0xFFFFFFFF),
+    200: const Color(0xFFFFFFFF),
+    300: const Color(0xFFFFFFFF),
+    400: const Color(0xFFFFFFFF),
+    500: const Color(0xFFFFFFFF),
+    600: const Color(0xFFFFFFFF),
+    700: const Color(0xFFFFFFFF),
+    800: const Color(0xFFFFFFFF),
+    900: const Color(0xFFFFFFFF),
+  },
+);

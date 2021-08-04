@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:thepaper_starter/app/home/tab_item.dart';
 import 'package:thepaper_starter/constants/keys.dart';
-import 'package:thepaper_starter/routing/cupertino_tab_view_router.gr.dart';
+import 'package:thepaper_starter/routing/cupertino_tab_view_router.dart';
 
 class CupertinoHomeScaffold extends StatelessWidget {
   CupertinoHomeScaffold({
@@ -39,7 +39,7 @@ class CupertinoHomeScaffold extends StatelessWidget {
         return CupertinoTabView(
           navigatorKey: navigatorKeys[item],
           builder: (context) => widgetBuilders[item](context),
-          onGenerateRoute: CupertinoTabViewRouter.onGenerateRoute,
+          onGenerateRoute: CupertinoTabViewRouter.generateRoute,
         );
       },
     );

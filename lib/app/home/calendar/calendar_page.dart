@@ -9,7 +9,6 @@ import 'package:thepaper_starter/app/home/funerals/funeral_details_page.dart';
 import 'package:thepaper_starter/app/home/jobs/empty_content.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
-import 'package:thepaper_starter/routing/router.gr.dart';
 import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 

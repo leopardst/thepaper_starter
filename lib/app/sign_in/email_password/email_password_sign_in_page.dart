@@ -3,7 +3,7 @@ import 'package:thepaper_starter/common_widgets/form_submit_button.dart';
 import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:thepaper_starter/constants/strings.dart';
-import 'package:thepaper_starter/routing/router.gr.dart';
+import 'package:thepaper_starter/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -16,10 +16,9 @@ class EmailPasswordSignInPageBuilder extends StatelessWidget {
 
   static Future<void> show(BuildContext context) async {
     final navigator = Navigator.of(context);
-    await navigator.pushNamed(AppRouter.emailPasswordSignInPageBuilder,
-        arguments: EmailPasswordSignInPageBuilderArguments(
-          onSignedIn: () => navigator.pop(),
-        ));
+    await navigator.pushNamed(Routes.emailPasswordSignInPageBuilder,
+        arguments: () => navigator.pop(),
+    );
   }
 
   @override

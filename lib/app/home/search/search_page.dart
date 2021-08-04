@@ -1,12 +1,10 @@
 import 'dart:async';
-
-import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:algolia/algolia.dart';
 import 'package:provider/provider.dart';
 import 'package:thepaper_starter/app/home/search/search_list_tile.dart';
 import 'package:thepaper_starter/services/analytics_service.dart';
-
+import 'package:flappy_search_bar/flappy_search_bar.dart';
 
 class SearchPage extends StatefulWidget {
   @override

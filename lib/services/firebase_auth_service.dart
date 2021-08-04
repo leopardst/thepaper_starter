@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 // import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 @immutable
 class AppUser {
@@ -97,24 +96,24 @@ class FirebaseAuthService {
   }
 
   Future<AppUser> signInWithFacebook() async {
-    final FacebookLogin facebookLogin = FacebookLogin();
-    // https://github.com/roughike/flutter_facebook_login/issues/210
-    facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
-    final FacebookLoginResult result =
-        await facebookLogin.logIn(<String>['public_profile', 'email']);
-    if (result.accessToken != null) {
-      final userCredential = await FirebaseAuth.instance
-      .signInWithCredential(
-        FacebookAuthProvider.credential(result.accessToken.token),
-      );
-      return AppUser.fromFirebaseUser(userCredential.user);
-    } else {
-      throw FirebaseException(
-        plugin: runtimeType.toString(),
-        code: 'ERROR_ABORTED_BY_USER',
-        message: 'Sign in aborted by user',
-      );
-    }
+    // final FacebookLogin facebookLogin = FacebookLogin();
+    // // https://github.com/roughike/flutter_facebook_login/issues/210
+    // facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
+    // final FacebookLoginResult result =
+    //     await facebookLogin.logIn(<String>['public_profile', 'email']);
+    // if (result.accessToken != null) {
+    //   final userCredential = await FirebaseAuth.instance
+    //   .signInWithCredential(
+    //     FacebookAuthProvider.credential(result.accessToken.token),
+    //   );
+    //   return AppUser.fromFirebaseUser(userCredential.user);
+    // } else {
+    //   throw FirebaseException(
+    //     plugin: runtimeType.toString(),
+    //     code: 'ERROR_ABORTED_BY_USER',
+    //     message: 'Sign in aborted by user',
+    //   );
+    // }
   }
 
   Future<void> sendPasswordResetEmail(String email) async {

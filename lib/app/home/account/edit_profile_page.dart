@@ -6,8 +6,8 @@ import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
 import 'package:thepaper_starter/app/home/models/comment.dart';
 import 'package:thepaper_starter/app/home/models/user_profile.dart';
+import 'package:thepaper_starter/routing/router.dart';
 
-import 'package:thepaper_starter/routing/router.gr.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:thepaper_starter/services/analytics_service.dart';
@@ -25,8 +25,8 @@ class EditProfilePage extends StatefulWidget {
 
   static Future<void> show({BuildContext context, UserProfile userProfile}) async {
     await Navigator.of(context, rootNavigator: true).pushNamed(
-      AppRouter.editProfilePage,
-      arguments: EditProfilePageArguments(userProfile: userProfile),
+      Routes.editProfilePage,
+      arguments: userProfile,
     );
   }
 
