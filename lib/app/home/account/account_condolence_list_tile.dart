@@ -16,7 +16,7 @@ import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 
 class AccountCondolenceListTile extends StatefulWidget {
-  const AccountCondolenceListTile({Key key, @required this.condolence}) : super(key: key);
+  const AccountCondolenceListTile({Key? key, required this.condolence}) : super(key: key);
 
   final UserCondolence condolence;
 
@@ -26,7 +26,7 @@ class AccountCondolenceListTile extends StatefulWidget {
 
 class _AccountCondolenceListTileState extends State<AccountCondolenceListTile> {
 
-  Future<void> _showFuneral(String funeralId) async {    
+  Future<void> _showFuneral(String? funeralId) async {    
     
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     final funeral = await database.funeralStream(funeralId: funeralId).first;
@@ -45,8 +45,8 @@ class _AccountCondolenceListTileState extends State<AccountCondolenceListTile> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-            Text(widget.condolence.name, style: TextThemes.smallTitle),
-            Text(new DateFormat('EEEE, MMMM dd, yyyy').format(widget.condolence.funeralDate), style: TextThemes.smallSubtitle),
+            Text(widget.condolence.name!, style: TextThemes.smallTitle),
+            Text(new DateFormat('EEEE, MMMM dd, yyyy').format(widget.condolence.funeralDate!), style: TextThemes.smallSubtitle),
             // daysToAnniversary(condolence.funeralDate),
           ]),
         ),
@@ -54,7 +54,7 @@ class _AccountCondolenceListTileState extends State<AccountCondolenceListTile> {
       ]);
   }
 
-  Widget buildImage(String imageURL){
+  Widget buildImage(String? imageURL){
     if(imageURL == null){
       return Container(width: 44.0,);
     }else{

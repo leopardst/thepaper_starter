@@ -7,7 +7,7 @@ enum EmailPasswordSignInFormType { signIn, register, forgotPassword }
 
 class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
   EmailPasswordSignInModel({
-    @required this.auth,
+    required this.auth,
     this.email = '',
     this.password = '',
     this.formType = EmailPasswordSignInFormType.signIn,
@@ -52,7 +52,7 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
 
   void updatePassword(String password) => updateWith(password: password);
 
-  void updateFormType(EmailPasswordSignInFormType formType) {
+  void updateFormType(EmailPasswordSignInFormType? formType) {
     updateWith(
       email: '',
       password: '',
@@ -63,11 +63,11 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
   }
 
   void updateWith({
-    String email,
-    String password,
-    EmailPasswordSignInFormType formType,
-    bool isLoading,
-    bool submitted,
+    String? email,
+    String? password,
+    EmailPasswordSignInFormType? formType,
+    bool? isLoading,
+    bool? submitted,
   }) {
     this.email = email ?? this.email;
     this.password = password ?? this.password;
@@ -85,7 +85,7 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
   }
 
   // Getters
-  String get primaryButtonText {
+  String? get primaryButtonText {
     return <EmailPasswordSignInFormType, String>{
       EmailPasswordSignInFormType.register: Strings.createAnAccount,
       EmailPasswordSignInFormType.signIn: Strings.signIn,
@@ -93,7 +93,7 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
     }[formType];
   }
 
-  String get secondaryButtonText {
+  String? get secondaryButtonText {
     return <EmailPasswordSignInFormType, String>{
       EmailPasswordSignInFormType.register: Strings.haveAnAccount,
       EmailPasswordSignInFormType.signIn: Strings.needAnAccount,
@@ -101,7 +101,7 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
     }[formType];
   }
 
-  EmailPasswordSignInFormType get secondaryActionFormType {
+  EmailPasswordSignInFormType? get secondaryActionFormType {
     return <EmailPasswordSignInFormType, EmailPasswordSignInFormType>{
       EmailPasswordSignInFormType.register: EmailPasswordSignInFormType.signIn,
       EmailPasswordSignInFormType.signIn: EmailPasswordSignInFormType.register,
@@ -110,7 +110,7 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
     }[formType];
   }
 
-  String get errorAlertTitle {
+  String? get errorAlertTitle {
     return <EmailPasswordSignInFormType, String>{
       EmailPasswordSignInFormType.register: Strings.registrationFailed,
       EmailPasswordSignInFormType.signIn: Strings.signInFailed,
@@ -118,7 +118,7 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
     }[formType];
   }
 
-  String get title {
+  String? get title {
     return <EmailPasswordSignInFormType, String>{
       EmailPasswordSignInFormType.register: Strings.register,
       EmailPasswordSignInFormType.signIn: Strings.signIn,
@@ -145,7 +145,7 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
     return canSubmitFields && !isLoading;
   }
 
-  String get emailErrorText {
+  String? get emailErrorText {
     final bool showErrorText = submitted && !canSubmitEmail;
     final String errorText = email.isEmpty
         ? Strings.invalidEmailEmpty
@@ -153,7 +153,7 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
     return showErrorText ? errorText : null;
   }
 
-  String get passwordErrorText {
+  String? get passwordErrorText {
     final bool showErrorText = submitted && !canSubmitPassword;
     final String errorText = password.isEmpty
         ? Strings.invalidPasswordEmpty

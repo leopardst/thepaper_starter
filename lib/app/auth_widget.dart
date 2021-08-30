@@ -8,13 +8,13 @@ import 'package:thepaper_starter/services/firebase_auth_service.dart';
 /// An [AuthWidgetBuilder] ancestor is required for this widget to work.
 /// Note: this class used to be called [LandingPage].
 class AuthWidget extends StatelessWidget {
-  const AuthWidget({Key key, @required this.userSnapshot}) : super(key: key);
-  final AsyncSnapshot<AppUser> userSnapshot;
+  const AuthWidget({Key? key, required this.userSnapshot}) : super(key: key);
+  final AsyncSnapshot<AppUser>? userSnapshot;
 
   @override
   Widget build(BuildContext context) {
-    if (userSnapshot.connectionState == ConnectionState.active) {
-      return userSnapshot.hasData ? HomePage() : SignInPageBuilder();
+    if (userSnapshot!.connectionState == ConnectionState.active) {
+      return userSnapshot!.hasData ? HomePage() : SignInPageBuilder();
     }
     return Scaffold(
       body: Center(

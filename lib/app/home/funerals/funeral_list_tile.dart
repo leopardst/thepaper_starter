@@ -7,7 +7,7 @@ import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class FuneralListTile extends StatelessWidget {
-  const FuneralListTile({Key key, @required this.funeral}) : super(key: key);
+  const FuneralListTile({Key? key, required this.funeral}) : super(key: key);
   final Funeral funeral;
 
   @override
@@ -45,7 +45,7 @@ class FuneralListTile extends StatelessWidget {
                     // ),
                     Text("Posted ", style: TextThemes.helperText,),
                     Text(
-                      timeago.format(funeral.createdDate),
+                      timeago.format(funeral.createdDate!),
                       style: TextThemes.helperText,
                     ),
                     
@@ -58,7 +58,7 @@ class FuneralListTile extends StatelessWidget {
 
   Widget _funeralTime(){
 
-    if(funeral.funeralDate != null && funeral.funeralDate.hour != 0){
+    if(funeral.funeralDate != null && funeral.funeralDate!.hour != 0){
       return Column(children: <Widget>[
         SizedBox(height: 5.0),
         Text(funeral.funeralTimeAsString),
@@ -119,7 +119,7 @@ class FuneralListTile extends StatelessWidget {
         Text(funeral.formattedFuneralDate),
         _funeralTime(),
         SizedBox(height: 5.0),
-        Text(funeral.location),
+        Text(funeral.location!),
         SizedBox(height: 10.0),
       ],
     );
@@ -133,7 +133,7 @@ class FuneralListTile extends StatelessWidget {
         tag: "${funeral.id}",
         transitionOnUserGestures: true,
         child: CachedNetworkImage(
-          imageUrl: funeral.imageURL,
+          imageUrl: funeral.imageURL!,
           imageBuilder: (context, imageProvider) => Container(
             width: 100.0,
             height: 100.0,

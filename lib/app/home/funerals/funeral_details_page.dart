@@ -20,9 +20,9 @@ import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 
 class FuneralDetailsPage extends StatefulWidget {
-  const FuneralDetailsPage({@required this.funeral, @required this.parent});
-  final Funeral funeral;
-  final String parent;
+  const FuneralDetailsPage({required this.funeral, required this.parent});
+  final Funeral? funeral;
+  final String? parent;
 
   static Future<void> show(BuildContext context, Funeral funeral) async {
     final analyticsService =
@@ -44,12 +44,12 @@ class FuneralDetailsPage extends StatefulWidget {
 
 class _FuneralDetailsPageState extends State<FuneralDetailsPage>
     with SingleTickerProviderStateMixin {
-  String _funeralFullName;
-  String _funeralImageURL;
-  String _funeralLocation;
+  late String _funeralFullName;
+  String? _funeralImageURL;
+  String? _funeralLocation;
 
-  String _funeralObituary;
-  Funeral _funeral;
+  String? _funeralObituary;
+  Funeral? _funeral;
   // TabController _controller;
   final TextEditingController textEditingController =
       new TextEditingController();
@@ -58,7 +58,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
   void initState() {
     super.initState();
     _funeralFullName = widget.funeral?.fullName ?? '';
-    _funeralImageURL = widget.funeral.imageURL ?? '';
+    _funeralImageURL = widget.funeral!.imageURL ?? '';
     _funeralLocation = widget.funeral?.location ?? '';
     _funeralObituary = widget.funeral?.obituaryClean ?? '';
     _funeral = widget.funeral; // TODO this cant be right
@@ -69,8 +69,9 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
   @override
   Widget build(BuildContext context) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
-    return StreamProvider<Condolence>.value(
-      value: database.condolenceStream(funeralId: _funeral.id),
+    return StreamProvider<Condolence?>.value(
+      value: database.condolenceStream(funeralId: _funeral!.id),
+      initialData: null,
       catchError: (_, __) => null,
       child: Scaffold(
         body: Column(
@@ -123,7 +124,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
                                     child:
                                         Icon(Icons.today, color: Colors.grey),
                                   ),
-                                  Text(widget.funeral.formattedFuneralDate),
+                                  Text(widget.funeral!.formattedFuneralDate),
                                 ]),
                             SizedBox(
                               height: 10.0,
@@ -185,7 +186,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
               padding: EdgeInsets.only(right: 10.0),
               child: Icon(Icons.location_on, color: Colors.grey),
             ),
-            Flexible(child: Text(_funeralLocation)),
+            Flexible(child: Text(_funeralLocation!)),
           ]);
     } else {
       return Container();
@@ -210,7 +211,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
 
   Widget _buildGroups() {
     //TODO could extract into a widget
-    if (_funeral.groups.length > 0) {
+    if (_funeral!.groups!.length > 0) {
       return Padding(
         padding: const EdgeInsets.only(top: 10.0),
         child: Row(children: <Widget>[
@@ -219,10 +220,10 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
             child: Icon(Icons.group, color: Colors.grey),
           ),
           Row(
-              children: _funeral.groups
+              children: _funeral!.groups!
                   .map((item) => GestureDetector(
                         child: new Chip(
-                          label: Text(item.name),
+                          label: Text(item.name!),
                         ),
                         onTap: () => GroupPage.show(context, groupId: item.id),
                       ))
@@ -242,12 +243,12 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
         constraints:
             BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 40.0),
         child: Hero(
-          tag: "${_funeral.id}",
+          tag: "${_funeral!.id}",
           transitionOnUserGestures: true,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: CachedNetworkImage(
-              imageUrl: _funeralImageURL,
+              imageUrl: _funeralImageURL!,
             ),
           ),
         ),
@@ -257,7 +258,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
     }
   }
 
-  Widget _buildCommentList(BuildContext context, Funeral funeral) {
+  Widget _buildCommentList(BuildContext context, Funeral? funeral) {
     return CondolencesFeedListBuilder(funeral: funeral);
   }
 }

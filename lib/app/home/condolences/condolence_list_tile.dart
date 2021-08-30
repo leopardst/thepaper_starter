@@ -14,9 +14,9 @@ import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 
 class CondolenceListTile extends StatelessWidget {
-  const CondolenceListTile({Key key, @required this.condolence, @required this.funeral}) : super(key: key);
+  const CondolenceListTile({Key? key, required this.condolence, required this.funeral}) : super(key: key);
   final Condolence condolence;
-  final Funeral funeral;
+  final Funeral? funeral;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class CondolenceListTile extends StatelessWidget {
           children: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
-            child: Avatar(photoUrl: condolence.userImageURL, radius: 20.0, character: condolence.name[0]),
+            child: Avatar(photoUrl: condolence.userImageURL, radius: 20.0, character: condolence.name![0]),
           ),
           Expanded(
             flex: 1,
@@ -39,7 +39,7 @@ class CondolenceListTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(condolence.name,
+                  Text(condolence.name!,
                   style: TextThemes.actionTitle,
                   ),
               ]),

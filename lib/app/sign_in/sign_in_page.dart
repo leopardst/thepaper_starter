@@ -32,9 +32,9 @@ class SignInPageBuilder extends StatelessWidget {
 }
 
 class SignInPage extends StatelessWidget {
-  const SignInPage._({Key key, this.viewModel, this.title}) : super(key: key);
-  final SignInViewModel viewModel;
-  final String title;
+  const SignInPage._({Key? key, this.viewModel, this.title}) : super(key: key);
+  final SignInViewModel? viewModel;
+  final String? title;
 
   static const Key googleButtonKey = Key('google');
   static const Key facebookButtonKey = Key('facebook');
@@ -51,7 +51,7 @@ class SignInPage extends StatelessWidget {
 
   Future<void> _signInAnonymously(BuildContext context) async {
     try {
-      await viewModel.signInAnonymously();
+      await viewModel!.signInAnonymously();
     } on PlatformException catch (e) {
       _showSignInError(context, e);
     }
@@ -59,7 +59,7 @@ class SignInPage extends StatelessWidget {
 
   Future<void> _signInWithGoogle(BuildContext context) async {
     try {
-      await viewModel.signInWithGoogle();
+      await viewModel!.signInWithGoogle();
     } on PlatformException catch (e) {
       if (e.code != 'ERROR_ABORTED_BY_USER') {
         _showSignInError(context, e);
@@ -67,15 +67,15 @@ class SignInPage extends StatelessWidget {
     }
   } 
 
-  Future<void> _signInWithFacebook(BuildContext context) async {
-    try {
-      await viewModel.signInWithFacebook();
-    } on PlatformException catch (e) {
-      if (e.code != 'ERROR_ABORTED_BY_USER') {
-        _showSignInError(context, e);
-      }
-    }
-  }
+  // Future<void> _signInWithFacebook(BuildContext context) async {
+  //   try {
+  //     await viewModel!.signInWithFacebook();
+  //   } on PlatformException catch (e) {
+  //     if (e.code != 'ERROR_ABORTED_BY_USER') {
+  //       _showSignInError(context, e);
+  //     }
+  //   }
+  // }
 
 
   @override
@@ -86,7 +86,7 @@ class SignInPage extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    if (viewModel.isLoading) {
+    if (viewModel!.isLoading) {
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -124,7 +124,7 @@ class SignInPage extends StatelessWidget {
               assetName: 'assets/fb-logo-blue.png',
               text: Strings.signInWithFacebook,
               // textColor: Colors.white,
-              onPressed: viewModel.isLoading ? null : () => _signInWithFacebook(context),
+              // onPressed: viewModel!.isLoading ? null : () => _signInWithFacebook(context),
               // color: Color(0xFF334D92),
               color: Colors.white,
             ),
@@ -133,7 +133,7 @@ class SignInPage extends StatelessWidget {
             key: googleButtonKey,
             assetName: 'assets/go-logo.png',
             text: Strings.signInWithGoogle,
-            onPressed: viewModel.isLoading ? null : () => _signInWithGoogle(context),
+            onPressed: viewModel!.isLoading ? null : () => _signInWithGoogle(context),
             color: Colors.white,
           ),
           // SizedBox(height: 32.0),

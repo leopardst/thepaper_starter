@@ -6,20 +6,20 @@ import 'package:google_sign_in/google_sign_in.dart';
 @immutable
 class AppUser {
   const AppUser({
-    @required this.uid,
+    required this.uid,
     this.email,
     this.photoURL,
     this.displayName,
   }) : assert(uid != null, 'User can only be created with a non-null uid');
 
   final String uid;
-  final String email;
-  final String photoURL;
-  final String displayName;
+  final String? email;
+  final String? photoURL;
+  final String? displayName;
 
-  factory AppUser.fromFirebaseUser(User user) {
+  factory AppUser.fromFirebaseUser(User? user) {
     if (user == null) {
-      return null;
+      throw StateError('User is null');
     }
     return AppUser(
       uid: user.uid,
@@ -67,7 +67,7 @@ class FirebaseAuthService {
 
   Future<AppUser> signInWithGoogle() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
-    final GoogleSignInAccount googleUser = await googleSignIn.signIn();
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
     if (googleUser != null) {
       final GoogleSignInAuthentication googleAuth =
@@ -95,7 +95,7 @@ class FirebaseAuthService {
     }
   }
 
-  Future<AppUser> signInWithFacebook() async {
+  // Future<AppUser> signInWithFacebook() async {
     // final FacebookLogin facebookLogin = FacebookLogin();
     // // https://github.com/roughike/flutter_facebook_login/issues/210
     // facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
@@ -114,7 +114,7 @@ class FirebaseAuthService {
     //     message: 'Sign in aborted by user',
     //   );
     // }
-  }
+  // }
 
   Future<void> sendPasswordResetEmail(String email) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);

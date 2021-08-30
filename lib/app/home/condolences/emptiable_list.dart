@@ -31,11 +31,11 @@ class EmptiableList extends StatefulWidget {
   /// Transition between [placeholder] and [list] is animated. Duration of this
   /// animation can be configured with [transitionDuration].
   EmptiableList({
-    @required this.listStream,
-    Widget placeholder,
-    Widget initializingPlaceholder,
-    @required this.list,
-    Duration transitionDuration
+    required this.listStream,
+    Widget? placeholder,
+    Widget? initializingPlaceholder,
+    required this.list,
+    Duration? transitionDuration
   }) : this.placeholder = placeholder ?? EMPTY_WIDGET,
        this.initializingPlaceholder = initializingPlaceholder ?? EMPTY_WIDGET,
        this.transitionDuration = transitionDuration ?? DEFAULT_DURATION;
@@ -47,8 +47,8 @@ class EmptiableList extends StatefulWidget {
 }
 
 class _EmptiableListState extends State<EmptiableList> {
-  StreamSubscription subscription;
-  List currentList;
+  StreamSubscription? subscription;
+  List? currentList;
 
   @override
   void initState() {
@@ -76,11 +76,11 @@ class _EmptiableListState extends State<EmptiableList> {
             duration: widget.transitionDuration,
             child: widget.initializingPlaceholder),
         AnimatedOpacity(
-            opacity: currentList != null && currentList.isEmpty ? 1 : 0,
+            opacity: currentList != null && currentList!.isEmpty ? 1 : 0,
             duration: widget.transitionDuration,
             child: widget.placeholder),
         AnimatedOpacity(
-            opacity: currentList == null || currentList.isEmpty ? 0 : 1,
+            opacity: currentList == null || currentList!.isEmpty ? 0 : 1,
             duration: widget.transitionDuration,
             child: widget.list)
       ],

@@ -10,9 +10,9 @@ import 'package:provider/provider.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
 class EmailPasswordSignInPageBuilder extends StatelessWidget {
-  const EmailPasswordSignInPageBuilder({Key key, this.onSignedIn})
+  const EmailPasswordSignInPageBuilder({Key? key, this.onSignedIn})
       : super(key: key);
-  final VoidCallback onSignedIn;
+  final VoidCallback? onSignedIn;
 
   static Future<void> show(BuildContext context) async {
     final navigator = Navigator.of(context);
@@ -37,10 +37,10 @@ class EmailPasswordSignInPageBuilder extends StatelessWidget {
 
 class EmailPasswordSignInPage extends StatefulWidget {
   const EmailPasswordSignInPage(
-      {Key key, @required this.model, this.onSignedIn})
+      {Key? key, required this.model, this.onSignedIn})
       : super(key: key);
   final EmailPasswordSignInModel model;
-  final VoidCallback onSignedIn;
+  final VoidCallback? onSignedIn;
 
   @override
   _EmailPasswordSignInPageState createState() =>
@@ -65,7 +65,7 @@ class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
   void _showSignInError(
       EmailPasswordSignInModel model, PlatformException exception) {
     PlatformExceptionAlertDialog(
-      title: model.errorAlertTitle,
+      title: model.errorAlertTitle!,
       exception: exception,
     ).show(context);
   }
@@ -82,7 +82,7 @@ class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
           ).show(context);
         } else {
           if (widget.onSignedIn != null) {
-            widget.onSignedIn();
+            widget.onSignedIn!();
           }
         }
       }
@@ -105,7 +105,7 @@ class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
     _submit();
   }
 
-  void _updateFormType(EmailPasswordSignInFormType formType) {
+  void _updateFormType(EmailPasswordSignInFormType? formType) {
     model.updateFormType(formType);
     _emailController.clear();
     _passwordController.clear();
@@ -167,14 +167,14 @@ class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
           SizedBox(height: 8.0),
           FormSubmitButton(
             key: Key('primary-button'),
-            text: model.primaryButtonText,
+            text: model.primaryButtonText!,
             loading: model.isLoading,
             onPressed: model.isLoading ? null : _submit,
           ),
           SizedBox(height: 8.0),
           FlatButton(
             key: Key('secondary-button'),
-            child: Text(model.secondaryButtonText),
+            child: Text(model.secondaryButtonText!),
             onPressed: model.isLoading
                 ? null
                 : () => _updateFormType(model.secondaryActionFormType),
@@ -198,7 +198,7 @@ class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 2.0,
-        title: Text(model.title),
+        title: Text(model.title!),
       ),
       backgroundColor: Colors.grey[200],
       body: SingleChildScrollView(

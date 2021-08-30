@@ -17,16 +17,16 @@ import 'package:thepaper_starter/app/home/condolences/emptiable_list.dart';
 
 class CondolencesListBuilder extends StatelessWidget {
   const CondolencesListBuilder({
-    Key key,
+    Key? key,
     // @required this.snapshot,
     // @required this.itemBuilder,
-    @required this.funeral,
-    @required this.scrollController,
+    required this.funeral,
+    required this.scrollController,
 
   }) : super(key: key);
   // final AsyncSnapshot<List<T>> snapshot;
   // final ItemWidgetBuilder<T> itemBuilder;
-  final Funeral funeral;
+  final Funeral? funeral;
   final ScrollController scrollController;
 
 
@@ -34,11 +34,11 @@ class CondolencesListBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     return FutureBuilder<List>(
-      future: database.condolencesList(funeral: funeral),
+      future: database.condolencesList(funeral: funeral!),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         debugPrint('condolence snapshot: $snapshot'); //TODO Remove this
         if (snapshot.hasData) {
-          final List<Condolence> items = snapshot.data;
+          final List<Condolence>? items = snapshot.data;
           return _buildList(context, items);
       } else if (snapshot.hasError) {
         return EmptyContent(
@@ -53,9 +53,9 @@ class CondolencesListBuilder extends StatelessWidget {
 
 //EmptyContent()
 
-  Widget _buildList(BuildContext context, List<Condolence> initialItems) {
+  Widget _buildList(BuildContext context, List<Condolence>? initialItems) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
-    final stream = database.condolencesStream(funeral: funeral);
+    final stream = database.condolencesStream(funeral: funeral!);
     return Padding(
       padding: const EdgeInsets.fromLTRB(10.0, 25.0, 10.0, 0.0),
       child: AnimatedStreamList<Condolence>(

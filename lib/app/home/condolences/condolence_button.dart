@@ -7,15 +7,14 @@ import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
-import 'package:thepaper_starter/routing/app_router.gr.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:thepaper_starter/app/home/condolences/compose_page.dart';
 import 'package:thepaper_starter/common_widgets/icomoon_icons.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:thepaper_starter/routing/router.dart';
 
 class CondolenceButton extends StatefulWidget {
-  const CondolenceButton({@required this.funeral});
-  final Funeral funeral;
+  const CondolenceButton({required this.funeral});
+  final Funeral? funeral;
 
   @override
   State<StatefulWidget> createState() => _CondolenceButtonState();
@@ -85,8 +84,8 @@ class _CondolenceButtonState extends State<CondolenceButton> {
   Widget build(BuildContext context) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     return StreamBuilder(
-        stream: database.condolenceStream(funeralId: widget.funeral.id),
-        builder: (context, snapshot) {
+        stream: database.condolenceStream(funeralId: widget.funeral!.id),
+        builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.data != null) {
             if (!snapshot.data.isDeleted)
               isLiked = true;
@@ -110,25 +109,6 @@ class _CondolenceButtonState extends State<CondolenceButton> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 leaveCondolencesButton(context),
-                // Padding(
-                //   padding: const EdgeInsets.only(right:30.0),
-                //   child: Row(
-                //     children: <Widget>[
-                //       // IconButton(
-                //       //   icon: Icon(
-                //       //     Icons.chat_bubble_outline,
-                //       //     color: Colors.grey
-                //       //     // isLiked ? Icons.favorite : Icons.favorite_border,
-                //       //     // color: isLiked ? Colors.red : Colors.grey
-                //       //   ),
-                //       //   onPressed: () => ComposePage.show(context: context, funeral: widget.funeral),
-                //       // ),
-                //       // GestureDetector(
-                //       //   onTap: () => {ComposePage.show(context: context, funeral: widget.funeral)},
-
-                //       //   child: Text("Comment"))
-                //     ]),
-                // ),
               ],
             ),
           );
@@ -136,7 +116,7 @@ class _CondolenceButtonState extends State<CondolenceButton> {
   }
 
 Widget leaveCondolencesButton(BuildContext context){
-  if(widget.funeral.allowCondolences){
+  if(widget.funeral!.allowCondolences!){
     return Padding(
       padding: const EdgeInsets.only(left: 5.0),
       child: Row(children: <Widget>[
@@ -181,15 +161,14 @@ Widget leaveCondolencesButton(BuildContext context){
                     color: isLiked ? Colors.redAccent : Colors.grey),
                 title: condolenceMenuText(),
                 onTap: () =>
-                    _toggleCondolence(context, widget.funeral.id, isLiked),
+                    _toggleCondolence(context, widget.funeral!.id, isLiked),
               ),
               new ListTile(
                 leading: new Icon(Icons.chat_bubble_outline),
                 title: new Text('Condolences with comment'),
                 onTap: () => {
                   Navigator.pop(context),
-                  context.router.push(ComposeRoute(funeral: widget.funeral))
-                  // ComposePage.show(context: context, funeral: widget.funeral),
+                  ComposePage.show(context: context, funeral: widget.funeral),
                 },
               ),
               Container(

@@ -7,12 +7,12 @@ import 'package:thepaper_starter/routing/cupertino_tab_view_router.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 
 class GroupPage extends StatelessWidget {
-  const GroupPage({@required this.group});
-  final Group group;
+  const GroupPage({required this.group});
+  final Group? group;
 
   static Future<void> show(BuildContext context,
-      {Group group, String groupId}) async {
-    Group _group;
+      {Group? group, String? groupId}) async {
+    Group? _group;
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
 
     if (groupId != null) {
@@ -49,7 +49,7 @@ class GroupPage extends StatelessWidget {
         child: SingleChildScrollView(
           physics: ScrollPhysics(),
           child: Column(children: <Widget>[
-            Text(group.name, style: TextThemes.title),
+            Text(group!.name!, style: TextThemes.title),
             RaisedButton(
               onPressed: () => {},
               child: Text("Follow"),
@@ -62,7 +62,7 @@ class GroupPage extends StatelessWidget {
                     padding: EdgeInsets.only(right: 10.0),
                     child: Icon(Icons.location_on, color: Colors.grey),
                   ),
-                  Flexible(child: Text("${group.type} in ${group.city}, ${group.state}")),
+                  Flexible(child: Text("${group!.type} in ${group!.city}, ${group!.state}")),
                 ]),
             buildFuneralList(context),
           ]),
@@ -74,12 +74,12 @@ class GroupPage extends StatelessWidget {
   Widget buildFuneralList(BuildContext context) {
     return ListView.separated(
         separatorBuilder: (context, index) => Divider(color: Colors.black),
-        itemCount: group.groupFunerals.length,
+        itemCount: group!.groupFunerals!.length,
         shrinkWrap: true, 
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext ctx, int index) {
           return ListTile(
-            title: Text(group.groupFunerals[index].name),
+            title: Text(group!.groupFunerals![index].name!),
           );
         });
   }

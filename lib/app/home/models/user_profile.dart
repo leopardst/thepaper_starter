@@ -2,10 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserCondolence{
-  String id;
-  String name;
-  String imageURL;
-  DateTime funeralDate;
+  String? id;
+  String? name;
+  String? imageURL;
+  DateTime? funeralDate;
 
   UserCondolence.fromMap(Map<dynamic, dynamic> value, String id)
       : id = value["id"],
@@ -17,21 +17,21 @@ class UserCondolence{
 
 class UserProfile {
   UserProfile({
-    @required this.id,
-    @required this.displayName,
-    @required this.createdDate,
-    @required this.email,
-    @required this.photoURL,
+    required this.id,
+    required this.displayName,
+    required this.createdDate,
+    required this.email,
+    required this.photoURL,
     this.condolences,
     // @required this.phoneNumber,
   });
 
   String id;
-  String displayName;
+  String? displayName;
   DateTime createdDate;
-  String email;
-  String photoURL;
-  List<UserCondolence> condolences;
+  String? email;
+  String? photoURL;
+  List<UserCondolence>? condolences;
 
   // String phoneNumber;
 

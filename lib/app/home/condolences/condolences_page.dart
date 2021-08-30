@@ -16,11 +16,11 @@ import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
 
 class CondolencesPage extends StatefulWidget {
-  const CondolencesPage({Key key, @required this.funeral})
+  const CondolencesPage({Key? key, required this.funeral})
     : super(key: key);
-  final Funeral funeral;
+  final Funeral? funeral;
 
-  static Future<void> show({BuildContext context, Funeral funeral}) async {
+  static Future<void> show({required BuildContext context, Funeral? funeral}) async {
     await Navigator.of(context, rootNavigator: true).pushNamed(
       Routes.composePage,
       arguments: {funeral: funeral},

@@ -50,7 +50,7 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   Future<void> _confirmSignOut(BuildContext context) async {
-    final bool didRequestSignOut = await PlatformAlertDialog(
+    final bool? didRequestSignOut = await PlatformAlertDialog(
       title: Strings.logout,
       content: Strings.logoutAreYouSure,
       cancelActionText: Strings.cancel,
@@ -74,7 +74,7 @@ class _AccountPageState extends State<AccountPage> {
         stream: database.userProfileStream(uid: user.uid),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            UserProfile userProfile = snapshot.data;
+            UserProfile? userProfile = snapshot.data;
             if (userProfile != null) {
               // return _buildList(items);
               return Scaffold(
@@ -122,7 +122,7 @@ class _AccountPageState extends State<AccountPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                      _userDisplayName(context, userProfile),
+                      _userDisplayName(context, userProfile)!,
                       // Text('Montreal, QC'),
                     ])),
                 Column(
@@ -151,7 +151,7 @@ class _AccountPageState extends State<AccountPage> {
     );
   }
 
-  Widget _userDisplayName(context, userProfile) {
+  Widget? _userDisplayName(context, userProfile) {
     if (userProfile.displayName != null) {
       return Column(
         children: <Widget>[

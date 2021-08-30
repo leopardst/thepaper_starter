@@ -5,25 +5,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Condolence {
   Condolence({
-    @required this.id,
-    @required this.name,
+    required this.id,
+    required this.name,
     this.content,
-    @required this.updatedAt,
+    required this.updatedAt,
     this.userImageURL,
     this.remoteId,
-    @required this.isPublic,
+    required this.isPublic,
     this.isDeleted,
 
   });
 
   String id;
-  String name;
-  String content;
+  String? name;
+  String? content;
   DateTime updatedAt;
-  String userImageURL;
-  int remoteId;
-  bool isPublic;
-  bool isDeleted;
+  String? userImageURL;
+  int? remoteId;
+  bool? isPublic;
+  bool? isDeleted;
 
   factory Condolence.fromMap(Map<dynamic, dynamic> value, String id) {
     // final int updatedAtAtMilliseconds = value['updatedAt'];

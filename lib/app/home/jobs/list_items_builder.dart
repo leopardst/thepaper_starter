@@ -7,9 +7,9 @@ typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item);
 
 class ListItemsBuilder<T> extends StatelessWidget {
   const ListItemsBuilder({
-    Key key,
-    @required this.snapshot,
-    @required this.itemBuilder,
+    Key? key,
+    required this.snapshot,
+    required this.itemBuilder,
     this.dontScroll = false,
   }) : super(key: key);
   final AsyncSnapshot<List<T>> snapshot;
@@ -20,7 +20,7 @@ class ListItemsBuilder<T> extends StatelessWidget {
   Widget build(BuildContext context) {
   debugPrint('snapshot: $snapshot'); //TODO Remove this
     if (snapshot.hasData) {
-      final List<T> items = snapshot.data;
+      final List<T> items = snapshot.data!;
       if (items.isNotEmpty) {
         return _buildList(items);
       } else {

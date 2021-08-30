@@ -18,25 +18,25 @@ import 'package:thepaper_starter/app/home/condolences/emptiable_list.dart';
 
 class CondolencesFeedListBuilder extends StatelessWidget {
   const CondolencesFeedListBuilder({
-    Key key,
+    Key? key,
     // @required this.snapshot,
     // @required this.itemBuilder,
-    @required this.funeral,
+    required this.funeral,
   }) : super(key: key);
   // final AsyncSnapshot<List<T>> snapshot;
   // final ItemWidgetBuilder<T> itemBuilder;
-  final Funeral funeral;
+  final Funeral? funeral;
   
 
   @override
   Widget build(BuildContext context) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     return FutureBuilder<List>(
-      future: database.condolencesList(funeral: funeral),
+      future: database.condolencesList(funeral: funeral!),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         debugPrint('comment snapshot: $snapshot'); //TODO Remove this
         if (snapshot.hasData) {
-          final List<Condolence> items = snapshot.data;
+          final List<Condolence>? items = snapshot.data;
           return _buildList(context, items);
       } else if (snapshot.hasError) {
         return EmptyContent(
@@ -51,9 +51,9 @@ class CondolencesFeedListBuilder extends StatelessWidget {
 
 //EmptyContent()
 
-  Widget _buildList(BuildContext context, List<Condolence> initialItems) {
+  Widget _buildList(BuildContext context, List<Condolence>? initialItems) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
-    final stream = database.condolencesStream(funeral: funeral);
+    final stream = database.condolencesStream(funeral: funeral!);
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
       child: EmptiableList(

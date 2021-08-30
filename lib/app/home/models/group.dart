@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 
 class GroupFuneral{
-  String id;
-  String name;
+  String? id;
+  String? name;
 
   GroupFuneral.fromMap(Map<dynamic, dynamic> value)
       : id = value["id"],
@@ -17,21 +17,21 @@ class GroupFuneral{
 
 class Group {
   Group({
-    @required this.id,
-    @required this.name,
-    @required this.groupFunerals,
-    @required this.type,
-    @required this.city,
-    @required this.state,
+    required this.id,
+    required this.name,
+    required this.groupFunerals,
+    required this.type,
+    required this.city,
+    required this.state,
     // @required this.createdAt,
   });
 
   String id;
-  String name;
-  String type;
-  String city;
-  String state;
-  List<GroupFuneral> groupFunerals;
+  String? name;
+  String? type;
+  String? city;
+  String? state;
+  List<GroupFuneral>? groupFunerals;
   // DateTime createdAt;
 
   factory Group.fromMap(Map<dynamic, dynamic> value, String id) {
