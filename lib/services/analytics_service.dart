@@ -31,14 +31,14 @@ class AnalyticsService {
     });
   }
 
-  Future<void> logSearched(String query, int count) async {
+  Future<void> logSearched(String? query, int count) async {
     analytics.logEvent('Searched for listing', eventProperties: {
       'query': query,
       'results_count': count,
     });
   }
 
-  Future<void> logCreateCondolence(String message, String funeralId) async {
+  Future<void> logCreateCondolence(String? message, String funeralId) async {
     analytics.logEvent('Created new condolence', eventProperties: {
       'message': message ?? null,
       'name_only': (message == null) ? 'true' : 'false',
@@ -47,14 +47,14 @@ class AnalyticsService {
     });
   }
 
-  Future<void> logUpdateProfile(String oldName, String newName) async {
+  Future<void> logUpdateProfile(String? oldName, String newName) async {
     analytics.logEvent('Updated user profile', eventProperties: {
       'old_name': oldName,
       'new_name': newName
     });
   }
 
-  Future<void> logRemoveCondolence(String id, String funeralId) async {
+  Future<void> logRemoveCondolence(String? id, String funeralId) async {
     analytics.logEvent('Removed condolence', eventProperties: {
       'condolenceId': id,
       'funeral_id': funeralId,
@@ -65,7 +65,7 @@ class AnalyticsService {
     analytics.logEvent('User signed out');
   }
 
-  Future<void> identifyUser(String uid, String name) async {
+  Future<void> identifyUser(String uid, String? name) async {
 
     analytics.init('5a182768ac170e9709225cc38f44e3d0');
 

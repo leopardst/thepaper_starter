@@ -16,16 +16,17 @@ import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
 
 class ComposePage extends StatefulWidget {
-  const ComposePage({Key key, @required this.funeral})
+  const ComposePage({Key? key, required this.funeral})
     : super(key: key);
-  final Funeral funeral;
+  final Funeral? funeral;
 
-  static Future<void> show({BuildContext context, Funeral funeral}) async {
+  static Future<void> show({required BuildContext context, Funeral? funeral}) async {
     await Navigator.of(context, rootNavigator: true).pushNamed(
-      Routes.condolencePage,
-      arguments: {funeral: funeral},
+      Routes.composePage,
+      arguments: funeral,
     );
   }
+
 
   @override
   _ComposePageState createState() => _ComposePageState();
@@ -33,8 +34,8 @@ class ComposePage extends StatefulWidget {
 
 class _ComposePageState extends State<ComposePage> {
 
-  String _name;
-  String _userImageURL;
+  String? _name;
+  String? _userImageURL;
   final TextEditingController textEditingController = new TextEditingController();
 
   @override
@@ -53,7 +54,7 @@ class _ComposePageState extends State<ComposePage> {
         final database = Provider.of<FirestoreDatabase>(context, listen: false);
         final id = documentIdFromCurrentDate();
         final updatedAt = DateTime.now();
-        print("url:" + _userImageURL);
+        print("url:" + _userImageURL!);
 
         final condolence = Condolence(id: id, name: _name, content: _content, updatedAt: updatedAt, userImageURL: _userImageURL, isPublic: true, isDeleted: false);
         await database.setCondolence(condolence, _funeralId, merge: true);
@@ -81,7 +82,7 @@ class _ComposePageState extends State<ComposePage> {
           FlatButton(
             textColor: Colors.blue,
             highlightColor: Colors.grey[100],
-            onPressed: () => _sendMessage(context, widget.funeral.id, textEditingController.text),
+            onPressed: () => _sendMessage(context, widget.funeral!.id, textEditingController.text),
             child: Text("Send")),
           // IconButton(
           //   icon: Icon(Icons.send, color: Colors.black),

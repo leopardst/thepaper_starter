@@ -18,13 +18,13 @@ class _SearchPageState extends State<SearchPage>{
     apiKey: 'e011058d5e69a218b2cc7012e68248c4',
   );
 
-  Future<List<AlgoliaObjectSnapshot>> search2(String input) async {    
-    List<AlgoliaObjectSnapshot> results = new List<AlgoliaObjectSnapshot>();
+  Future<List<AlgoliaObjectSnapshot>> search2(String? input) async {    
+    List<AlgoliaObjectSnapshot> results = new List<AlgoliaObjectSnapshot>.empty(growable: true);
     // AlgoliaSettings settingsData = algolia.instance.index('funerals').settings;
     // settingsData = settingsData.setSnippetEllipsisText('[&hellip;]');
     // AlgoliaTask setSettings = await settingsData.setSettings();
     
-    AlgoliaQuery query = algolia.instance.index("funerals").search(input);
+    AlgoliaQuery query = algolia.instance.index("funerals").search(input!);
     query = query.setFacetFilter('isLive:true');
     query = query.setFacetFilter('isDeleted:false');
 
@@ -44,7 +44,7 @@ class _SearchPageState extends State<SearchPage>{
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: SearchBar<AlgoliaObjectSnapshot>(
+          child: SearchBar<AlgoliaObjectSnapshot?>(
             onSearch: search2,
             hintText: "Search",
             hintStyle: TextStyle(
@@ -54,7 +54,7 @@ class _SearchPageState extends State<SearchPage>{
               padding: const EdgeInsets.only(top: 4.0),
               child: Text("No results found"),
             ),
-            onItemFound: (AlgoliaObjectSnapshot snap, int index){
+            onItemFound: (AlgoliaObjectSnapshot? snap, int index){
               return SearchListTile(snap: snap, index: index);
             },
           ),

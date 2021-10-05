@@ -3,22 +3,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Comment {
   Comment({
-    @required this.id,
-    @required this.name,
-    @required this.content,
-    @required this.createdAt,
-    @required this.userImageURL,
+    required this.id,
+    required this.name,
+    required this.content,
+    required this.createdAt,
+    required this.userImageURL,
     this.isPublic,
     this.remoteId,
   });
 
   String id;
-  String name;
-  String content;
+  String? name;
+  String? content;
   DateTime createdAt;
-  String userImageURL;
-  bool isPublic;
-  int remoteId;
+  String? userImageURL;
+  bool? isPublic;
+  int? remoteId;
 
   factory Comment.fromMap(Map<dynamic, dynamic> value, String id) {
     final Timestamp createdAtTS = value['createdAt'];

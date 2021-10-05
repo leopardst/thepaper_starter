@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
 class SignInViewModel with ChangeNotifier {
-  SignInViewModel({@required this.auth});
+  SignInViewModel({required this.auth});
   final FirebaseAuthService auth;
   bool isLoading = false;
 
@@ -25,11 +25,11 @@ class SignInViewModel with ChangeNotifier {
   }
 
   Future<void> signInWithGoogle() async {
-    return await _signIn(auth.signInWithGoogle);
+    await _signIn(auth.signInWithGoogle);
   }
 
-  Future<void> signInWithFacebook() async {
-    return await _signIn(auth.signInWithFacebook);
-  }
+  // Future<void> signInWithFacebook() async {
+  //   await _signIn(auth.signInWithFacebook);
+  // }
   
 }

@@ -13,9 +13,9 @@ import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 
 class CalendarPage extends StatelessWidget {
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
 
-  const CalendarPage({Key key, this.scrollController}) : super(key: key);
+  const CalendarPage({Key? key, this.scrollController}) : super(key: key);
 
 
   @override
@@ -37,7 +37,7 @@ class CalendarPage extends StatelessWidget {
             builder: (context, snapshot) {
               print('state:' + snapshot.connectionState.toString());
               if (snapshot.hasData) {
-                final List<Funeral> items = snapshot.data;
+                final List<Funeral> items = snapshot.data!;
                 if (items.isNotEmpty) {
                   return _buildList(items);
                 } else {

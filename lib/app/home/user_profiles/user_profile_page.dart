@@ -16,20 +16,20 @@ import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.
 
 class UserProfilePage extends StatelessWidget {
   const UserProfilePage({this.userProfile});
-  final UserProfile userProfile;
+  final UserProfile? userProfile;
 
-  static Future<void> show(BuildContext context, {String uid, Comment comment, Condolence condolence}) async {
+  static Future<void> show(BuildContext context, {String? uid, Comment? comment, Condolence? condolence}) async {
 
     var userProfile;
 
-    if(uid != null){
-      final database = Provider.of<FirestoreDatabase>(context, listen: false);
-      userProfile = await database.jobsStream().first;
-    }else if(comment != null){
+    // if(uid != null){
+    //   final database = Provider.of<FirestoreDatabase>(context, listen: false);
+    //   userProfile = await database.jobsStream().first;
+    // }else if(comment != null){
        
-    }else if(condolence != null){
+    // }else if(condolence != null){
 
-    }
+    // }
     
     await Navigator.of(context).pushNamed(
       CupertinoTabViewRoutes.userProfilePage,
@@ -41,7 +41,7 @@ class UserProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    return _buildUserInfo(userProfile);
+    return _buildUserInfo(userProfile!);
     
     //final database = Provider.of<FirestoreDatabase>(context, listen: false);
     // return StreamBuilder<UserProfile>(
@@ -69,7 +69,7 @@ class UserProfilePage extends StatelessWidget {
   Widget _buildUserInfo(UserProfile userProfile) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(userProfile.displayName),
+        title: Text(userProfile.displayName!),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(130.0),
           child: Column(
@@ -83,7 +83,7 @@ class UserProfilePage extends StatelessWidget {
               SizedBox(height: 8),
               if (userProfile.displayName != null)
                 Text(
-                  userProfile.displayName,
+                  userProfile.displayName!,
                   style: TextStyle(color: Colors.black),
                 ),
               SizedBox(height: 8),

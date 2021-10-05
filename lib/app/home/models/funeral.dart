@@ -6,8 +6,8 @@ import 'package:html/parser.dart';
 
 
 class FuneralGroup{
-  String id; //ID of the group
-  String name; // Name of the group
+  String? id; //ID of the group
+  String? name; // Name of the group
 
   FuneralGroup.fromMap(Map<dynamic, dynamic> value)
       : id = value["id"],
@@ -22,33 +22,33 @@ class FuneralGroup{
 
 class Funeral {
   Funeral({
-    @required this.id,
-    @required this.firstName,
-    @required this.lastName,
-    @required this.funeralDate,
-    @required this.location,
-    @required this.obituary,
-    @required this.allowCondolences,
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.funeralDate,
+    required this.location,
+    required this.obituary,
+    required this.allowCondolences,
     this.createdDate,
     this.groups,
     this.imageURL
   });
 
   String id;
-  String firstName;
-  String lastName;
-  DateTime funeralDate;
-  DateTime createdDate;
-  String location;
-  String obituary;
-  String imageURL;
-  List<FuneralGroup> groups;
-  bool allowCondolences;
+  String? firstName;
+  String? lastName;
+  DateTime? funeralDate;
+  DateTime? createdDate;
+  String? location;
+  String? obituary;
+  String? imageURL;
+  List<FuneralGroup>? groups;
+  bool? allowCondolences;
 
   factory Funeral.fromMap(Map<dynamic, dynamic> value, String id) {
-    final Timestamp dateTS = value['funeralDate'];
+    final Timestamp? dateTS = value['funeralDate'];
     final Timestamp createdDateTS = value['createdDate'];
-    var _dateTS = null;
+    dynamic _dateTS = null;
 
     if(dateTS != null){
       _dateTS = dateTS.toDate();
@@ -89,11 +89,11 @@ class Funeral {
     return <String, dynamic>{
       'firstName': firstName,
       'lastName': lastName,
-      'funeralDate': Timestamp.fromDate(funeralDate), //TODO not sure if this works
+      'funeralDate': Timestamp.fromDate(funeralDate!), //TODO not sure if this works
       'location': location,
       'obituary': obituary,
       'imageURL': imageURL,
-      'createdDate': Timestamp.fromDate(createdDate),
+      'createdDate': Timestamp.fromDate(createdDate!),
       'allowCondolences': allowCondolences,
       // 'groups': funeralGroups,
   };
@@ -105,26 +105,26 @@ class Funeral {
 
   String get funeralDateAsString{
     var formatter = new DateFormat('EEEE, MMMM dd, yyyy');
-    String formatted = formatter.format(funeralDate);
+    String formatted = formatter.format(funeralDate!);
     return formatted;
   }
 
   String get funeralTimeAsString{
     var formatter = new DateFormat('h:mm a');
-    String formatted = formatter.format(funeralDate);
+    String formatted = formatter.format(funeralDate!);
     return formatted;
   }
   
   String get funeralFullDateAndTimeAsString{
     var formatter = new DateFormat("EEEE, MMMM d, yyyy 'at' h:mm a");
-    String formatted = formatter.format(funeralDate);
+    String formatted = formatter.format(funeralDate!);
     return formatted;
   }
 
   String get obituaryClean{
-    var oTemp = obituary.replaceAll('<br>', '\n');
+    var oTemp = obituary!.replaceAll('<br>', '\n');
     var doc = parse(oTemp);
-    return parse(doc.body.text).documentElement.text;
+    return parse(doc.body!.text).documentElement!.text;
   }
 
   bool get emptyImage{
@@ -138,12 +138,12 @@ class Funeral {
 
   DateTime get funeralDateGroupBy{
     // String formattedDate = DateFormat('EEEE, MMMM d').format(funeralDate);
-    return new DateTime(funeralDate.year, funeralDate.month, funeralDate.day);
+    return new DateTime(funeralDate!.year, funeralDate!.month, funeralDate!.day);
   }
 
   String get funeralFormattedTime{
-    if(funeralDate.hour != 0)
-      return new DateFormat.jm().format(funeralDate);
+    if(funeralDate!.hour != 0)
+      return new DateFormat.jm().format(funeralDate!);
     else
       return "";
   }

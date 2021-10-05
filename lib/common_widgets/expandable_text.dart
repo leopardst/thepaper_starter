@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ExpandableText extends StatefulWidget {
   ExpandableText(this.text);
 
-  final String text;
+  final String? text;
 
   @override
   _ExpandableTextState createState() => new _ExpandableTextState();
@@ -27,7 +27,7 @@ class _ExpandableTextState extends State<ExpandableText>
           duration: Duration(milliseconds: 200),
           crossFadeState: showFullText ? CrossFadeState.showFirst : CrossFadeState.showSecond,
           firstChild: Text(
-              widget.text,
+              widget.text!,
               style: TextStyle(
                   height: 1.65, 
               ),
@@ -36,7 +36,7 @@ class _ExpandableTextState extends State<ExpandableText>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                widget.text,
+                widget.text!,
                 maxLines: 10,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -57,7 +57,7 @@ class _ExpandableTextState extends State<ExpandableText>
         );
       }
       else{
-       return Text(widget.text);
+       return Text(widget.text!);
       }
     });
   }

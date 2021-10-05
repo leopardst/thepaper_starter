@@ -6,9 +6,9 @@ typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item);
 
 class AccountCondolencesListBuilder<T> extends StatelessWidget {
   const AccountCondolencesListBuilder({
-    Key key,
-    @required this.snapshot,
-    @required this.itemBuilder,
+    Key? key,
+    required this.snapshot,
+    required this.itemBuilder,
     this.dontScroll = false,
   }) : super(key: key);
   final AsyncSnapshot<List<T>> snapshot;
@@ -19,7 +19,7 @@ class AccountCondolencesListBuilder<T> extends StatelessWidget {
   Widget build(BuildContext context) {
   debugPrint('snapshot: $snapshot'); //TODO Remove this
     if (snapshot.hasData) {
-      final List<T> items = snapshot.data.reversed.toList();
+      final List<T> items = snapshot.data!.reversed.toList();
       if (items.isNotEmpty) {
         return _buildList(items);
       } else {

@@ -14,8 +14,8 @@ import 'package:thepaper_starter/app/home/condolences/compose_page.dart';
 import 'package:thepaper_starter/app/home/condolences/condolences_list_builder.dart';
 
 class CondolenceCount extends StatefulWidget {
-  const CondolenceCount({@required this.funeral});
-  final Funeral funeral;
+  const CondolenceCount({required this.funeral});
+  final Funeral? funeral;
 
   @override
   State<StatefulWidget> createState() => _CondolenceCountState();
@@ -31,7 +31,7 @@ class _CondolenceCountState extends State<CondolenceCount> {
   bool isExpanded = false;
   bool userHasGivenCondolences = false;
   double initialExtent = minExtent;
-  BuildContext draggableSheetContext;
+  BuildContext? draggableSheetContext;
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _CondolenceCountState extends State<CondolenceCount> {
   Widget build(BuildContext context) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     final user = Provider.of<AppUser>(context, listen:false);
-    var condolenceSnapshot = Provider.of<Condolence>(context);
+    var condolenceSnapshot = Provider.of<Condolence?>(context);
     if(condolenceSnapshot != null){
       userHasGivenCondolences = true;
     }
@@ -55,11 +55,11 @@ class _CondolenceCountState extends State<CondolenceCount> {
       // width: MediaQuery.of(context).size.width - 40.0,
       child:
        StreamBuilder<List<Condolence>>(
-        stream: database.condolencesStream(funeral: widget.funeral),
+        stream: database.condolencesStream(funeral: widget.funeral!),
         builder: (context, snapshot) {
-          if(snapshot.hasData && snapshot.data.isNotEmpty){
-            var count = snapshot.data.length;
-            var nameContent = getNames(snapshot.data, count, user);
+          if(snapshot.hasData && snapshot.data!.isNotEmpty){
+            var count = snapshot.data!.length;
+            var nameContent = getNames(snapshot.data!, count, user);
             return GestureDetector(
               onTap: () => _showDialog(context),
               child: Text(Strings.viewCondolences, style: TextThemes.actionTitle),
@@ -105,7 +105,7 @@ String getNames(List<Condolence> data, int count, AppUser user){
       );
     }
     else{
-      var name2 = "";
+      String? name2 = "";
       if(count >= 2){
         name2 = data[count - 2].name;
       }

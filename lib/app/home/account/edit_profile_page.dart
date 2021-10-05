@@ -18,12 +18,12 @@ import 'package:thepaper_starter/services/firebase_auth_service.dart';
 
 
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({Key key, @required this.userProfile})
+  const EditProfilePage({Key? key, required this.userProfile})
     : super(key: key);
 
-  final UserProfile userProfile;
+  final UserProfile? userProfile;
 
-  static Future<void> show({BuildContext context, UserProfile userProfile}) async {
+  static Future<void> show({required BuildContext context, UserProfile? userProfile}) async {
     await Navigator.of(context, rootNavigator: true).pushNamed(
       Routes.editProfilePage,
       arguments: userProfile,
@@ -36,25 +36,25 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
 
-  TextEditingController nameTextEditingController;
+  TextEditingController? nameTextEditingController;
   final _formKey = GlobalKey<FormState>();
-  bool _disableSubmit;
+  late bool _disableSubmit;
 
   // TextEditingController locationTextEditingController;
 
   @override
   void initState() {
     super.initState();
-    nameTextEditingController = new TextEditingController(text: widget.userProfile.displayName);
+    nameTextEditingController = new TextEditingController(text: widget.userProfile!.displayName);
     _disableSubmit = true;
   }
 
   Future<void> _saveProfile(BuildContext context) async {
 
-    if (_formKey.currentState.validate()) {
-       _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+       _formKey.currentState!.save();
       debugPrint('Saving profile changes');
-      String _oldDisplayName = widget.userProfile.displayName;
+      String? _oldDisplayName = widget.userProfile!.displayName;
 
     // if (_content.trim() != '') {
     //   nameTextEditingController.clear();
@@ -65,13 +65,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
         // print("url:" + _userImageURL);
 
         final Map<String, dynamic> userProfileUpdates = {
-          'displayName': nameTextEditingController.text,
+          'displayName': nameTextEditingController!.text,
         };
 
         await database.updateUserProfile(userProfileUpdates);
 
         final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
-        analyticsService.logUpdateProfile(_oldDisplayName, nameTextEditingController.text);
+        analyticsService.logUpdateProfile(_oldDisplayName, nameTextEditingController!.text);
         
         Navigator.of(context).pop();
       } on PlatformException catch (e) {
@@ -128,7 +128,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     style: TextThemes.inputStyle,
                     onChanged: (text) {
                     setState(() {
-                      if(text.length>0 && text != widget.userProfile.displayName)
+                      if(text.length>0 && text != widget.userProfile!.displayName)
                         _disableSubmit = false;
                       else
                         _disableSubmit = true;

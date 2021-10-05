@@ -2,14 +2,14 @@ import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
 import 'package:flutter/services.dart';
 
 class PlatformExceptionAlertDialog extends PlatformAlertDialog {
-  PlatformExceptionAlertDialog({String title, PlatformException exception})
+  PlatformExceptionAlertDialog({required String title, required PlatformException exception})
       : super(
     title: title,
-    content: message(exception),
+    content: message(exception)!,
     defaultActionText: 'OK',
   );
 
-  static String message(PlatformException exception) {
+  static String? message(PlatformException exception) {
     if (exception.message == 'FIRFirestoreErrorDomain') {
       if (exception.code == 'Code 7') {
         // This happens when we get a "Missing or insufficient permissions" error

@@ -31,15 +31,15 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key key, this.authServiceBuilder, this.databaseBuilder, this.analyticsService})
+  const MyApp({Key? key, this.authServiceBuilder, this.databaseBuilder, this.analyticsService})
       : super(key: key);
   // Expose builders for 3rd party services at the root of the widget tree
   // This is useful when mocking services while testing
-  final FirebaseAuthService Function(BuildContext context) authServiceBuilder;
-  final FirestoreDatabase Function(BuildContext context, String uid)
+  final FirebaseAuthService Function(BuildContext context)? authServiceBuilder;
+  final FirestoreDatabase Function(BuildContext context, String uid)?
       databaseBuilder;
   
-  final AnalyticsService Function(BuildContext context) analyticsService;
+  final AnalyticsService Function(BuildContext context)? analyticsService;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +47,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<FirebaseAuthService>(
-          create: authServiceBuilder,
+          create: authServiceBuilder!,
         ),
         Provider<AnalyticsService>(
-          create: analyticsService,
+          create: analyticsService!,
         )
       ],
       child: AuthWidgetBuilder(
@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
             onGenerateRoute: route.Router.onGenerateRoute,
             builder: (context, child) {
               return MediaQuery(
-                child: child,
+                child: child!,
                   data: MediaQuery.of(context).copyWith(textScaleFactor: max(0.8, min(1.2, (10*MediaQuery.textScaleFactorOf(context)).round()/10))));
             },
           );

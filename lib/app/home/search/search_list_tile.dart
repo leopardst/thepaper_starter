@@ -9,9 +9,9 @@ import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class SearchListTile extends StatefulWidget {
-  const SearchListTile({Key key, @required this.snap, @required this.index}) : super(key: key);
+  const SearchListTile({Key? key, required this.snap, required this.index}) : super(key: key);
   
-  final AlgoliaObjectSnapshot snap;
+  final AlgoliaObjectSnapshot? snap;
   final int index;
 
   @override
@@ -31,7 +31,7 @@ class _SearchListTileState extends State<SearchListTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => _showFuneral(widget.snap.objectID),      
+        onTap: () => _showFuneral(widget.snap!.objectID),      
         child: Container(
         width: double.infinity,
         padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
@@ -56,36 +56,24 @@ class _SearchListTileState extends State<SearchListTile> {
     );
   }
 
-  Widget _funeralTime(){
-    // if(funeral.funeralDate.hour != 0){
-    //   return Column(children: <Widget>[
-    //     SizedBox(height: 5.0),
-    //     Text(funeral.funeralTimeAsString),
-    //   ],);
-    // }
-    // else{
-    //   return Container();
-    // }
-    
-  }
 
   Widget _buildContent(){
   
-    if(widget.snap.snippetResult["obituary"]["matchLevel"] == "full"){
+    if(widget.snap!.snippetResult!["obituary"]["matchLevel"] == "full"){
       return ListTile(
         trailing: _buildImage(),
         title: Wrap(
           direction: Axis.horizontal,
           spacing: 4,
           children: <Widget>[
-            Text(widget.snap.data["firstName"], style: TextThemes.title2),
-            Text(widget.snap.data["lastName"], style: TextThemes.title2),
+            Text(widget.snap!.data["firstName"], style: TextThemes.title2),
+            Text(widget.snap!.data["lastName"], style: TextThemes.title2),
           ]
         ),        
         subtitle: MediaQuery(
           data: MediaQueryData(textScaleFactor: 1.0),
           child: Html(
-          data: widget.snap.snippetResult["obituary"]["value"],
+          data: widget.snap!.snippetResult!["obituary"]["value"],
           style: 
             {
               '*': Style(
@@ -104,8 +92,8 @@ class _SearchListTileState extends State<SearchListTile> {
           direction: Axis.horizontal,
           spacing: 4,
           children: <Widget>[
-            Text(widget.snap.data["firstName"], style: TextThemes.title2),
-            Text(widget.snap.data["lastName"], style: TextThemes.title2),
+            Text(widget.snap!.data["firstName"], style: TextThemes.title2),
+            Text(widget.snap!.data["lastName"], style: TextThemes.title2),
           ]
         ),
         // subtitle: Text(widget.snap.snippetResult["obituary"]["value"]),
@@ -114,12 +102,12 @@ class _SearchListTileState extends State<SearchListTile> {
    
   }
 
-  Widget _buildImage() {
-    if(widget.snap.data["imageURL"] != null && widget.snap.data["imageURL"] != "https:"){
+  Widget? _buildImage() {
+    if(widget.snap!.data["imageURL"] != null && widget.snap!.data["imageURL"] != "https:"){
       // return Image.network(funeral.imageURL);
 
       return Hero(
-        tag: "${widget.snap.objectID}",
+        tag: "${widget.snap!.objectID}",
         transitionOnUserGestures: true,
         child: ConstrainedBox(
           constraints: BoxConstraints(
@@ -129,7 +117,7 @@ class _SearchListTileState extends State<SearchListTile> {
             maxHeight: 64,
           ),
           child: CachedNetworkImage(
-            imageUrl: widget.snap.data["imageURL"],
+            imageUrl: widget.snap!.data["imageURL"],
             imageBuilder: (context, imageProvider) => Container(
               width: 100.0,
               height: 100.0,

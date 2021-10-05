@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:thepaper_starter/app/home/account/account_page.dart';
 import 'package:thepaper_starter/app/home/cupertino_home_scaffold.dart';
-import 'package:thepaper_starter/app/home/jobs/jobs_page.dart';
 import 'package:thepaper_starter/app/home/funerals/funerals_page.dart';
 import 'package:thepaper_starter/app/home/tab_item.dart';
 import 'package:package_info/package_info.dart';
@@ -54,7 +53,7 @@ class _HomePageState extends State<HomePage> {
   void _select(TabItem tabItem) {
     if (tabItem == _currentTab) {
       // pop to first route
-      navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
+      navigatorKeys[tabItem]!.currentState!.popUntil((route) => route.isFirst);
     } else {
       setState(() => _currentTab = tabItem);
     }
@@ -63,7 +62,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => !await navigatorKeys[_currentTab].currentState.maybePop(),
+      onWillPop: () async => !await navigatorKeys[_currentTab]!.currentState!.maybePop(),
       child: CupertinoHomeScaffold(
         currentTab: _currentTab,
         onSelectTab: _select,
@@ -90,7 +89,7 @@ class _HomePageState extends State<HomePage> {
     double newVersion = double.parse(data['version'].trim().replaceAll(".", ""));
     final newVersionText = data['text'];
     final url = data['url'];
-    bool required = data['required'];
+    bool? required = data['required'];
     
     print("text: $newVersionText");
     if (newVersion > currentVersion) {
@@ -105,7 +104,7 @@ class _HomePageState extends State<HomePage> {
   }
   }
 
-  _showVersionDialog(context, String text, String url, bool required) async {
+  _showVersionDialog(context, String? text, String? url, bool? required) async {
     await showDialog<String>(
       context: context,
       barrierDismissible: false,
@@ -122,11 +121,11 @@ class _HomePageState extends State<HomePage> {
                 actions: <Widget>[
                   FlatButton(
                     child: Text(btnLabel),
-                    onPressed: () => _launchURL(url),
+                    onPressed: () => _launchURL(url!),
                   ),
                   FlatButton(
                     child: Text(btnLabelCancel),
-                    onPressed: required ? null : () => Navigator.pop(context),
+                    onPressed: required! ? null : () => Navigator.pop(context),
                   ),
                 ],
               )
@@ -136,11 +135,11 @@ class _HomePageState extends State<HomePage> {
                 actions: <Widget>[
                   FlatButton(
                     child: Text(btnLabel),
-                    onPressed: () => _launchURL(url),
+                    onPressed: () => _launchURL(url!),
                   ),
                   FlatButton(
                     child: Text(btnLabelCancel),
-                    onPressed: required ? null : () => Navigator.pop(context),
+                    onPressed: required! ? null : () => Navigator.pop(context),
                   ),
                 ],
               );

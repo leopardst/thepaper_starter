@@ -14,9 +14,9 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:thepaper_starter/common_widgets/time_ago_format.dart';
 
 class CondolenceFeedListTile extends StatelessWidget {
-  const CondolenceFeedListTile({Key key, @required this.condolence, @required this.funeral}) : super(key: key);
+  const CondolenceFeedListTile({Key? key, required this.condolence, required this.funeral}) : super(key: key);
   final Condolence condolence;
-  final Funeral funeral;
+  final Funeral? funeral;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class CondolenceFeedListTile extends StatelessWidget {
           children: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
-            child: Avatar(photoUrl: condolence.userImageURL, radius: 20.0, character: condolence.name[0]),
+            child: Avatar(photoUrl: condolence.userImageURL, radius: 20.0, character: condolence.name![0]),
           ),
           Expanded(
             flex: 1,
@@ -68,7 +68,7 @@ class CondolenceFeedListTile extends StatelessWidget {
         children: <Widget>[
           GestureDetector(
             onTap: () => {},
-            child: Text(condolence.name,
+            child: Text(condolence.name!,
               style: TextThemes.subtitle,
             )
           ),
@@ -77,7 +77,7 @@ class CondolenceFeedListTile extends StatelessWidget {
     } else {
       return GestureDetector(
         onTap: () => {},
-        child: Text(condolence.name,
+        child: Text(condolence.name!,
           style: TextThemes.subtitle,
         )
       );
@@ -87,7 +87,7 @@ class CondolenceFeedListTile extends StatelessWidget {
     if(condolence.content == null){
       return Container();
     } else {
-      return Text(condolence.content,
+      return Text(condolence.content!,
         style: TextThemes.commentBody,
       );
     }

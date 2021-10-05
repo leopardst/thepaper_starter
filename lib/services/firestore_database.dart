@@ -15,59 +15,14 @@ import 'package:thepaper_starter/services/firestore_service.dart';
 String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
 
 class FirestoreDatabase {
-  FirestoreDatabase({@required this.uid}) : assert(uid != null);
+  FirestoreDatabase({required this.uid}) : assert(uid != null);
   final String uid;
 
   final _service = FirestoreService.instance;
 
-  Future<void> setJob(Job job) async => await _service.setData(
-        path: FirestorePath.job(uid, job.id),
-        data: job.toMap(),
-      );
-
-  Future<void> deleteJob(Job job) async {
-    // delete where entry.jobId == job.jobId
-    final allEntries = await entriesStream(job: job).first;
-    for (Entry entry in allEntries) {
-      if (entry.jobId == job.id) {
-        await deleteEntry(entry);
-      }
-    }
-    // delete job
-    await _service.deleteData(path: FirestorePath.job(uid, job.id));
-  }
-
-  Stream<Job> jobStream({@required String jobId}) => _service.documentStream(
-        path: FirestorePath.job(uid, jobId),
-        builder: (data, documentId) => Job.fromMap(data, documentId),
-      );
-
-  Stream<List<Job>> jobsStream() => _service.collectionStream(
-        path: FirestorePath.jobs(uid),
-        builder: (data, documentId) => Job.fromMap(data, documentId),
-      );
-
-  Future<void> setEntry(Entry entry) async => await _service.setData(
-        path: FirestorePath.entry(uid, entry.id),
-        data: entry.toMap(),
-      );
-
-  Future<void> deleteEntry(Entry entry) async =>
-      await _service.deleteData(path: FirestorePath.entry(uid, entry.id));
-
-  Stream<List<Entry>> entriesStream({Job job}) =>
-      _service.collectionStream<Entry>(
-        path: FirestorePath.entries(uid),
-        queryBuilder: job != null
-            ? (query) => query.where('jobId', isEqualTo: job.id)
-            : null,
-        builder: (data, documentID) => Entry.fromMap(data, documentID),
-        sort: (lhs, rhs) => rhs.start.compareTo(lhs.start),
-      );
-
-  Stream<Funeral> funeralStream({@required String funeralId}) => _service.documentStream(
+  Stream<Funeral> funeralStream({required String? funeralId}) => _service.documentStream(
         path: FirestorePath.funeral(funeralId),
-        builder: (data, documentId) => Funeral.fromMap(data, documentId),
+        builder: (data, documentId) => Funeral.fromMap(data!, documentId),
       );
 
   Stream<List<Funeral>> funeralsStream() => _service.collectionStream(
@@ -76,10 +31,10 @@ class FirestoreDatabase {
           .where('isDeleted', isEqualTo: false),
           
         builder: (data, documentId) => Funeral.fromMap(data, documentId),
-        sort: (lhs, rhs) => rhs.createdDate.compareTo(lhs.createdDate),
+        sort: (lhs, rhs) => rhs.createdDate!.compareTo(lhs.createdDate!),
       );
 
-    Stream<List<Funeral>> funeralsStreamAfterDate({@required int daysAfter}) => _service.collectionStream(
+    Stream<List<Funeral>> funeralsStreamAfterDate({required int daysAfter}) => _service.collectionStream(
         path: FirestorePath.funerals(),
         queryBuilder: (query) => query.where('isLive', isEqualTo: true)
           .where('isDeleted', isEqualTo: false)
@@ -88,10 +43,10 @@ class FirestoreDatabase {
                     DateTime.now().month,
                     DateTime.now().day + daysAfter)),
         builder: (data, documentId) => Funeral.fromMap(data, documentId),
-        sort: (lhs, rhs) => rhs.createdDate.compareTo(lhs.createdDate),
+        sort: (lhs, rhs) => rhs.createdDate!.compareTo(lhs.createdDate!),
       );
 
-    Stream<List<Funeral>> funeralsStreamSinceDaysAgo({@required int daysAgo}) => _service.collectionStream(
+    Stream<List<Funeral>> funeralsStreamSinceDaysAgo({required int daysAgo}) => _service.collectionStream(
         path: FirestorePath.funerals(),
         queryBuilder: (query) => query.where('isLive', isEqualTo: true)
           .where('isDeleted', isEqualTo: false)
@@ -100,10 +55,10 @@ class FirestoreDatabase {
                     DateTime.now().month,
                     DateTime.now().day - daysAgo)),
         builder: (data, documentId) => Funeral.fromMap(data, documentId),
-        sort: (lhs, rhs) => rhs.createdDate.compareTo(lhs.createdDate),
+        sort: (lhs, rhs) => rhs.createdDate!.compareTo(lhs.createdDate!),
       );
   
-  Stream<List<Condolence>> condolencesStream({@required Funeral funeral}) => _service.collectionStream(
+  Stream<List<Condolence>> condolencesStream({required Funeral funeral}) => _service.collectionStream(
         path: FirestorePath.condolences(funeral.id),
         queryBuilder: (query) => query.where('isPublic', isEqualTo: true)
           .where('isDeleted', isEqualTo: false),
@@ -117,12 +72,12 @@ class FirestoreDatabase {
       merge: merge,
     );
 
-  Stream<Condolence> condolenceStream({@required String funeralId}) => _service.documentStream(
+  Stream<Condolence> condolenceStream({required String funeralId}) => _service.documentStream(
         path: FirestorePath.condolence(funeralId, uid),
-        builder: (data, documentId) => Condolence.fromMap(data, documentId),
+        builder: (data, documentId) => Condolence.fromMap(data!, documentId),
   );
 
-  Future<List<Condolence>> condolencesList({@required Funeral funeral}) async => await _service.collectionList(
+  Future<List<Condolence>> condolencesList({required Funeral funeral}) async => await _service.collectionList(
         path: FirestorePath.condolences(funeral.id),
         builder: (data, documentId) => Condolence.fromMap(data, documentId),
   );
@@ -130,7 +85,7 @@ class FirestoreDatabase {
   Future<void> deleteCondolence(String funeralId) async => 
       await _service.deleteData(path: FirestorePath.condolence(funeralId, uid));
   
-  Stream<List<Comment>> commentsStream({@required Funeral funeral}) => _service.collectionStream(
+  Stream<List<Comment>> commentsStream({required Funeral funeral}) => _service.collectionStream(
         path: FirestorePath.comments(funeral.id),
         queryBuilder: (query) => query.where('isPublic', isEqualTo: true)
           .where('isDeleted', isEqualTo: false),
@@ -139,7 +94,7 @@ class FirestoreDatabase {
 
       );
   
-  Future<List<Comment>> commentsList({@required Funeral funeral}) => _service.collectionList(
+  Future<List<Comment>> commentsList({required Funeral funeral}) => _service.collectionList(
       path: FirestorePath.comments(funeral.id),
       builder: (data, documentId) => Comment.fromMap(data, documentId),
     );
@@ -155,26 +110,26 @@ class FirestoreDatabase {
     data: userProfileUpdates,
   );
 
-  Stream<UserProfile> userProfileStream({@required String uid}) => _service.documentStream(
+  Stream<UserProfile> userProfileStream({required String uid}) => _service.documentStream(
     path: FirestorePath.userProfile(uid),
-    builder: (data, documentId) => UserProfile.fromMap(data, documentId),
+    builder: (data, documentId) => UserProfile.fromMap(data!, documentId),
   );
 
-  Future<UserProfile> userProfileFuture({@required String uid}) => _service.documentFuture(
+  Future<UserProfile> userProfileFuture({required String uid}) => _service.documentFuture(
     path: FirestorePath.userProfile(uid),
-    builder: (data, documentId) => UserProfile.fromMap(data, documentId),
+    builder: (data, documentId) => UserProfile.fromMap(data!, documentId),
   );
 
-  Stream<List<UserCondolence>> userCondolencesStream({@required String uid}) => _service.collectionStream(
+  Stream<List<UserCondolence>> userCondolencesStream({required String uid}) => _service.collectionStream(
         path: FirestorePath.usercondolences(uid),
         queryBuilder: (query) => query.where('isDeleted', isEqualTo: false),
         builder: (data, documentId) => UserCondolence.fromMap(data, documentId)
         // sort: (lhs, rhs) => rhs.updatedAt.compareTo(lhs.updatedAt),
       );
 
-  Stream<Group> groupStream({@required String groupId}) => _service.documentStream(
+  Stream<Group> groupStream({required String groupId}) => _service.documentStream(
         path: FirestorePath.group(groupId),
-        builder: (data, documentId) => Group.fromMap(data, documentId),
+        builder: (data, documentId) => Group.fromMap(data!, documentId),
   );
 
   
