@@ -67,15 +67,15 @@ class SignInPage extends StatelessWidget {
     }
   } 
 
-  // Future<void> _signInWithFacebook(BuildContext context) async {
-  //   try {
-  //     await viewModel!.signInWithFacebook();
-  //   } on PlatformException catch (e) {
-  //     if (e.code != 'ERROR_ABORTED_BY_USER') {
-  //       _showSignInError(context, e);
-  //     }
-  //   }
-  // }
+  Future<void> _signInWithFacebook(BuildContext context) async {
+    try {
+      await viewModel!.signInWithFacebook();
+    } on PlatformException catch (e) {
+      if (e.code != 'ERROR_ABORTED_BY_USER') {
+        _showSignInError(context, e);
+      }
+    }
+  }
 
 
   @override
@@ -124,7 +124,7 @@ class SignInPage extends StatelessWidget {
               assetName: 'assets/fb-logo-blue.png',
               text: Strings.signInWithFacebook,
               // textColor: Colors.white,
-              // onPressed: viewModel!.isLoading ? null : () => _signInWithFacebook(context),
+              onPressed: viewModel!.isLoading ? null : () => _signInWithFacebook(context),
               // color: Color(0xFF334D92),
               color: Colors.white,
             ),
@@ -136,31 +136,17 @@ class SignInPage extends StatelessWidget {
             onPressed: viewModel!.isLoading ? null : () => _signInWithGoogle(context),
             color: Colors.white,
           ),
-          // SizedBox(height: 32.0),
-          // SignInButton(
-          //   key: emailPasswordButtonKey,
-          //   text: Strings.signInWithEmailPassword,
-          //   onPressed: viewModel.isLoading
-          //       ? null
-          //       : () => EmailPasswordSignInPageBuilder.show(context),
-          //   textColor: Colors.black,
-          //   color: Theme.of(context).primaryColor,
-          // ),
-          // SizedBox(height: 8),
-          // Text(
-          //   Strings.or,
-          //   style: TextStyle(fontSize: 14.0, color: Colors.black87),
-          //   textAlign: TextAlign.center,
-          // ),
-          // SizedBox(height: 8),
-          // SignInButton(
-          //   key: anonymousButtonKey,
-          //   text: Strings.goAnonymous,
-          //   color: Theme.of(context).primaryColor,
-          //   textColor: Colors.black,
-          //   onPressed:
-          //       viewModel.isLoading ? null : () => _signInAnonymously(context),
-          // ),
+          SizedBox(height: 32.0),
+          SignInButton(
+            key: emailPasswordButtonKey,
+            text: Strings.signInWithEmailPassword,
+            onPressed: viewModel!.isLoading
+                ? null
+                : () => EmailPasswordSignInPageBuilder.show(context),
+            textColor: Colors.black,
+            color: Theme.of(context).primaryColor,
+          ),
+          SizedBox(height: 16),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 // import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -10,7 +11,7 @@ class AppUser {
     this.email,
     this.photoURL,
     this.displayName,
-  }) : assert(uid != null, 'User can only be created with a non-null uid');
+  });
 
   final String uid;
   final String? email;
@@ -95,26 +96,75 @@ class FirebaseAuthService {
     }
   }
 
-  // Future<AppUser> signInWithFacebook() async {
-    // final FacebookLogin facebookLogin = FacebookLogin();
-    // // https://github.com/roughike/flutter_facebook_login/issues/210
-    // facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
-    // final FacebookLoginResult result =
-    //     await facebookLogin.logIn(<String>['public_profile', 'email']);
-    // if (result.accessToken != null) {
-    //   final userCredential = await FirebaseAuth.instance
-    //   .signInWithCredential(
-    //     FacebookAuthProvider.credential(result.accessToken.token),
-    //   );
-    //   return AppUser.fromFirebaseUser(userCredential.user);
-    // } else {
-    //   throw FirebaseException(
-    //     plugin: runtimeType.toString(),
-    //     code: 'ERROR_ABORTED_BY_USER',
-    //     message: 'Sign in aborted by user',
-    //   );
-    // }
-  // }
+  Future<AppUser> signInWithFacebook() async {
+    try {
+
+      LoginResult res = await FacebookAuth.instance.login();
+      switch (res.status) {
+        case LoginStatus.success:
+        // Send access token to server for validation and auth
+          final AccessToken? accessToken = res.accessToken;
+          print('Access token: ${accessToken!.token}');
+          OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(accessToken.token);
+
+          final UserCredential authResult = await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+          final User? user = authResult.user;
+          return AppUser.fromFirebaseUser(user);
+
+        case LoginStatus.failed:
+          throw FirebaseException(
+            plugin: runtimeType.toString(),
+            code: 'ERROR_MISSING_GOOGLE_ID_TOKEN',
+            message: 'Missing Google ID Token',
+          );
+        case LoginStatus.cancelled:
+          throw FirebaseException(
+            plugin: runtimeType.toString(),
+            code: 'ERROR_MISSING_GOOGLE_ID_TOKEN',
+            message: 'Missing Google ID Token',
+          );
+        case LoginStatus.operationInProgress:
+          throw FirebaseException(
+            plugin: runtimeType.toString(),
+            code: 'ERROR_MISSING_GOOGLE_ID_TOKEN',
+            message: 'Missing Google ID Token',
+          );
+      }
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "ERROR_EMAIL_ALREADY_IN_USE":
+        case "account-exists-with-different-credential":
+        case "email-already-in-use":
+          break;
+        case "ERROR_WRONG_PASSWORD":
+        case "wrong-password":
+          break;
+        case "ERROR_USER_NOT_FOUND":
+        case "user-not-found":
+          break;
+        case "ERROR_USER_DISABLED":
+        case "user-disabled":
+          break;
+        case "ERROR_TOO_MANY_REQUESTS":
+        case "operation-not-allowed":
+          break;
+        case "ERROR_OPERATION_NOT_ALLOWED":
+        case "operation-not-allowed":
+          break;
+        case "ERROR_INVALID_EMAIL":
+        case "invalid-email":
+          break;
+        case "ERROR_USER_NOT_FOUND":
+        case "user-not-found":
+          break;
+        default:
+          break;
+      }
+      throw e;
+    } on FirebaseException catch (e) {
+      throw e;
+    }
+  }
 
   Future<void> sendPasswordResetEmail(String email) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
