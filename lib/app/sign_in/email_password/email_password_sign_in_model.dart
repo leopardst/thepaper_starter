@@ -167,7 +167,7 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
     final bool canSubmitFields =
         formType == EmailPasswordSignInFormType.forgotPassword
             ? canSubmitEmail
-            : canSubmitEmail && canSubmitPassword && canSubmitName && canSubmitConfirmPassword;
+            : canSubmitEmail && canSubmitPassword && (formType == EmailPasswordSignInFormType.forgotPassword ? canSubmitName && canSubmitConfirmPassword: true);
     return canSubmitFields && !isLoading;
   }
 
