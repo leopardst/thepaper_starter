@@ -8,16 +8,20 @@ enum EmailPasswordSignInFormType { signIn, register, forgotPassword }
 class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
   EmailPasswordSignInModel({
     required this.auth,
+    this.name = '',
     this.email = '',
     this.password = '',
+    this.confirmPassword = '',
     this.formType = EmailPasswordSignInFormType.signIn,
     this.isLoading = false,
     this.submitted = false,
   });
   final FirebaseAuthService auth;
 
+  String name;
   String email;
   String password;
+  String confirmPassword;
   EmailPasswordSignInFormType formType;
   bool isLoading;
   bool submitted;
@@ -34,7 +38,7 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
           await auth.signInWithEmailAndPassword(email, password);
           break;
         case EmailPasswordSignInFormType.register:
-          await auth.createUserWithEmailAndPassword(email, password);
+          await auth.createUserWithEmailAndPassword(name, email, password);
           break;
         case EmailPasswordSignInFormType.forgotPassword:
           await auth.sendPasswordResetEmail(email);
@@ -48,14 +52,20 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
     }
   }
 
+  void updateName(String name) => updateWith(name: name);
+
   void updateEmail(String email) => updateWith(email: email);
 
   void updatePassword(String password) => updateWith(password: password);
 
+  void updateConfirmPassword(String password) => updateWith(confirmPassword: password);
+
   void updateFormType(EmailPasswordSignInFormType? formType) {
     updateWith(
+      name: '',
       email: '',
       password: '',
+      confirmPassword: '',
       formType: formType,
       isLoading: false,
       submitted: false,
@@ -63,14 +73,18 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
   }
 
   void updateWith({
+    String? name,
     String? email,
     String? password,
+    String? confirmPassword,
     EmailPasswordSignInFormType? formType,
     bool? isLoading,
     bool? submitted,
   }) {
+    this.name = name ?? this.name;
     this.email = email ?? this.email;
     this.password = password ?? this.password;
+    this.confirmPassword = confirmPassword ?? this.confirmPassword;
     this.formType = formType ?? this.formType;
     this.isLoading = isLoading ?? this.isLoading;
     this.submitted = submitted ?? this.submitted;
@@ -82,6 +96,10 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
       return Strings.password8CharactersLabel;
     }
     return Strings.passwordLabel;
+  }
+
+  String get confirmPasswordLabelText {
+    return Strings.confirmPassword8CharactersLabel;
   }
 
   // Getters
@@ -137,12 +155,24 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
     return passwordSignInSubmitValidator.isValid(password);
   }
 
+  bool get canSubmitName {
+    return name.isNotEmpty;
+  }
+
+  bool get canSubmitConfirmPassword {
+    return confirmPassword.isNotEmpty;
+  }
+
   bool get canSubmit {
     final bool canSubmitFields =
         formType == EmailPasswordSignInFormType.forgotPassword
             ? canSubmitEmail
-            : canSubmitEmail && canSubmitPassword;
+            : canSubmitEmail && canSubmitPassword && canSubmitName && canSubmitConfirmPassword;
     return canSubmitFields && !isLoading;
+  }
+
+  String? get nameErrorText {
+    return submitted && name.isEmpty ? Strings.invalidNameEmpty : null;
   }
 
   String? get emailErrorText {
@@ -159,6 +189,11 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
         ? Strings.invalidPasswordEmpty
         : Strings.invalidPasswordTooShort;
     return showErrorText ? errorText : null;
+  }
+
+  String? get confirmPasswordErrorText {
+    final bool showErrorText = submitted && (!canSubmitPassword || password != confirmPassword);
+    return showErrorText ? Strings.invalidConfirmPassword : null;
   }
 
   @override

@@ -6,17 +6,17 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 @immutable
 class AppUser {
-  const AppUser({
+  AppUser({
     required this.uid,
     this.email,
     this.photoURL,
     this.displayName,
   });
 
-  final String uid;
-  final String? email;
-  final String? photoURL;
-  final String? displayName;
+  String uid;
+  String? email;
+  String? photoURL;
+  String? displayName;
 
   factory AppUser.fromFirebaseUser(User? user) {
     if (user == null) {
@@ -60,10 +60,12 @@ class FirebaseAuthService {
   }
 
   Future<AppUser> createUserWithEmailAndPassword(
-      String email, String password) async {
+      String name, String email, String password) async {
     final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
-    return AppUser.fromFirebaseUser(userCredential.user);
+    AppUser user = AppUser.fromFirebaseUser(userCredential.user);
+    user.displayName = name;
+    return user;
   }
 
   Future<AppUser> signInWithGoogle() async {

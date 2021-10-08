@@ -122,7 +122,7 @@ class _AccountPageState extends State<AccountPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                      _userDisplayName(context, userProfile)!,
+                      _userDisplayName(context, userProfile),
                       // Text('Montreal, QC'),
                     ])),
                 Column(
@@ -151,7 +151,7 @@ class _AccountPageState extends State<AccountPage> {
     );
   }
 
-  Widget? _userDisplayName(context, userProfile) {
+  Widget _userDisplayName(context, userProfile) {
     if (userProfile.displayName != null) {
       return Column(
         children: <Widget>[
@@ -175,7 +175,7 @@ class _AccountPageState extends State<AccountPage> {
         ],
       );
     } else {
-      return null;
+      return Container();
     }
   }
 
