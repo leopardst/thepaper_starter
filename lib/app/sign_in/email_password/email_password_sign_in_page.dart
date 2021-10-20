@@ -50,7 +50,9 @@ class EmailPasswordSignInPage extends StatefulWidget {
 class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
   final FocusScopeNode _node = FocusScopeNode();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
   EmailPasswordSignInModel get model => widget.model;
 
@@ -59,6 +61,7 @@ class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
     _node.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -116,10 +119,22 @@ class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
       key: Key('email'),
       controller: _emailController,
       decoration: InputDecoration(
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.blue,
+            width: 1,
+          ),
+        ),
         labelText: Strings.emailLabel,
         hintText: Strings.emailHint,
         errorText: model.emailErrorText,
         enabled: !model.isLoading,
+        labelStyle: TextStyle(
+          color: Colors.black54,
+        ),
+        hintStyle: TextStyle(
+          fontStyle: FontStyle.italic,
+        ),
       ),
       autocorrect: false,
       textInputAction: TextInputAction.next,
@@ -133,20 +148,95 @@ class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
     );
   }
 
+  Widget _buildNameField() {
+    return TextField(
+      key: Key('name'),
+      controller: _nameController,
+      decoration: InputDecoration(
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.blue,
+            width: 1,
+          ),
+        ),
+        labelText: Strings.nameLabel,
+        hintText: Strings.nameHint,
+        errorText: model.nameErrorText,
+        enabled: !model.isLoading,
+        labelStyle: TextStyle(
+          color: Colors.black54,
+        ),
+        hintStyle: TextStyle(
+          fontStyle: FontStyle.italic,
+        ),
+      ),
+      autocorrect: false,
+      textInputAction: TextInputAction.next,
+      keyboardType: TextInputType.name,
+      keyboardAppearance: Brightness.light,
+      onChanged: model.updateName,
+      onEditingComplete: _emailEditingComplete,
+    );
+  }
+
   Widget _buildPasswordField() {
     return TextField(
       key: Key('password'),
       controller: _passwordController,
       decoration: InputDecoration(
-        labelText: model.passwordLabelText,
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.blue,
+            width: 1,
+          ),
+        ),
+        labelText: Strings.passwordLabel,
+        hintText: model.passwordLabelText,
         errorText: model.passwordErrorText,
         enabled: !model.isLoading,
+        labelStyle: TextStyle(
+          color: Colors.black54,
+        ),
+        hintStyle: TextStyle(
+          fontStyle: FontStyle.italic,
+        ),
       ),
       obscureText: true,
       autocorrect: false,
       textInputAction: TextInputAction.done,
       keyboardAppearance: Brightness.light,
       onChanged: model.updatePassword,
+      onEditingComplete: _passwordEditingComplete,
+    );
+  }
+
+  Widget _buildConfirmPasswordField() {
+    return TextField(
+      key: Key('confirm_password'),
+      controller: _confirmPasswordController,
+      decoration: InputDecoration(
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.blue,
+            width: 1,
+          ),
+        ),
+        labelText: model.confirmPasswordLabelText,
+        hintText: model.confirmPasswordLabelText,
+        errorText: model.confirmPasswordErrorText,
+        enabled: !model.isLoading,
+        labelStyle: TextStyle(
+          color: Colors.black54,
+        ),
+        hintStyle: TextStyle(
+          fontStyle: FontStyle.italic,
+        ),
+      ),
+      obscureText: true,
+      autocorrect: false,
+      textInputAction: TextInputAction.done,
+      keyboardAppearance: Brightness.light,
+      onChanged: model.updateConfirmPassword,
       onEditingComplete: _passwordEditingComplete,
     );
   }
@@ -158,11 +248,16 @@ class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           SizedBox(height: 8.0),
+          if (model.formType == EmailPasswordSignInFormType.register)
+            _buildNameField(),
           _buildEmailField(),
           if (model.formType !=
               EmailPasswordSignInFormType.forgotPassword) ...<Widget>[
             SizedBox(height: 8.0),
             _buildPasswordField(),
+
+            if (model.formType == EmailPasswordSignInFormType.register)
+              _buildConfirmPasswordField(),
           ],
           SizedBox(height: 8.0),
           FormSubmitButton(
@@ -172,17 +267,27 @@ class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
             onPressed: model.isLoading ? null : _submit,
           ),
           SizedBox(height: 8.0),
-          FlatButton(
+          TextButton(
             key: Key('secondary-button'),
-            child: Text(model.secondaryButtonText!),
+            child: Text(
+              model.secondaryButtonText!,
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
             onPressed: model.isLoading
                 ? null
                 : () => _updateFormType(model.secondaryActionFormType),
           ),
           if (model.formType == EmailPasswordSignInFormType.signIn)
-            FlatButton(
+            TextButton(
               key: Key('tertiary-button'),
-              child: Text(Strings.forgotPasswordQuestion),
+              child: Text(
+                Strings.forgotPasswordQuestion,
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
               onPressed: model.isLoading
                   ? null
                   : () => _updateFormType(

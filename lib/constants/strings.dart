@@ -34,13 +34,18 @@ class Strings {
   static const String resetLinkSentMessage =
       'Check your email to reset your password';
   static const String emailLabel = 'Email';
+  static const String nameLabel = 'Full name';
+  static const String nameHint = 'John Doe';
   static const String emailHint = 'test@test.com';
   static const String password8CharactersLabel = 'Password (8+ characters)';
+  static const String confirmPassword8CharactersLabel = 'Confirm password';
   static const String passwordLabel = 'Password';
   static const String invalidEmailErrorText = 'Email is invalid';
+  static const String invalidNameEmpty = 'Name can\'t be empty';
   static const String invalidEmailEmpty = 'Email can\'t be empty';
   static const String invalidPasswordTooShort = 'Password is too short';
   static const String invalidPasswordEmpty = 'Password can\'t be empty';
+  static const String invalidConfirmPassword = 'Confirm password doesn\'t match';
 
   // Home page
   static const String homePage = 'Home Page';
