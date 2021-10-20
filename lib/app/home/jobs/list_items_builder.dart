@@ -11,10 +11,12 @@ class ListItemsBuilder<T> extends StatelessWidget {
     required this.snapshot,
     required this.itemBuilder,
     this.dontScroll = false,
+    this.showFooter = true,
   }) : super(key: key);
   final AsyncSnapshot<List<T>> snapshot;
   final ItemWidgetBuilder<T> itemBuilder;
   final bool dontScroll;
+  final bool showFooter;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class ListItemsBuilder<T> extends StatelessWidget {
   Widget _buildList(List<T> items) {
     return ListView.builder(
       padding: EdgeInsets.zero, // Top padding of list
-      itemCount: items.length + 2,
+      itemCount: items.length + (showFooter ? 2: 1),
       physics: dontScroll ? NeverScrollableScrollPhysics() : AlwaysScrollableScrollPhysics(),
       shrinkWrap: dontScroll ? true : false,
       itemBuilder: (context, index) {
