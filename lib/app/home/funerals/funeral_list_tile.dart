@@ -7,16 +7,19 @@ import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class FuneralListTile extends StatelessWidget {
-  const FuneralListTile({Key? key, required this.funeral}) : super(key: key);
+  const FuneralListTile({
+    Key? key,
+    required this.funeral,
+    required this.hero,
+  }) : super(key: key);
   final Funeral funeral;
+  final String hero;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => FuneralDetailsPage.show(context, funeral),      
-        child: Container(
-        // height: 10,
-        // constraints: BoxConstraints(minHeight: 140.0),
+      onTap: () => FuneralDetailsPage.show(context, funeral),
+      child: Container(
         width: double.infinity,
         margin: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
         padding: EdgeInsets.only(bottom: 10.0),
@@ -25,39 +28,33 @@ class FuneralListTile extends StatelessWidget {
             bottom: BorderSide(
               color: Colors.grey,
               width: 0.3,
-              )
+            ),
           ),
-          // color: Colors.blue,
-          // borderRadius: BorderRadius.circular(20.0),
         ),
-        child: 
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              _buildContent(),
-              Container(
-                padding: EdgeInsets.only(top: 25.0),
-                child: Wrap(
-                  children: <Widget>[
-                    // Text("Paperman & Sons · ",
-                    //   style: TextStyle(color: Colors.grey[600])
-                    // ),
-                    Text("Posted ", style: TextThemes.helperText,),
-                    Text(
-                      timeago.format(funeral.createdDate!),
-                      style: TextThemes.helperText,
-                    ),
-                    
-                  ]),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            _buildContent(),
+            Container(
+              padding: EdgeInsets.only(top: 25.0),
+              child: Wrap(
+                children: <Widget>[
+                  Text("Posted ", style: TextThemes.helperText,),
+                  Text(
+                    timeago.format(funeral.createdDate!),
+                    style: TextThemes.helperText,
+                  ),
+                ],
               ),
-            ]),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _funeralTime(){
-
     if(funeral.funeralDate != null && funeral.funeralDate!.hour != 0){
       return Column(children: <Widget>[
         SizedBox(height: 5.0),
@@ -67,11 +64,9 @@ class FuneralListTile extends StatelessWidget {
     else{
       return Container();
     }
-    
   }
 
   Widget _buildContent(){
-    
     if(funeral.emptyImage){
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,7 +75,6 @@ class FuneralListTile extends StatelessWidget {
           Flexible(child: _subContent()),
         ],
       );
-
     }
     else{
       return Row(
@@ -90,17 +84,15 @@ class FuneralListTile extends StatelessWidget {
           Flexible(
             flex: 2,
             fit: FlexFit.tight,
-              child: _subContent(),
-            ),
+            child: _subContent(),
+          ),
           Flexible(
-              flex: 1,
-              // fit: FlexFit.tight,
-                child: _buildImage(),
+            flex: 1,
+            child: _buildImage(),
           ),
         ],
       );
     }
-    
   }
 
   Widget _subContent(){
@@ -108,7 +100,6 @@ class FuneralListTile extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
-          // width: 200.0,
           child: Text(
             funeral.fullName,
             style: TextThemes.title,
@@ -123,14 +114,12 @@ class FuneralListTile extends StatelessWidget {
         SizedBox(height: 10.0),
       ],
     );
-
   }
 
   Widget _buildImage() {
     if(funeral.imageURL != null && funeral.imageURL != "https:"){
-      // return Image.network(funeral.imageURL);
       return Hero(
-        tag: "${funeral.id}",
+        tag: "$hero${funeral.id}",
         transitionOnUserGestures: true,
         child: CachedNetworkImage(
           imageUrl: funeral.imageURL!,
@@ -140,14 +129,16 @@ class FuneralListTile extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
               image: DecorationImage(
-                image: imageProvider, fit: BoxFit.cover),
+                  image: imageProvider, fit: BoxFit.cover),
             ),
           ),
           placeholder: (context, url) => CircularProgressIndicator(),
           errorWidget: (context, url, error) => Icon(Icons.error),
         ),
       );
-    } else{return Container();}
+    } else{
+      return Container();
+    }
   }
 
  

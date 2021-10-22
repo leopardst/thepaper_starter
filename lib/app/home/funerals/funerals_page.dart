@@ -66,7 +66,6 @@ class _FuneralsPageState extends State<FuneralsPage> {
                 IconButton(
                   icon: Icon(Icons.calendar_today),
                   tooltip: 'Calendar',
-                  // onPressed: () => CalendarPage.show(context: context)
                   onPressed: () {
                     setState(() {
                       showCalendar = !showCalendar;
@@ -81,56 +80,41 @@ class _FuneralsPageState extends State<FuneralsPage> {
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              AnimatedCrossFade(
-                firstChild: StreamBuilder<List<Funeral>>(
-                  initialData: [],
-                  stream: database.funeralsStreamAfterDate(
-                      daysAfter: 0), // trying to get last midnight to include today
-                  builder: (context, AsyncSnapshot<List<Funeral>> snapshot) {
-                    if (snapshot.hasData) {
-                      final List<Funeral> items = snapshot.data!;
-                      if (items.isNotEmpty) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            _calendarView(items),
-                            _buildCalendarList(snapshot),
-                          ],
-                        );
-                      } else {
-                        return EmptyContent(
-                          title: "No funerals",
-                          message: "Check back later for updated schedule",
-                        );
-                      }
-                    } else if (snapshot.hasError) {
-                      return EmptyContent(
-                        title: 'Something went wrong',
-                        message: 'Can\'t load items right now',
+              StreamBuilder<List<Funeral>>(
+                stream: database.funeralsStreamSinceDaysAgo(
+                  daysAgo: 30,
+                ),
+                // stream: database.funeralsStream(),
+                builder: (context, snapshot) {
+                  return StreamBuilder<List<Funeral>>(
+                    initialData: [],
+                    stream: database.funeralsStreamAfterDate(
+                        daysAfter: 0), // trying to get last midnight to include today
+                    builder: (context, AsyncSnapshot<List<Funeral>> filtered) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _calendarView(filtered),
+                          AnimatedCrossFade(
+                              firstChild: ListItemsBuilder<Funeral>(
+                                snapshot: snapshot,
+                                dontScroll: true,
+                                itemBuilder: (context, funeral) => FuneralListTile(
+                                  funeral: funeral,
+                                  hero: '',
+                                ),
+                              ),
+                              secondChild: buildFilteredList(filtered),
+                              crossFadeState: selectedDate != null
+                                  ? CrossFadeState.showSecond
+                                  : CrossFadeState.showFirst,
+                              duration: Duration(milliseconds: 300),
+                          )
+                        ],
                       );
-                    }
-                    return Center(child: CircularProgressIndicator());
-                  },
-                ),
-                secondChild: StreamBuilder<List<Funeral>>(
-                  stream: database.funeralsStreamSinceDaysAgo(
-                    daysAgo: 30,
-                  ),
-                  // stream: database.funeralsStream(),
-                  builder: (context, snapshot) {
-                    return ListItemsBuilder<Funeral>(
-                      snapshot: snapshot,
-                      dontScroll: true,
-                      itemBuilder: (context, funeral) => FuneralListTile(
-                        funeral: funeral,
-                      ),
-                    );
-                  },
-                ),
-                crossFadeState: showCalendar
-                    ? CrossFadeState.showFirst
-                    : CrossFadeState.showSecond,
-                duration: Duration(milliseconds: 300),
+                    },
+                  );
+                },
               ),
             ],
           ),
@@ -141,14 +125,7 @@ class _FuneralsPageState extends State<FuneralsPage> {
 
   Widget _buildCalendarList(AsyncSnapshot<List<Funeral>> snapshot) {
     if (selectedDate == null) {
-      return ListItemsBuilder<Funeral>(
-        snapshot: snapshot,
-        dontScroll: true,
-        showFooter: false,
-        itemBuilder: (context, funeral) => FuneralListTile(
-          funeral: funeral,
-        ),
-      );
+      return Container();
     } else {
       List<Funeral> filtered = snapshot.data!.where((element) =>
       format.format(element.funeralDate!) == format.format(selectedDate!)
@@ -159,12 +136,13 @@ class _FuneralsPageState extends State<FuneralsPage> {
         dontScroll: true,
         itemBuilder: (context, funeral) => FuneralListTile(
           funeral: funeral,
+          hero: selectedDate.toString(),
         ),
       );
     }
   }
 
-  Widget _calendarView(List<Funeral> funerals) {
+  Widget _calendarView(AsyncSnapshot<List<Funeral>> snapshot) {
     List<Widget> dateButtons = [];
     dateButtons.add(MaterialButton(
       onPressed: () {
@@ -195,43 +173,46 @@ class _FuneralsPageState extends State<FuneralsPage> {
       height: 80,
       minWidth: 0,
     ));
-    List<DateTime> dateTimes = funerals.where((element) => element.funeralDate != null).map((e) => e.funeralDate!).toSet().toList();
-    dateTimes.sort((d1, d2) => d1.compareTo(d2));
-    for (DateTime dt in dateTimes) {
-      dateButtons.add(
-        Padding(
-          padding: EdgeInsets.only(left: 24),
-          child: MaterialButton(
-            onPressed: () {
-              setState(() {
-                selectedDate = dt;
-              });
-            },
-            child: Text(
-              format.format(dt),
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: selectedDate == dt ? Colors.white: Colors.deepPurple,
+    if (snapshot.hasData) {
+      List<DateTime> dateTimes = snapshot.data!.where((element) =>
+      element.funeralDate != null).map((e) => e.funeralDate!).toSet().toList();
+      dateTimes.sort((d1, d2) => d1.compareTo(d2));
+      for (DateTime dt in dateTimes) {
+        dateButtons.add(
+          Padding(
+            padding: EdgeInsets.only(left: 24),
+            child: MaterialButton(
+              onPressed: () {
+                setState(() {
+                  selectedDate = dt;
+                });
+              },
+              child: Text(
+                format.format(dt),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: selectedDate == dt ? Colors.white: Colors.deepPurple,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-              side: BorderSide(
-                width: 1,
-                color: Colors.black,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+                side: BorderSide(
+                  width: 1,
+                  color: Colors.black,
+                ),
               ),
+              color: selectedDate == dt ? Colors.orange: Colors.white,
+              padding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16
+              ),
+              height: 80,
+              minWidth: 0,
             ),
-            color: selectedDate == dt ? Colors.orange: Colors.white,
-            padding: EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 16
-            ),
-            height: 80,
-            minWidth: 0,
           ),
-        ),
-      );
+        );
+      }
     }
     return AnimatedContainer(
       duration: Duration(milliseconds: 300),
@@ -251,5 +232,25 @@ class _FuneralsPageState extends State<FuneralsPage> {
         ),
       ),
     );
+  }
+
+  Widget buildFilteredList(AsyncSnapshot<List<Funeral>> snapshot) {
+    if (snapshot.hasData) {
+      final List<Funeral> items = snapshot.data!;
+      if (items.isNotEmpty) {
+        return _buildCalendarList(snapshot);
+      } else {
+        return EmptyContent(
+          title: "No funerals",
+          message: "Check back later for updated schedule",
+        );
+      }
+    } else if (snapshot.hasError) {
+      return EmptyContent(
+        title: 'Something went wrong',
+        message: 'Can\'t load items right now',
+      );
+    }
+    return Center(child: CircularProgressIndicator());
   }
 }
