@@ -16,6 +16,7 @@ import 'package:thepaper_starter/app/home/condolences/condolence_count.dart';
 import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/common_widgets/expandable_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:thepaper_starter/routing/router.dart';
 import 'package:thepaper_starter/services/analytics_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 
@@ -29,8 +30,8 @@ class FuneralDetailsPage extends StatefulWidget {
         Provider.of<AnalyticsService>(context, listen: false);
     analyticsService.logViewedFuneralPage(funeral.fullName, funeral.id);
 
-    await Navigator.of(context).pushNamed(
-      CupertinoTabViewRoutes.funeralDetailsPage,
+    await Navigator.of(context, rootNavigator: true).pushNamed(
+      Routes.funeralDetailsPage,
       arguments: {
         'funeral': funeral,
         'parent': context.widget.toString(),
