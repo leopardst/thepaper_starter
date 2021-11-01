@@ -24,7 +24,6 @@ class CondolenceCount extends StatefulWidget {
 class _CondolenceCountState extends State<CondolenceCount> {
   bool isLiked = false; // Has sent condolences
 
-
   static const double minExtent = 0.2;
   static const double maxExtent = 0.9;
 
@@ -43,7 +42,7 @@ class _CondolenceCountState extends State<CondolenceCount> {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     final user = Provider.of<AppUser>(context, listen:false);
     var condolenceSnapshot = Provider.of<Condolence?>(context);
-    if(condolenceSnapshot != null){
+    if(condolenceSnapshot != null && condolenceSnapshot.isDeleted == false){
       userHasGivenCondolences = true;
     }
     else{
@@ -61,8 +60,32 @@ class _CondolenceCountState extends State<CondolenceCount> {
             var count = snapshot.data!.length;
             var nameContent = getNames(snapshot.data!, count, user);
             return GestureDetector(
-              onTap: () => _showDialog(context),
-              child: Text(Strings.viewCondolences, style: TextThemes.actionTitle),
+              // onTap: () => _showDialog(context),
+              // child: Text(Strings.viewCondolences, style: TextThemes.actionTitle),
+              child: Wrap(
+                direction: Axis.horizontal,
+                children: <Widget>[
+                  Text(
+                    "Condolences from "
+                  ),
+                  AnimatedSwitcher(
+                    duration: Duration(milliseconds: 200),
+                    child:
+                      Text(youCondolenceText(userHasGivenCondolences, count),
+                        key: ValueKey<int>(userHasGivenCondolences ? 0 : 1),
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                  ),
+                  Text(
+                    nameContent,
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    andOthers(userHasGivenCondolences, count),
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ]
+              )
             );
           }
           else{
@@ -129,7 +152,7 @@ String andOthers(bool userHasGivenCondolences, int count){
   String text = "";
   if(count >= 3 )
   {
-    text = "and others";
+    text = "and ${count - 1} others";
   }
   
   return text;

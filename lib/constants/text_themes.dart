@@ -45,6 +45,12 @@ class TextThemes {
     fontWeight: FontWeight.w500,
   );
 
+  static final TextStyle largeSubtitle = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+  );
+
+
   static final TextStyle smallSubtitle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,

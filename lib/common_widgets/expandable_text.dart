@@ -37,7 +37,7 @@ class _ExpandableTextState extends State<ExpandableText>
             children: <Widget>[
               Text(
                 widget.text!,
-                maxLines: 10,
+                maxLines: 4,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   height: 1.65, 
