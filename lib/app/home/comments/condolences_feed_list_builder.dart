@@ -64,10 +64,10 @@ class CondolencesFeedListBuilder extends StatelessWidget {
             // initialList: initialItems,
             scrollPhysics: NeverScrollableScrollPhysics(),
             shrinkWrap: true, 
-            itemBuilder: (item, index, context, animation) =>      
-              _createCondolenceFeedTile(item, animation),      
-            itemRemovedBuilder: (item, index, context, animation) =>  
-              _createRemovedCondolenceFeedTile(item, animation), 
+            itemBuilder: (List<Condolence> items, index, context, animation) =>      
+              _createCondolenceFeedTile(items[index], animation),      
+            itemRemovedBuilder: (List<Condolence> items, index, context, animation) =>  
+              _createRemovedCondolenceFeedTile(items[index], animation), 
         ),
       ),
     );
