@@ -27,7 +27,9 @@ dependencies:
   amplitude_flutter: ^3.5.0
   animated_stream_list:
     git:
-      url: git://github.com/pavlea1/animated-stream-list.git
+      url: git://github.com/hhayak/animated-stream-list.git
+      # url: git://github.com/pavlea1/animated-stream-list.git
+      
   auto_route: ^2.4.2
   cached_network_image: ^3.1.0
   cupertino_icons: ^1.0.3

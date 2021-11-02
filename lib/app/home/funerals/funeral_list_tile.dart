@@ -110,8 +110,8 @@ class FuneralListTile extends StatelessWidget {
         Text(funeral.formattedFuneralDate),
         _funeralTime(),
         SizedBox(height: 5.0),
-        Text(funeral.location!),
-        SizedBox(height: 10.0),
+        // Text(funeral.location!),
+        // SizedBox(height: 10.0),
       ],
     );
   }
