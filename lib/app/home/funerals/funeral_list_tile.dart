@@ -58,7 +58,7 @@ class FuneralListTile extends StatelessWidget {
     if(funeral.funeralDate != null && funeral.funeralDate!.hour != 0){
       return Column(children: <Widget>[
         SizedBox(height: 5.0),
-        Text(funeral.funeralTimeAsString),
+        Text(funeral.funeralTimeAsString, style: TextThemes.largeSubtitle),
       ],);
     }
     else{
@@ -107,8 +107,8 @@ class FuneralListTile extends StatelessWidget {
           ),
         ),
         SizedBox(height: 10.0),
-        Text(funeral.formattedFuneralDate),
-        _funeralTime(),
+        Text(funeral.formattedFuneralDate,  style: TextThemes.mediumSubtitle),
+        // _funeralTime(),
         SizedBox(height: 5.0),
         // Text(funeral.location!),
         // SizedBox(height: 10.0),

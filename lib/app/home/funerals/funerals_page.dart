@@ -16,10 +16,12 @@ class FuneralsPage extends StatefulWidget {
 }
 
 class _FuneralsPageState extends State<FuneralsPage> {
-  DateFormat format = DateFormat('d\nEEE');
+  DateFormat format = DateFormat('EE, MMM d');
 
   bool showCalendar = false;
   DateTime? selectedDate;
+  static double calendarIconHeight = 65.0;
+
   @override
   void initState() {
     super.initState();
@@ -144,7 +146,7 @@ class _FuneralsPageState extends State<FuneralsPage> {
 
   Widget _calendarView(AsyncSnapshot<List<Funeral>> snapshot) {
     List<Widget> dateButtons = [];
-    dateButtons.add(MaterialButton(
+    dateButtons.add(ElevatedButton(
       onPressed: () {
         setState(() {
           selectedDate = null;
@@ -153,26 +155,20 @@ class _FuneralsPageState extends State<FuneralsPage> {
       child: Text(
         'All',
         style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: selectedDate == null ? Colors.white: Colors.deepPurple,
+          // fontWeight: FontWeight.bold,
+          color: selectedDate == null ? Colors.white: Colors.black,
         ),
         textAlign: TextAlign.center,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        side: BorderSide(
-          width: 1,
-          color: Colors.black,
+        ),
+        style: ElevatedButton.styleFrom(
+          primary: selectedDate == null ? Colors.black: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
         ),
       ),
-      color: selectedDate == null ? Colors.orange: Colors.white,
-      padding: EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 16
-      ),
-      height: 80,
-      minWidth: 0,
-    ));
+    );
+
     if (snapshot.hasData) {
       List<DateTime> dateTimes = snapshot.data!.where((element) =>
       element.funeralDate != null).map((e) => e.funeralDate!).toSet().toList();
@@ -180,8 +176,8 @@ class _FuneralsPageState extends State<FuneralsPage> {
       for (DateTime dt in dateTimes) {
         dateButtons.add(
           Padding(
-            padding: EdgeInsets.only(left: 24),
-            child: MaterialButton(
+            padding: EdgeInsets.only(left: 16),
+            child: ElevatedButton(
               onPressed: () {
                 setState(() {
                   selectedDate = dt;
@@ -190,33 +186,26 @@ class _FuneralsPageState extends State<FuneralsPage> {
               child: Text(
                 format.format(dt),
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: selectedDate == dt ? Colors.white: Colors.deepPurple,
+                  // fontWeight: FontWeight.bold,
+                  color: selectedDate == dt ? Colors.white: Colors.black,
                 ),
                 textAlign: TextAlign.center,
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-                side: BorderSide(
-                  width: 1,
-                  color: Colors.black,
+              style: ElevatedButton.styleFrom(
+                primary: selectedDate == dt ? Colors.black: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
                 ),
               ),
-              color: selectedDate == dt ? Colors.orange: Colors.white,
-              padding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16
-              ),
-              height: 80,
-              minWidth: 0,
+             
             ),
           ),
         );
       }
     }
     return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
-      height: showCalendar ? 100: 0,
+      duration: Duration(milliseconds: 200),
+      height: showCalendar ? 50: 0,
       child: Container(
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -225,6 +214,8 @@ class _FuneralsPageState extends State<FuneralsPage> {
             horizontal: 24,
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(dateButtons.length, (index) {
               return dateButtons[index];
             }),
