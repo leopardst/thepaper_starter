@@ -61,6 +61,8 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
   final TextEditingController textEditingController =
       new TextEditingController();
 
+  final scrollKey = new GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -144,6 +146,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
                             ),
                             obitSection(),
                             SizedBox(
+                              key: scrollKey,
                               height: 15,
                             ),
                             // CondolenceButton(funeral: _funeral),
@@ -184,7 +187,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 // Avatar(photoUrl: _userImageURL, radius: 20.0),
-                CommentField(funeral: _funeral),
+                CommentField(funeral: _funeral, scrollKey: scrollKey),
                 CondolenceButton(funeral: _funeral),
               ],    
             ),
