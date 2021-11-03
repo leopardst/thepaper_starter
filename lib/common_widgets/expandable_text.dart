@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thepaper_starter/constants/text_themes.dart';
 
 class ExpandableText extends StatefulWidget {
   ExpandableText(this.text);
@@ -49,7 +50,7 @@ class _ExpandableTextState extends State<ExpandableText>
                   onTap: () => {setState(() => showFullText = !showFullText)},
                   child: Text(
                     'See More',
-                    style: TextStyle(color: Colors.grey[600]),
+                    style: TextStyle(color: TextThemes.accentColor),
                   )
                 ),
               ),

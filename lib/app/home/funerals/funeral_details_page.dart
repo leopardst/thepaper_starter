@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:thepaper_starter/app/home/comments/comment_field.dart';
 
 import 'package:thepaper_starter/app/home/comments/condolences_feed_list_builder.dart';
 import 'package:thepaper_starter/app/home/groups/group_page.dart';
@@ -129,7 +130,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
                                   Padding(
                                     padding: EdgeInsets.only(right: 10.0),
                                     child:
-                                        Icon(Icons.today, color: Colors.grey),
+                                        Icon(Icons.today, color: TextThemes.accentColor),
                                   ),
                                   Text(widget.funeral!.formattedFuneralDate),
                                 ]),
@@ -172,52 +173,21 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
             )
           ],
         ),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
-          height: 70,
-          // width: double.maxFinite,
-          child:  Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // Avatar(photoUrl: _userImageURL, radius: 20.0),
-              Expanded(
-                child: Container(
-                  width: 280,
-                  margin: const EdgeInsets.only(left: 10.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(18),
-                    border: Border.all(color: (Colors.grey[200])!)
-                  ),
-                  child: TextField(
-                    // expands: true,
-                    maxLines: null,
-                    // maxLength: 600,
-                    style: TextThemes.subtitle,
-                    controller: textEditingController,
-                    decoration: InputDecoration(
-                      border:InputBorder.none,
-                      hintText: 'Add a comment...',
-                      hintStyle: TextThemes.helperText,
-                      contentPadding: EdgeInsets.all(15.0),
-                      isDense: true,
-                      suffix: Text('Post', style: TextStyle(color: Colors.blueAccent)),
-                    ),
-                    // autofocus: true,
-                    showCursor: true,
-                    cursorColor: Colors.grey,
-                    textInputAction: TextInputAction.done,
-                    onSubmitted: (String str) {
-                      // _sendMessage(context, widget.funeral.id, str);
-                      FocusScope.of(context).unfocus();
-                    },
-                    // focusNode: focusNode,
-                  ),
-                ),
-              ),
-             CondolenceButton(funeral: _funeral),
-            ],    
+      bottomNavigationBar: StickyBottomAppBar(
+        child: BottomAppBar(
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+            height: 70,
+            // width: double.maxFinite,
+            child:  Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                // Avatar(photoUrl: _userImageURL, radius: 20.0),
+                CommentField(funeral: _funeral),
+                CondolenceButton(funeral: _funeral),
+              ],    
+            ),
           ),
         ),
       ),
@@ -233,7 +203,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(right: 10.0),
-              child: Icon(Icons.location_on, color: Colors.grey),
+              child: Icon(Icons.location_on, color: TextThemes.accentColor),
             ),
             Flexible(child: Text(_funeralLocation!)),
           ]);
@@ -309,5 +279,18 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
 
   Widget _buildCommentList(BuildContext context, Funeral? funeral) {
     return CondolencesFeedListBuilder(funeral: funeral);
+  }
+}
+
+class StickyBottomAppBar extends StatelessWidget {
+  final BottomAppBar child;
+  StickyBottomAppBar({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.translate(
+      offset: Offset(0.0, -1 * MediaQuery.of(context).viewInsets.bottom),
+      child: child,
+    );
   }
 }
