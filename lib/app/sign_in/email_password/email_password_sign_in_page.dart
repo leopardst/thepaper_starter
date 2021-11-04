@@ -3,6 +3,7 @@ import 'package:thepaper_starter/common_widgets/form_submit_button.dart';
 import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:thepaper_starter/constants/strings.dart';
+import 'package:thepaper_starter/constants/text_themes.dart';
 import 'package:thepaper_starter/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -244,10 +245,18 @@ class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
   Widget _buildContent() {
     return FocusScope(
       node: _node,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          SizedBox(height: 8.0),
+      child: Container(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+          // SizedBox(height: 40.0),
+          SizedBox(
+            height: 120.0,
+            child: _buildHeader(),
+          ),
+          SizedBox(height: 24.0),
           if (model.formType == EmailPasswordSignInFormType.register)
             _buildNameField(),
           _buildEmailField(),
@@ -259,7 +268,7 @@ class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
             if (model.formType == EmailPasswordSignInFormType.register)
               _buildConfirmPasswordField(),
           ],
-          SizedBox(height: 8.0),
+          SizedBox(height: 24.0),
           FormSubmitButton(
             key: Key('primary-button'),
             text: model.primaryButtonText!,
@@ -293,7 +302,8 @@ class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
                   : () => _updateFormType(
                       EmailPasswordSignInFormType.forgotPassword),
             ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -305,18 +315,27 @@ class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
         elevation: 2.0,
         title: Text(model.title!),
       ),
-      backgroundColor: Colors.grey[200],
       body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Card(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: _buildContent(),
-            ),
-          ),
-        ),
-      ),
+        child: _buildContent()),
     );
+  }
+
+  Widget _buildHeader() {
+    if (model.isLoading) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        // Text('Login with your Email', style: TextThemes.login1,),
+    ]);
+    
+    // return Text(
+    //   Strings.signIn,
+    //   textAlign: TextAlign.center,
+    //   style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w600),
+    // );
   }
 }

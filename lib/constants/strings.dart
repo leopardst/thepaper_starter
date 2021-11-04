@@ -36,7 +36,7 @@ class Strings {
   static const String emailLabel = 'Email';
   static const String nameLabel = 'Full name';
   static const String nameHint = 'John Doe';
-  static const String emailHint = 'test@test.com';
+  static const String emailHint = 'you@gmail.com';
   static const String password8CharactersLabel = 'Password (8+ characters)';
   static const String confirmPassword8CharactersLabel = 'Confirm password';
   static const String passwordLabel = 'Password';
