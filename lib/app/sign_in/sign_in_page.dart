@@ -1,3 +1,4 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thepaper_starter/app/sign_in/email_password/email_password_sign_in_page.dart';
 import 'package:thepaper_starter/app/sign_in/sign_in_view_model.dart';
 // import 'package:thepaper_starter/app/sign_in/sign_in_button.dart';
@@ -95,7 +96,7 @@ class SignInPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text('Welcome to', style: TextThemes.login1,),
-        Text('the paper', style: TextThemes.logo,),
+        Text('The Paper', style: TextThemes.logo,),
     ]);
     
     // return Text(
@@ -115,28 +116,46 @@ class SignInPage extends StatelessWidget {
         children: <Widget>[
           // SizedBox(height: 40.0),
           SizedBox(
-            height: 180.0,
+            height: 120.0,
             child: _buildHeader(),
           ),
-          SizedBox(height: 32.0),
+          SizedBox(height: 24.0),
           SocialSignInButton(
               key: facebookButtonKey,
-              assetName: 'assets/fb-logo-blue.png',
+              // assetName: 'assets/fb-logo-blue.png',
+              iconData: FontAwesomeIcons.facebook,
               text: Strings.signInWithFacebook,
               // textColor: Colors.white,
               onPressed: viewModel!.isLoading ? null : () => _signInWithFacebook(context),
               // color: Color(0xFF334D92),
-              color: Colors.white,
+              textColor: Colors.white,
+              color: Colors.black,
             ),
-          SizedBox(height: 32.0),
+          SizedBox(height: 18.0),
           SocialSignInButton(
             key: googleButtonKey,
-            assetName: 'assets/go-logo.png',
+            // assetName: 'assets/go-logo.png',
+            iconData: FontAwesomeIcons.google,
             text: Strings.signInWithGoogle,
             onPressed: viewModel!.isLoading ? null : () => _signInWithGoogle(context),
-            color: Colors.white,
+            color: Colors.black,
+            textColor: Colors.white,
           ),
-          SizedBox(height: 32.0),
+          SizedBox(height: 18.0),
+          Row(
+            children: <Widget>[
+                Expanded(
+                    child: Divider()
+                ),       
+
+                Text("Or"),        
+
+                Expanded(
+                    child: Divider()
+                ),
+            ]
+          ),
+          SizedBox(height: 18.0),
           SignInButton(
             key: emailPasswordButtonKey,
             text: Strings.signInWithEmailPassword,
@@ -145,6 +164,7 @@ class SignInPage extends StatelessWidget {
                 : () => EmailPasswordSignInPageBuilder.show(context),
             textColor: Colors.black,
             color: Theme.of(context).primaryColor,
+            iconData: FontAwesomeIcons.envelope,
           ),
           SizedBox(height: 16),
         ],
