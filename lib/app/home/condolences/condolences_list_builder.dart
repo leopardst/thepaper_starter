@@ -10,6 +10,7 @@ import 'package:thepaper_starter/app/home/models/condolence.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 
 import 'package:animated_stream_list/animated_stream_list.dart';
+import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:thepaper_starter/app/home/condolences/emptiable_list.dart';
 
@@ -56,6 +57,8 @@ class CondolencesListBuilder extends StatelessWidget {
   Widget _buildList(BuildContext context, List<Condolence>? initialItems) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     final stream = database.condolencesStream(funeral: funeral!);
+    final user = Provider.of<AppUser>(context, listen: false);
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(10.0, 25.0, 10.0, 0.0),
       child: AnimatedStreamList<Condolence>(
@@ -73,8 +76,7 @@ class CondolencesListBuilder extends StatelessWidget {
   }
 
   Widget _createCondolenceTile(Condolence condolence, Animation<double> animation) {    
-    return FadeTransition(      
-      // axis: Axis.vertical,      
+    return FadeTransition(          
       opacity: animation,      
       child: CondolenceListTile(condolence: condolence, funeral: funeral),    
     ); 

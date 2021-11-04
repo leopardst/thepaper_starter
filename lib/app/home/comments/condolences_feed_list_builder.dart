@@ -54,6 +54,7 @@ class CondolencesFeedListBuilder extends StatelessWidget {
   Widget _buildList(BuildContext context, List<Condolence>? initialItems) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     final stream = database.condolencesStream(funeral: funeral!);
+    
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
       child: EmptiableList(

@@ -81,7 +81,7 @@ class TextThemes {
   );
 
   static final accentColor = Color(0xff00838a);
-  static final secondaryAccentColor = Color(0xff05008a);
+  static final secondaryAccentColor = Colors.grey[500]; //Color(0xff05008a);
 
   static final TextStyle logout = TextStyle(
     fontSize: 14,
