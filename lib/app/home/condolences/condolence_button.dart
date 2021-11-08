@@ -124,12 +124,16 @@ Widget leaveCondolencesButton(BuildContext context){
     return Row(children: <Widget>[
       IconButton(
         iconSize: 32,
+        enableFeedback: true,
         padding: const EdgeInsets.fromLTRB(11.0, 11.0, 3.0, 11.0),
         constraints: BoxConstraints(),
         icon: Icon(Icomoon.tulip_outline,
             color: isLiked ? Colors.redAccent : Colors.grey[700]),
         // onPressed: () => openModal(context),
-        onPressed: () => _toggleCondolence(context, widget.funeral!.id, isLiked),
+        onPressed: () {
+          HapticFeedback.heavyImpact();
+          _toggleCondolence(context, widget.funeral!.id, isLiked);
+        }
       ),
       Padding(
         padding: const EdgeInsets.only(right: 11.0),

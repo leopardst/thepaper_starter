@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:thepaper_starter/app/home/funerals/funeral_list_tile.dart';
@@ -35,13 +36,13 @@ class _FuneralsPageState extends State<FuneralsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(0.0),
-        child: AppBar(
-          // title: Text(Strings.funerals),
-          elevation: 0.0,
-        ),
-      ),
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(0.0),
+      //   child: AppBar(
+      //     // title: Text(Strings.funerals),
+      //     elevation: 0.0,
+      //   ),
+      // ),
       body: _buildContents(context),
     );
   }
@@ -51,16 +52,21 @@ class _FuneralsPageState extends State<FuneralsPage> {
     return CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
+          pinned: false,
+          backwardsCompatibility: false,
+          systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.white, systemNavigationBarColor: Colors.white),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.white,
           floating: true,
           snap: true,
           flexibleSpace: FlexibleSpaceBar(
             centerTitle: false,
-            titlePadding: EdgeInsetsDirectional.only(start: 20, bottom: 15),
+            titlePadding: EdgeInsetsDirectional.only(start: 20, bottom: 5),
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  'the paper',
+                  'The Paper',
                   style: GoogleFonts.notoSerif(
                     fontWeight: FontWeight.w600,
                   ),
@@ -210,8 +216,10 @@ class _FuneralsPageState extends State<FuneralsPage> {
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: AlwaysScrollableScrollPhysics(),
-          padding: EdgeInsets.symmetric(
-            horizontal: 24,
+          padding: EdgeInsets.only(
+            left: 24,
+            right: 24,
+            bottom: 15,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,

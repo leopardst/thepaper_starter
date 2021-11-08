@@ -312,6 +312,8 @@ class _EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         elevation: 2.0,
         title: Text(model.title!),
       ),

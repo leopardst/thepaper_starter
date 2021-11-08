@@ -51,11 +51,16 @@ class _CommentFieldState extends State<CommentField> {
         final updatedAt = DateTime.now();
         print("url:" + _userImageURL!);
 
-        final condolence = Condolence(id: id, name: _name, content: _content, updatedAt: updatedAt, userImageURL: _userImageURL, isPublic: true, isDeleted: false);
-        await database.setCondolence(condolence, _funeralId, merge: true);
+        // final condolence = Condolence(id: id, name: _name, content: _content, updatedAt: updatedAt, userImageURL: _userImageURL, isPublic: true, isDeleted: false);
+        final comment = Comment(id: id, name: _name, content: _content, updatedAt: updatedAt, userImageURL: _userImageURL, isPublic: true, isDeleted: false);
+        
+        // await database.setCondolence(condolence, _funeralId, merge: true);
+        await database.setComment(comment, _funeralId, merge: true);
 
-        final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
-        analyticsService.logCreateCondolence(_content, _funeralId);
+        // await database.setComment(condolence, _funeralId, merge: true);
+
+        // final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+        // analyticsService.logCreateCondolence(_content, _funeralId);
         
         // Navigator.of(context).pop();
       } on PlatformException catch (e) {
@@ -93,7 +98,7 @@ class _CommentFieldState extends State<CommentField> {
               onTap: (){
                 _sendMessage(context, widget.funeral!.id, textEditingController.text);
               },
-              child: Text('Post', style: TextStyle(color: Colors.blueAccent))
+              child: Text('Post', style: TextStyle(color: TextThemes.accentColor))
             ),
           ),
           // autofocus: true,

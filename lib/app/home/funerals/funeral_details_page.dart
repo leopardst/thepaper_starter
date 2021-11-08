@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:thepaper_starter/app/home/comments/comment_field.dart';
+import 'package:thepaper_starter/app/home/comments/comments_feed_list_builder.dart';
 
 import 'package:thepaper_starter/app/home/comments/condolences_feed_list_builder.dart';
 import 'package:thepaper_starter/app/home/groups/group_page.dart';
@@ -118,7 +119,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              _funeralFullName,
+                              _funeralFullName.capitalizeFirstofEach,
                               style: TextThemes.title,
                               textScaleFactor: 1.0,
                             ),
@@ -281,7 +282,8 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
   }
 
   Widget _buildCommentList(BuildContext context, Funeral? funeral) {
-    return CondolencesFeedListBuilder(funeral: funeral);
+    // return CondolencesFeedListBuilder(funeral: funeral);
+    return CommentsFeedListBuilder(funeral: funeral);
   }
 }
 

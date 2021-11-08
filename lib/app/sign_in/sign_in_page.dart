@@ -119,7 +119,7 @@ class SignInPage extends StatelessWidget {
             height: 120.0,
             child: _buildHeader(),
           ),
-          SizedBox(height: 24.0),
+          SizedBox(height: 104.0),
           SocialSignInButton(
               key: facebookButtonKey,
               // assetName: 'assets/fb-logo-blue.png',

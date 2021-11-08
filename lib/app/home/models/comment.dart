@@ -1,36 +1,43 @@
-import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Comment {
   Comment({
     required this.id,
     required this.name,
-    required this.content,
-    required this.createdAt,
-    required this.userImageURL,
-    this.isPublic,
+    this.content,
+    required this.updatedAt,
+    this.userImageURL,
     this.remoteId,
+    required this.isPublic,
+    this.isDeleted,
+
   });
 
   String id;
   String? name;
   String? content;
-  DateTime createdAt;
+  DateTime updatedAt;
   String? userImageURL;
-  bool? isPublic;
   int? remoteId;
+  bool? isPublic;
+  bool? isDeleted;
 
   factory Comment.fromMap(Map<dynamic, dynamic> value, String id) {
-    final Timestamp createdAtTS = value['createdAt'];
+    // final int updatedAtAtMilliseconds = value['updatedAt'];
+    // print('updatedat' + value['updatedAt'].toString());
+    final Timestamp updatedAtTS = value['updatedAt'];
+    final deleted = value['isDeleted'] ?? false;
 
     return Comment(
       id: id,
       name: value['name'],
       content: value['content'],
-      createdAt: createdAtTS.toDate(),
+      updatedAt: updatedAtTS.toDate(),
       userImageURL: value['userImageURL'],
       isPublic: value['isPublic'],
       remoteId: value['remoteId'],
+      isDeleted: deleted,
     );
   }
 
@@ -38,9 +45,10 @@ class Comment {
     return <String, dynamic>{
       'name': name,
       'content': content,
-      'createdAt': createdAt,
+      'updatedAt': updatedAt,
       'userImageURL': userImageURL,
       'isPublic': isPublic,
+      'isDeleted': isDeleted,
     };
   }
 }

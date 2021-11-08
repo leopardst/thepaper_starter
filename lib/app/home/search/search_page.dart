@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flappy_search_bar_fork/search_bar_style.dart';
 import 'package:flutter/material.dart';
 import 'package:algolia/algolia.dart';
 import 'package:provider/provider.dart';
@@ -45,11 +46,17 @@ class _SearchPageState extends State<SearchPage>{
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SearchBar<AlgoliaObjectSnapshot?>(
+            searchBarStyle: SearchBarStyle(
+              backgroundColor: Colors.white,
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 0)
+            ),
             onSearch: search2,
             hintText: "Search",
             hintStyle: TextStyle(
               color: Colors.grey[600],
+              fontSize: 20.0,
             ),
+            iconActiveColor: Colors.black,
             emptyWidget: Padding(
               padding: const EdgeInsets.only(top: 4.0),
               child: Text("No results found"),

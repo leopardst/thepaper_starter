@@ -21,7 +21,7 @@ class FuneralListTile extends StatelessWidget {
       onTap: () => FuneralDetailsPage.show(context, funeral),
       child: Container(
         width: double.infinity,
-        margin: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+        margin: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
         padding: EdgeInsets.only(bottom: 10.0),
         decoration: BoxDecoration(
           border: Border(
@@ -37,7 +37,7 @@ class FuneralListTile extends StatelessWidget {
           children: <Widget>[
             _buildContent(),
             Container(
-              padding: EdgeInsets.only(top: 25.0),
+              padding: EdgeInsets.only(top: 15.0),
               child: Wrap(
                 children: <Widget>[
                   Text("Posted ", style: TextThemes.helperText,),
@@ -101,9 +101,8 @@ class FuneralListTile extends StatelessWidget {
       children: <Widget>[
         Container(
           child: Text(
-            funeral.fullName,
+            funeral.fullName.capitalizeFirstofEach,
             style: TextThemes.title,
-            textScaleFactor: 1.0,
           ),
         ),
         SizedBox(height: 10.0),
