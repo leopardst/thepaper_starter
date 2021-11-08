@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:thepaper_starter/constants/text_themes.dart';
 
 const placeholder = 'https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png';
 class Avatar extends StatelessWidget {
@@ -24,7 +25,7 @@ class Avatar extends StatelessWidget {
       decoration: _borderDecoration(),
       child: CircleAvatar(
         radius: radius,
-        backgroundColor: Colors.blueAccent[100],
+        backgroundColor: TextThemes.secondaryAccentColor,
         backgroundImage: photoUrl != null ? CachedNetworkImageProvider(photoUrl!)
             : (character == null ? CachedNetworkImageProvider(placeholder): null),
         child: photoUrl == null ? Text(character ?? '', style: TextStyle(color: Colors.white)) : null,

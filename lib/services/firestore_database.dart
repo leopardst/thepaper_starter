@@ -82,28 +82,29 @@ class FirestoreDatabase {
         builder: (data, documentId) => Condolence.fromMap(data, documentId),
   );
 
+    Future<List<Comment>> commentsList({required Funeral funeral}) => _service.collectionList(
+      path: FirestorePath.comments(funeral.id),
+      builder: (data, documentId) => Comment.fromMap(data, documentId),
+  );
+
+
   Future<void> deleteCondolence(String funeralId) async => 
       await _service.deleteData(path: FirestorePath.condolence(funeralId, uid));
   
   Stream<List<Comment>> commentsStream({required Funeral funeral}) => _service.collectionStream(
-        path: FirestorePath.comments(funeral.id),
-        queryBuilder: (query) => query.where('isPublic', isEqualTo: true)
-          .where('isDeleted', isEqualTo: false),
-        builder: (data, documentId) => Comment.fromMap(data, documentId),
-        sort: (lhs, rhs) => rhs.createdAt.compareTo(lhs.createdAt),
-
-      );
-  
-  Future<List<Comment>> commentsList({required Funeral funeral}) => _service.collectionList(
       path: FirestorePath.comments(funeral.id),
+      queryBuilder: (query) => query.where('isPublic', isEqualTo: true)
+        .where('isDeleted', isEqualTo: false),
       builder: (data, documentId) => Comment.fromMap(data, documentId),
-    );
-
-
-  Future<void> setComment(Comment comment, String funeralId) async => await _service.setData(
-    path: FirestorePath.comment(funeralId, uid),
-    data: comment.toMap(),
+      sort: (lhs, rhs) => rhs.updatedAt.compareTo(lhs.updatedAt),
   );
+  
+
+  Future<void> setComment(Comment comment, String funeralId, {bool merge = false}) async => await _service.setData(
+      path: FirestorePath.comment(funeralId, uid),
+      data: comment.toMap(),
+      merge: merge,
+    );
 
   Future<void> updateUserProfile(Map<String, dynamic> userProfileUpdates) async => await _service.updateData(
     path: FirestorePath.userProfile(uid),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:thepaper_starter/app/home/comments/comments_feed_list_tile.dart';
 import 'package:thepaper_starter/app/home/comments/condolence_feed_list_tile.dart';
 // import 'dart:async';
 
@@ -16,8 +17,8 @@ import 'package:thepaper_starter/app/home/condolences/emptiable_list.dart';
 
 // typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item, Animation animation);
 
-class CondolencesFeedListBuilder extends StatelessWidget {
-  const CondolencesFeedListBuilder({
+class CommentsFeedListBuilder extends StatelessWidget {
+  const CommentsFeedListBuilder({
     Key? key,
     // @required this.snapshot,
     // @required this.itemBuilder,
@@ -32,11 +33,11 @@ class CondolencesFeedListBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     return FutureBuilder<List>(
-      future: database.condolencesList(funeral: funeral!),
+      future: database.commentsList(funeral: funeral!),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         debugPrint('comment snapshot: $snapshot'); //TODO Remove this
         if (snapshot.hasData) {
-          final List<Condolence>? items = snapshot.data;
+          final List<Comment>? items = snapshot.data;
           return _buildList(context, items);
       } else if (snapshot.hasError) {
         return EmptyContent(
@@ -51,42 +52,42 @@ class CondolencesFeedListBuilder extends StatelessWidget {
 
 //EmptyContent()
 
-  Widget _buildList(BuildContext context, List<Condolence>? initialItems) {
+  Widget _buildList(BuildContext context, List<Comment>? initialItems) {
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
-    final stream = database.condolencesStream(funeral: funeral!);
+    final stream = database.commentsStream(funeral: funeral!);
     
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
       child: EmptiableList(
           listStream: stream,
           // placeholder: EmptyContent(),
-          list: AnimatedStreamList<Condolence>(
+          list: AnimatedStreamList<Comment>(
             streamList: stream,
             // initialList: initialItems,
             scrollPhysics: NeverScrollableScrollPhysics(),
             shrinkWrap: true, 
-            itemBuilder: (List<Condolence> items, index, context, animation) =>      
+            itemBuilder: (List<Comment> items, index, context, animation) =>      
               _createCondolenceFeedTile(items[index], animation),      
-            itemRemovedBuilder: (List<Condolence> items, index, context, animation) =>  
+            itemRemovedBuilder: (List<Comment> items, index, context, animation) =>  
               _createRemovedCondolenceFeedTile(items[index], animation), 
         ),
       ),
     );
   }
 
-  Widget _createCondolenceFeedTile(Condolence condolence, Animation<double> animation) {    
+  Widget _createCondolenceFeedTile(Comment comment, Animation<double> animation) {    
     return FadeTransition(      
       // axis: Axis.vertical,      
       opacity: animation,      
-      child: CondolenceFeedListTile(condolence: condolence, funeral: funeral),    
+      child: CommentsFeedListTile(comment: comment, funeral: funeral),    
     ); 
   }
 
-  Widget _createRemovedCondolenceFeedTile(Condolence condolence, Animation<double> animation) {    
+  Widget _createRemovedCondolenceFeedTile(Comment comment, Animation<double> animation) {    
     return FadeTransition(      
       // axis: Axis.vertical,      
       opacity: animation,      
-      child: CondolenceFeedListTile(condolence: condolence, funeral:funeral),   
+      child: CommentsFeedListTile(comment: comment, funeral:funeral),   
     ); 
   }
 }

@@ -79,7 +79,8 @@ class _AccountPageState extends State<AccountPage> {
               // return _buildList(items);
               return Scaffold(
                 appBar: AppBar(
-                  title: Text(Strings.account, style: TextThemes.subtitle),
+                  backgroundColor: Colors.white,
+                  title: Text(Strings.account, style: TextThemes.appBar),
                   elevation: 0.0,
                   actions: [
                     FlatButton(

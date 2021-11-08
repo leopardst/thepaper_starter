@@ -27,14 +27,17 @@ dependencies:
   amplitude_flutter: ^3.5.0
   animated_stream_list:
     git:
-      url: git://github.com/pavlea1/animated-stream-list.git
+      url: git://github.com/mpcreza/animated-stream-list.git
+      # url: git://github.com/pavlea1/animated-stream-list.git
+      
   auto_route: ^2.4.2
   cached_network_image: ^3.1.0
   cupertino_icons: ^1.0.3
   expandable: ^5.0.1
-  flappy_search_bar:
+  flappy_search_bar_fork:
     git:
-      url: git://github.com/harryjjacobs/flappy_search_bar.git
+      # url: git://github.com/harryjjacobs/flappy_search_bar.git
+      url: git://github.com/joaovvrodrigues/flappy_search_bar_fork.git
   flutter_html: ^2.1.5
   google_fonts: ^2.1.0
   grouped_list: ^4.1.0
@@ -47,6 +50,8 @@ dependencies:
   rxdart: ^0.27.2
   timeago: ^3.1.0
   url_launcher: ^6.0.9
+  font_awesome_flutter: ^9.2.0
+
 
   # Firebase
   cloud_firestore: ^2.5.3

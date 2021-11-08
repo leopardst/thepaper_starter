@@ -50,7 +50,7 @@ class _CondolenceButtonState extends State<CondolenceButton> {
 
   Future<void> _toggleCondolence(
       BuildContext context, String funeralId, bool isLiked) async {
-    Navigator.pop(context);
+    // Navigator.pop(context);
 
     try {
       final database = Provider.of<FirestoreDatabase>(context, listen: false);
@@ -95,16 +95,20 @@ class _CondolenceButtonState extends State<CondolenceButton> {
             isLiked = false;
           }
           return Container(
-            decoration: BoxDecoration(
-                border: Border(
-                    top: BorderSide(
-                      color: Colors.grey,
-                      width: 0.3,
-                    ),
-                    bottom: BorderSide(
-                      color: Colors.grey,
-                      width: 0.3,
-                    ))),
+            margin: EdgeInsets.only(left: 10.0) ,
+            // decoration: BoxDecoration(
+            //     border: Border.all(color: (Colors.grey[200])!),
+            //     borderRadius: BorderRadius.circular(18),
+            // ),
+                // border: Border(
+                //     top: BorderSide(
+                //       color: Colors.grey,
+                //       width: 0.3,
+                //     ),
+                //     bottom: BorderSide(
+                //       color: Colors.grey,
+                //       width: 0.3,
+                //     ))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -117,24 +121,29 @@ class _CondolenceButtonState extends State<CondolenceButton> {
 
 Widget leaveCondolencesButton(BuildContext context){
   if(widget.funeral!.allowCondolences!){
-    return Padding(
-      padding: const EdgeInsets.only(left: 5.0),
-      child: Row(children: <Widget>[
-        IconButton(
-          icon: Icon(Icomoon.tulip_outline,
-              color: isLiked ? Colors.redAccent : Colors.grey),
-          onPressed: () => openModal(context),
-        ),
-        GestureDetector(
-            onTap: () => openModal(context),
-            child: Text("Leave Condolences"))
-      ]),
-    );
+    return Row(children: <Widget>[
+      IconButton(
+        iconSize: 32,
+        enableFeedback: true,
+        padding: const EdgeInsets.fromLTRB(11.0, 11.0, 3.0, 11.0),
+        constraints: BoxConstraints(),
+        icon: Icon(Icomoon.tulip_outline,
+            color: isLiked ? Colors.redAccent : Colors.grey[700]),
+        // onPressed: () => openModal(context),
+        onPressed: () {
+          HapticFeedback.heavyImpact();
+          _toggleCondolence(context, widget.funeral!.id, isLiked);
+        }
+      ),
+      Padding(
+        padding: const EdgeInsets.only(right: 11.0),
+        // child: Text('Condolences'),
+      )
+    ]);
   }
   else{
     return Container();
  
-
   }
 
 

@@ -4,11 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:thepaper_starter/app/home/comments/comment_field.dart';
+import 'package:thepaper_starter/app/home/comments/comments_feed_list_builder.dart';
 
 import 'package:thepaper_starter/app/home/comments/condolences_feed_list_builder.dart';
 import 'package:thepaper_starter/app/home/groups/group_page.dart';
 import 'package:thepaper_starter/app/home/models/funeral.dart';
 import 'package:thepaper_starter/app/home/models/condolence.dart';
+import 'package:thepaper_starter/common_widgets/avatar.dart';
 import 'package:thepaper_starter/routing/cupertino_tab_view_router.dart';
 
 import 'package:thepaper_starter/app/home/condolences/condolence_button.dart';
@@ -18,6 +21,7 @@ import 'package:thepaper_starter/common_widgets/expandable_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:thepaper_starter/routing/router.dart';
 import 'package:thepaper_starter/services/analytics_service.dart';
+import 'package:thepaper_starter/services/firebase_auth_service.dart';
 import 'package:thepaper_starter/services/firestore_database.dart';
 
 class FuneralDetailsPage extends StatefulWidget {
@@ -51,9 +55,14 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
 
   String? _funeralObituary;
   Funeral? _funeral;
+  // String? _name;
+  String? _userImageURL;
+
   // TabController _controller;
   final TextEditingController textEditingController =
       new TextEditingController();
+
+  final scrollKey = new GlobalKey();
 
   @override
   void initState() {
@@ -64,6 +73,9 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
     _funeralObituary = widget.funeral?.obituaryClean ?? '';
     _funeral = widget.funeral; // TODO this cant be right
 
+   final user = Provider.of<AppUser>(context, listen:false);
+    // _name = user.displayName ?? user.email;
+    _userImageURL = user.photoURL ?? null;
     // _controller = new TabController(length: 3, vsync: this);
   }
 
@@ -94,6 +106,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
             Expanded(
               child: SingleChildScrollView(
                 physics: ScrollPhysics(),
+                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                 child: Column(
                   children: <Widget>[
                     _buildImage(),
@@ -106,16 +119,13 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              _funeralFullName,
+                              _funeralFullName.capitalizeFirstofEach,
                               style: TextThemes.title,
                               textScaleFactor: 1.0,
                             ),
+                            // Text("Funeral Service", style: TextThemes.subtitle),
                             SizedBox(
-                              height: 20.0,
-                            ),
-                            Text("Funeral Service", style: TextThemes.subtitle),
-                            SizedBox(
-                              height: 10.0,
+                              height: 15.0,
                             ),
                             Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,7 +133,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
                                   Padding(
                                     padding: EdgeInsets.only(right: 10.0),
                                     child:
-                                        Icon(Icons.today, color: Colors.grey),
+                                        Icon(Icons.today, color: TextThemes.accentColor),
                                   ),
                                   Text(widget.funeral!.formattedFuneralDate),
                                 ]),
@@ -131,28 +141,26 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
                               height: 10.0,
                             ),
                             funeralLocation(),
-                            // Row(
-                            //     mainAxisAlignment: MainAxisAlignment.start,
-                            //     crossAxisAlignment: CrossAxisAlignment.center,
-                            //     children: <Widget>[
-                            //       Padding(
-                            //         padding: EdgeInsets.only(right: 10.0),
-                            //         child: Icon(Icons.location_on,
-                            //             color: Colors.grey),
-                            //       ),
-                            //       Flexible(child: Text(_funeralLocation)),
-                            //     ]),
                             _buildGroups(),
                             SizedBox(
-                              height: 20.0,
+                              height: 25.0,
                             ),
                             obitSection(),
                             SizedBox(
+                              key: scrollKey,
                               height: 15,
                             ),
-                            CondolenceButton(funeral: _funeral),
-                            SizedBox(
+                            // CondolenceButton(funeral: _funeral),
+                            Container(
                               height: 20,
+                              decoration: BoxDecoration(
+                                border: Border(
+                                    top: BorderSide(
+                                      color: Colors.grey,
+                                      width: 0.3,
+                                    ),
+                                ),
+                              ),
                             ),
                             CondolenceCount(funeral: _funeral),
                             _buildCommentList(context, _funeral),
@@ -160,12 +168,8 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
                         ),
                       ),
                     ),
-
-                    // Expanded(
-                    //    child:
-                    // ),
                     SizedBox(
-                      height: 100.0,
+                      height: 25.0,
                     ),
                   ],
                 ),
@@ -173,6 +177,24 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
             )
           ],
         ),
+      bottomNavigationBar: StickyBottomAppBar(
+        child: BottomAppBar(
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+            height: 70,
+            // width: double.maxFinite,
+            child:  Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                // Avatar(photoUrl: _userImageURL, radius: 20.0),
+                CommentField(funeral: _funeral, scrollKey: scrollKey),
+                CondolenceButton(funeral: _funeral),
+              ],    
+            ),
+          ),
+        ),
+      ),
       ),
     );
   }
@@ -185,7 +207,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(right: 10.0),
-              child: Icon(Icons.location_on, color: Colors.grey),
+              child: Icon(Icons.location_on, color: TextThemes.accentColor),
             ),
             Flexible(child: Text(_funeralLocation!)),
           ]);
@@ -199,7 +221,7 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
       return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text("Obituary", style: TextThemes.subtitle),
+            Text("Obituary", style: TextThemes.largeSubtitle),
             SizedBox(
               height: 10.0,
             ),
@@ -260,6 +282,20 @@ class _FuneralDetailsPageState extends State<FuneralDetailsPage>
   }
 
   Widget _buildCommentList(BuildContext context, Funeral? funeral) {
-    return CondolencesFeedListBuilder(funeral: funeral);
+    // return CondolencesFeedListBuilder(funeral: funeral);
+    return CommentsFeedListBuilder(funeral: funeral);
+  }
+}
+
+class StickyBottomAppBar extends StatelessWidget {
+  final BottomAppBar child;
+  StickyBottomAppBar({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.translate(
+      offset: Offset(0.0, -1 * MediaQuery.of(context).viewInsets.bottom),
+      child: child,
+    );
   }
 }

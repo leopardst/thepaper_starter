@@ -17,9 +17,9 @@ import 'package:thepaper_starter/services/firestore_database.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:thepaper_starter/common_widgets/time_ago_format.dart';
 
-class CondolenceFeedListTile extends StatelessWidget {
-  const CondolenceFeedListTile({Key? key, required this.condolence, required this.funeral}) : super(key: key);
-  final Condolence condolence;
+class CommentsFeedListTile extends StatelessWidget {
+  const CommentsFeedListTile({Key? key, required this.comment, required this.funeral}) : super(key: key);
+  final Comment comment;
   final Funeral? funeral;
 
   @override
@@ -34,7 +34,7 @@ class CondolenceFeedListTile extends StatelessWidget {
           children: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
-            child: Avatar(photoUrl: condolence.userImageURL, radius: 20.0, character: condolence.name![0]),
+            child: Avatar(photoUrl: comment.userImageURL, radius: 20.0, character: comment.name![0]),
           ),
           Expanded(
             flex: 1,
@@ -50,10 +50,10 @@ class CondolenceFeedListTile extends StatelessWidget {
                     child: Wrap(
                       children: <Widget>[
                         Text(
-                          timeago.format(condolence.updatedAt, locale: 'en_short'),
+                          timeago.format(comment.updatedAt, locale: 'en_short'),
                           style: TextThemes.helperText,
                         ),
-                        if(condolence.remoteId != null)
+                        if(comment.remoteId != null)
                           Text(" · from paperman.com", style: TextThemes.helperText),
                       ]),
                   ),
@@ -67,12 +67,12 @@ class CondolenceFeedListTile extends StatelessWidget {
   }
  
   Widget _nameContent(){
-     if(condolence.content == null){
+     if(comment.content == null){
       return Wrap(
         children: <Widget>[
           GestureDetector(
             onTap: () => {},
-            child: Text(condolence.name!,
+            child: Text(comment.name!,
               style: TextThemes.subtitle,
             )
           ),
@@ -81,20 +81,20 @@ class CondolenceFeedListTile extends StatelessWidget {
     } else {
       return GestureDetector(
         onTap: () => {},
-        child: Text(condolence.name!,
+        child: Text(comment.name!,
           style: TextThemes.subtitle,
         )
       );
     }
   }
   Widget _bodyContent(BuildContext context){
-    if(condolence.content == null){
+    if(comment.content == null){
       return Container();
     } else {
       return Row(
         children: [
           Expanded(
-            child: Text(condolence.content!,
+            child: Text(comment.content!,
               style: TextThemes.commentBody,
             ),
           ),
@@ -109,7 +109,7 @@ class CondolenceFeedListTile extends StatelessWidget {
 
   Widget _deleteButton(BuildContext context){
     final user = Provider.of<AppUser>(context, listen: false);
-    if(user.uid == condolence.id){
+    if(user.uid == comment.id){
       return IconButton(
         icon: FaIcon(
           FontAwesomeIcons.times, 
@@ -135,10 +135,9 @@ class CondolenceFeedListTile extends StatelessWidget {
       // final analyticsService =
       //     Provider.of<AnalyticsService>(context, listen: false);
 
-      condolence.isDeleted = true;
-      await database.setCondolence(condolence, funeralId, merge: true);
+      comment.isDeleted = true;
+      await database.setComment(comment, funeralId, merge: true);
 
-  
       // analyticsService.logRemoveCondolence(condolence.content, funeralId);
       
 

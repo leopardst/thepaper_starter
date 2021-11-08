@@ -34,8 +34,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
 	<string>531999080845488</string>
-    <key>FacebookClientToken</key>
-    <string>26fc143bdf77285b9cef994f643b6d00</string>
+	<key>FacebookClientToken</key>
+	<string>26fc143bdf77285b9cef994f643b6d00</string>
 	<key>FacebookDisplayName</key>
 	<string>The Paper</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>

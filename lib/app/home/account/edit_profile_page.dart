@@ -90,6 +90,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text("Edit profile", style: TextThemes.subtitle),
         actions: <Widget>[
           FlatButton(

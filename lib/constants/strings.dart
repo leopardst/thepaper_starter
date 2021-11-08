@@ -12,7 +12,7 @@ class Strings {
   // Sign In Page
   static const String signIn = 'Sign in';
   static const String signInWithEmailPassword =
-      'Sign in with email and password';
+      'Login with your Email';
   static const String signInWithFacebook = 'Continue with Facebook';
   static const String signInWithGoogle = 'Continue with Google';
   static const String goAnonymous = 'Go anonymous';
@@ -36,7 +36,7 @@ class Strings {
   static const String emailLabel = 'Email';
   static const String nameLabel = 'Full name';
   static const String nameHint = 'John Doe';
-  static const String emailHint = 'test@test.com';
+  static const String emailHint = 'you@gmail.com';
   static const String password8CharactersLabel = 'Password (8+ characters)';
   static const String confirmPassword8CharactersLabel = 'Confirm password';
   static const String passwordLabel = 'Password';
