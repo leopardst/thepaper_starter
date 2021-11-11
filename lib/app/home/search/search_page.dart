@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'package:flappy_search_bar_fork/search_bar_style.dart';
 import 'package:flutter/material.dart';
 import 'package:algolia/algolia.dart';
 import 'package:provider/provider.dart';
+import 'package:thepaper_search_bar/search_bar_style.dart';
+import 'package:thepaper_search_bar/thepaper_search_bar.dart';
 import 'package:thepaper_starter/app/home/search/search_list_tile.dart';
 import 'package:thepaper_starter/services/analytics_service.dart';
-import 'package:flappy_search_bar_fork/flappy_search_bar.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -13,6 +13,12 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage>{
+  
+  final SearchBarController<AlgoliaObjectSnapshot> _searchBarController = SearchBarController();
+  static final _borderSide = BorderSide(
+    color: Colors.grey[400]!,
+    width: 1.0
+  );
 
   Algolia algolia = Algolia.init(
     applicationId: 'H51U8BPLQV',
@@ -46,19 +52,27 @@ class _SearchPageState extends State<SearchPage>{
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SearchBar<AlgoliaObjectSnapshot?>(
+            searchBarController: _searchBarController ,
             searchBarStyle: SearchBarStyle(
+              borderRadius: BorderRadius.circular(18),
               backgroundColor: Colors.white,
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 0)
+              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+              border: Border(top: _borderSide, bottom: _borderSide, left: _borderSide, right: _borderSide)
             ),
+            // placeHolder: ('hello'),
             onSearch: search2,
             hintText: "Search",
             hintStyle: TextStyle(
               color: Colors.grey[600],
-              fontSize: 20.0,
+              fontSize: 18.0,
             ),
             iconActiveColor: Colors.black,
+            icon: Icon(
+              Icons.search,
+              color: Colors.grey[400],
+            ),
             emptyWidget: Padding(
-              padding: const EdgeInsets.only(top: 4.0),
+              padding: const EdgeInsets.only(top: 10.0, left: 5.0),
               child: Text("No results found"),
             ),
             onItemFound: (AlgoliaObjectSnapshot? snap, int index){

@@ -11,6 +11,7 @@ import 'package:thepaper_starter/app/home/jobs/empty_content.dart';
 import 'package:thepaper_starter/app/home/jobs/list_items_builder.dart';
 import 'package:thepaper_starter/app/home/models/user_profile.dart';
 import 'package:thepaper_starter/common_widgets/avatar.dart';
+import 'package:thepaper_starter/common_widgets/custom_raised_button.dart';
 import 'package:thepaper_starter/common_widgets/platform_alert_dialog.dart';
 import 'package:thepaper_starter/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:thepaper_starter/constants/keys.dart';
@@ -160,14 +161,14 @@ class _AccountPageState extends State<AccountPage> {
             userProfile.displayName,
             style: TextThemes.title2,
           ),
-          FlatButton(
+          CustomRaisedButton(
               onPressed: () => { EditProfilePage.show(context: context, userProfile: userProfile)},
               child: Text("Edit profile", style: TextThemes.inputStyle),
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
-                side: BorderSide(color: Colors.blue)
-              ),
+              height: 44,
+              borderRadius: 18,
+              textColor: Colors.white,
+              color: Colors.black,
+              
           ),
           // IconButton(icon: Icon(Icons.edit), onPressed: () => {
           //   EditProfilePage.show(context: context, userProfile: userProfile),  
