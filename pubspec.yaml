@@ -34,10 +34,13 @@ dependencies:
   cached_network_image: ^3.1.0
   cupertino_icons: ^1.0.3
   expandable: ^5.0.1
-  flappy_search_bar_fork:
+  thepaper_search_bar:
     git:
       # url: git://github.com/harryjjacobs/flappy_search_bar.git
-      url: git://github.com/joaovvrodrigues/flappy_search_bar_fork.git
+      # url: git://github.com/joaovvrodrigues/flappy_search_bar_fork.git
+      url: git@github.com:bpaperman/thepaper_search.git
+      ref: 1a233d53b0849423674af4f0f63a51a5809eadeb
+
   flutter_html: ^2.1.5
   google_fonts: ^2.1.0
   grouped_list: ^4.1.0

@@ -61,6 +61,9 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               // brightness: Brightness.dark,
               primaryColor: Colors.white, //Color(0xFFF3F5F7),
+              textSelectionTheme: TextSelectionThemeData(
+                cursorColor: Colors.grey[500],
+              ),
               // primarySwatch: white,
               // primaryColor: Colors.white,//Color(0xFF3EBACE),
               // accentColor: Color(0xFFD8ECF1),

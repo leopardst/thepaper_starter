@@ -44,7 +44,7 @@ class TextThemes {
   );
 
   static final TextStyle inputStyle = TextStyle(
-    color: Colors.blue,
+    color: Colors.white,
   );
 
   static final TextStyle smallTitle = TextStyle(
